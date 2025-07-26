@@ -49,7 +49,7 @@ export default [
       'no-trailing-spaces': 'warn',
       'eol-last': ['warn', 'always'],
       'semi': ['warn', 'always'],
-      'quotes': ['warn', 'single'],
+      'quotes': ['warn', 'double'],
       'indent': ['warn', 2, { SwitchCase: 1 }]
     },
     settings: {

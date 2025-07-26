@@ -1,11 +1,10 @@
 
-import './App.css';
-import Windows from './components/Windows';
-
+import ClipboardBody from "@/components/Clipboard";
+import "./App.css";
 function App() {
 
   return (
-    <Windows></Windows>
+    <ClipboardBody />
   );
 }
 
