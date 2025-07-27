@@ -1,7 +1,31 @@
-# Tauri + React + Typescript
+# Clipboard Manager for Linux
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+This project is a clipboard manager designed for Linux systems, built with **Tauri**, **React**, and **TypeScript**. It allows users to manage, view, and organize clipboard content such as text, images, documents, audio, and video.
 
-## Recommended IDE Setup
+## Features
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+- **Content Management**: Save and organize clipboard items.
+- **Multimedia Support**: Compatible with text, images, audio, video, and documents.
+- **Quick Editing**: Edit text directly within the interface.
+- **Pin Items**: Mark important items for quick access.
+- **Modern Interface**: Responsive and dark-themed design optimized for Linux.
+- **Lightweight and Fast**: Built with Tauri for optimal performance.
+
+## Technologies Used
+
+- **Frontend**: React + TypeScript
+- **Backend**: Tauri (Rust)
+- **Bundler**: Vite
+- **Styling**: TailwindCSS
+- **Icons**: React Icons
+
+## Prerequisites
+
+Before starting, ensure you have the following installed:
+
+- **Node.js** (v16 or higher)
+- **Rust** (with `cargo` and `rustup`)
+- **Tauri CLI**: Install it by running:
+  ```bash
+  cargo install tauri-cli
+  ```
