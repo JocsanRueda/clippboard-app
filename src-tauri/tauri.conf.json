@@ -13,10 +13,10 @@
     "windows": [
       {
         "title": "clippboard",
-        "width": 400,
-        "height": 450,
-        "minWidth": 400,
-        "minHeight": 450,
+        "width": 430,
+        "height": 470,
+        "minWidth": 430,
+        "minHeight": 470,
         "maxWidth": 650,
         "maxHeight": 850
       }

@@ -7,18 +7,30 @@ import { SquareTextProps,SquareTextComponentProps } from "@/types/square.type";
 import OptionSquare from "./OptionSquare";
 
 
-function ContentText({text}: {text: string}) {
+function ContentText({text, editText,newText, setText}: {text: string, editText: boolean, newText: string, setText: (newText: string) => void}) {
 
    const displayText = text.length > MAX_TEXT_LENGTH ? text.slice(0, MAX_TEXT_LENGTH) + "..." : text;
 
 
-   return (
-    <p className="text-gray-900 dark:text-white text-base font-light tracking-tight ">
+   if (editText){
+   
+    return (
+      <textarea
+        className="w-full  h-28 p-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-base font-light tracking-tight "
+        value={newText}
+        onChange={(e) => setText(e.target.value)}
+        maxLength={50*MAX_TEXT_LENGTH}
+      />
+    );
+   }else{
+
+     return (<p className="text-gray-900 dark:text-white text-base font-light tracking-tight ">
 
         {displayText}
 
-      </p>
-   )
+    </p>)
+    
+   }
 
 }
 
@@ -72,10 +84,10 @@ function ContentDocument({text, url}: {text: string, url: string}) {
   );
 }
 
-function RenderContent({ type, text, url }: SquareTextProps) {
+function RenderContent({ type, text, url,editText, newText, setText }: SquareTextProps & {editText:boolean, newText: string, setText: (newText: string) => void}) {
   switch (type) {
     case "text":
-      return <ContentText text={text} />;
+      return <ContentText text={text} editText={editText} newText={newText} setText={setText} />;
     case "image":
       return <ContentImage text={text} url={url ?? ""} />;
     case "audio":
@@ -91,24 +103,34 @@ function RenderContent({ type, text, url }: SquareTextProps) {
 
 
 
-function SquareText({ text, type,url, toggleMenu, onClick }: SquareTextComponentProps) {
+function SquareText({ text, type,url, toggleMenu,toggleEdit, handleMenu , handleDelete ,handleEdit, handleSave }: SquareTextComponentProps) {
+
   const [pinned, setPinned] = useState(false);
+  const [newText, setNewText] = useState(text);
+
+  const handleSaveText = () => {
+    handleSave(newText);
+  };
+
+  const handledOption=()=>{
+    handleMenu();
+  }
 
 
   return (
     <div className="flex flex-row justify-between items-stretch  ">
       <div className="w-full bg-gray-200 dark:bg-gray-700 py-2 px-2 mx-2 rounded-md shadow-md flex flex-row justify-between border-3 hover:border-solid border-gray-300 dark:border-gray-700 hover:border-gray-400 transition-border  gap-2   ">
 
-      {<RenderContent type={type} text={text} url={url} />}
+      {<RenderContent type={type} text={text} url={url} editText={toggleEdit} newText={newText} setText={setNewText} />}
 
       <section className="ml-auto flex flex-col justify-between gap-2">
-        {/* Ícono de elipsis */}
+      
         <HiOutlineEllipsisHorizontal
           className="text-gray-100 cursor-pointer hover:text-gray-300 transition-colors duration-200"
-          onClick={onClick}
-        />
+          onClick={()=>handledOption()}
+        />  
 
-        {/* Ícono de pin */}
+       
         {pinned ? (
           <TiPin
             className="text-gray-100 transition-transform duration-150 hover:scale-115 cursor-pointer"
@@ -122,7 +144,7 @@ function SquareText({ text, type,url, toggleMenu, onClick }: SquareTextComponent
         )}
       </section>
     </div>
-    {<OptionSquare toggleMenu={toggleMenu} />}
+    {<OptionSquare toggleMenu={toggleMenu} handleDelete={handleDelete} disabledEdit={type !== "text"} editText={toggleEdit} handleEdit={handleEdit} handleSave={handleSaveText} />}
     </div>
   );
 }

@@ -38,25 +38,65 @@ function History() {
     }
    ]
 
-   const [toggleMenu, setToggleMenu] = useState(Array(data.length).fill(false));
+   type handleElement ={
+    showMenu:boolean,
+    activeEdit:boolean,
+   }
+
+   const [toggleMenu, setToggleMenu] = useState<handleElement[]>(Array(data.length).fill({ showMenu: false, activeEdit: false }));
+
+   const [dataList, setDataList]= useState<SquareTextProps[]>(data)
 
    const handleToggleMenu = (index: number) => {
-     const newToggleMenu= Array(data.length).fill(false);
-     newToggleMenu[index] = !toggleMenu[index];
+     const newToggleMenu= Array(data.length).fill({ showMenu: false, activeEdit: false });
+
+     newToggleMenu[index]={ showMenu: !toggleMenu[index].showMenu, activeEdit: false};
+
      setToggleMenu(newToggleMenu);
    }
 
+   const handleSave = (index: number, newText: string) => {
+      const newDataList = [...dataList];
+      newDataList[index].text = newText;
+      setDataList(newDataList);
+  
+      const newToggleMenu = [...toggleMenu];
+      newToggleMenu[index] = { showMenu: true, activeEdit: false };
+      setToggleMenu(newToggleMenu);
+   }
+
+    const handleEdit = (index: number) => {
+      const newToggleMenu = [...toggleMenu];
+      newToggleMenu[index]={ showMenu: newToggleMenu[index].showMenu, activeEdit: !newToggleMenu[index].activeEdit };
+      setToggleMenu(newToggleMenu);
+    }
+
+
+   const handleDelete = (index:number)=>{
+
+    const newDataList=dataList.filter((_,i)=> i!==index)
+
+    setDataList(newDataList)
+
+   }
+
+
+
+
+  
+
 
   return (
-    <div className="overflow-x-hidde">
+    <div className="overflow-x-hidden">
       
       <h2 className={`text-gray-900 dark:text-white mt-5 text-base font-light tracking-tight mx-3`}>Clippboard</h2>
  
 
      <section className="flex flex-col gap-2 my-2 mx-1">
-      {data.map((item, index) => (
+      {dataList.map((item, index) => (
+       
 
-          <SquareText key={index} text={item.text} type={item.type} url={item.url} toggleMenu={toggleMenu[index]} onClick={() => handleToggleMenu(index)} />
+          <SquareText key={index} text={item.text} type={item.type} url={item.url} toggleMenu={toggleMenu[index].showMenu} toggleEdit={toggleMenu[index].activeEdit} handleMenu={() => handleToggleMenu(index)} handleDelete={() => handleDelete(index)} handleEdit={() => handleEdit(index)} handleSave={(newText) => handleSave(index, newText)} />
 
       ))}
       </section>

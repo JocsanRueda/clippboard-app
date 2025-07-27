@@ -9,6 +9,11 @@ export type SquareTextProps = {
 export type SquareTextComponentProps = SquareTextProps & {
 
   toggleMenu: boolean;
+  toggleEdit: boolean;
 
-  onClick: () => void
+  handleMenu: () => void;
+  handleDelete: () => void;
+  handleEdit: () => void;
+  handleSave: (newText: string) => void;
+
 }
