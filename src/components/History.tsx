@@ -1,88 +1,55 @@
-
-
-import { SquareTextProps } from "@/types/square.type";
-import SquareText from "./square-text";
+import { data } from "@/mock/data";
+import { handleElement } from "@/types/handle.type";
+import { ItemClipboard } from "@/types/item-clippboard.type";
 import { useState } from "react";
+import SquareText from "./Content-Card";
 
 
 function History() {
 
-   const data : SquareTextProps[]=[
-    {
-      text: "This is a sample text that has been copied to the clipboard.",
-      type: "text"
-    },
-    {
-      text: "This text is also part of the clipboard history, showcasing how it This text is also part of the clipboard history, showcasing how itThis text is also part of the clipboard history, showcasing how it.",
-      type: "text"
-    },
-    {
-      text: "This is a image",
-      type: "image",
-      url: "https://static.getimg.ai/media/getimg_ai_img-uXZgKW7ZjTW9WBdjLofIG.jpeg"
-    },
-    {
-      text: "This is a audio",
-      type: "audio",
-      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-    },
-    {
-      text: "This is a video",
-      type: "video",
-      url: "https://www.w3schools.com/html/mov_bbb.mp4"
-    },
-    {
-      text: "This is a document",
-      type: "document",
-      url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-    }
-   ]
+  
 
-   type handleElement ={
-    showMenu:boolean,
-    activeEdit:boolean,
-   }
+   
+   const [toggleActions, setToggleActions] = useState<ItemActionMenu[]>(Array(data.length).fill({ showMenu: false, activeEdit: false }));
 
-   const [toggleMenu, setToggleMenu] = useState<handleElement[]>(Array(data.length).fill({ showMenu: false, activeEdit: false }));
 
-   const [dataList, setDataList]= useState<SquareTextProps[]>(data)
+   //data list content originall data
+
+   const [dataList, setDataList]= useState<ItemClipboard[]>(data)
 
    const handleToggleMenu = (index: number) => {
-     const newToggleMenu= Array(data.length).fill({ showMenu: false, activeEdit: false });
-
-     newToggleMenu[index]={ showMenu: !toggleMenu[index].showMenu, activeEdit: false};
-
-     setToggleMenu(newToggleMenu);
+     updateToggleActions(index, { showMenu: !toggleActions[index].showMenu, activeEdit: false });
    }
 
+
+   //save new text after edit
    const handleSave = (index: number, newText: string) => {
-      const newDataList = [...dataList];
-      newDataList[index].text = newText;
-      setDataList(newDataList);
-  
-      const newToggleMenu = [...toggleMenu];
-      newToggleMenu[index] = { showMenu: true, activeEdit: false };
-      setToggleMenu(newToggleMenu);
+      updateDataList(index, { text: newText });
+      updateToggleActions(index, { showMenu: true, activeEdit: false });
    }
 
+   //toggle edit mode
     const handleEdit = (index: number) => {
-      const newToggleMenu = [...toggleMenu];
-      newToggleMenu[index]={ showMenu: newToggleMenu[index].showMenu, activeEdit: !newToggleMenu[index].activeEdit };
-      setToggleMenu(newToggleMenu);
+      updateToggleActions(index, { activeEdit: !toggleActions[index].activeEdit });
     }
 
-
-   const handleDelete = (index:number)=>{
-
-    const newDataList=dataList.filter((_,i)=> i!==index)
-
-    setDataList(newDataList)
-
+    //delete item from data list
+   const handleDelete = (index: number) => {
+      const newDataList = dataList.filter((_, i) => i !== index);
+      setDataList(newDataList);
    }
 
+   const updateToggleActions = (index: number, updates: Partial<handleElement>) => {
+     const newToggleActions = [...toggleActions];
+     newToggleActions[index] = { ...newToggleActions[index], ...updates };
+     setToggleActions(newToggleActions);
+   };
 
-
-
+   const updateDataList = (index: number, updates: Partial<ItemClipboard>) => {
+     const newDataList = [...dataList];
+     newDataList[index] = { ...newDataList[index], ...updates };
+     setDataList(newDataList);
+   };
   
 
 
@@ -96,7 +63,16 @@ function History() {
       {dataList.map((item, index) => (
        
 
-          <SquareText key={index} text={item.text} type={item.type} url={item.url} toggleMenu={toggleMenu[index].showMenu} toggleEdit={toggleMenu[index].activeEdit} handleMenu={() => handleToggleMenu(index)} handleDelete={() => handleDelete(index)} handleEdit={() => handleEdit(index)} handleSave={(newText) => handleSave(index, newText)} />
+          <SquareText 
+          key={index} 
+          text={item.text} 
+          type={item.type} 
+          url={item.url} 
+          toggleActions={toggleActions[index]} 
+          handleMenu={() => handleToggleMenu(index)} 
+          handleDelete={() => handleDelete(index)} 
+          handleEdit={() => handleEdit(index)} 
+          handleSave={(newText: string) => handleSave(index, newText)} />
 
       ))}
       </section>

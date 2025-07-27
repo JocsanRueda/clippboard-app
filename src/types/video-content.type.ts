@@ -1,0 +1,1 @@
+type VideoContentProps = BaseContentFileProps;
