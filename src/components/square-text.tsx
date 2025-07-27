@@ -1,10 +1,10 @@
-
 import { HiOutlineEllipsisHorizontal,HiDocumentText } from "react-icons/hi2";
 import { TiPinOutline,TiPin } from "react-icons/ti";
 import { MAX_TEXT_LENGTH } from "@/utils/constant";
 import { useState } from "react";
 
-import { SquareTextProps } from "@/types/square.type";
+import { SquareTextProps,SquareTextComponentProps } from "@/types/square.type";
+import OptionSquare from "./OptionSquare";
 
 
 function ContentText({text}: {text: string}) {
@@ -42,15 +42,18 @@ function ContentAudio({text, url}: {text: string, url: string}) {
 
 }
 
-function ContentVideo({text, url}: {text: string, url: string}) {
-
-   return (
-     <video controls className="max-w-full max-h-36 my-3 dark:bg-gray-700 rounded-md shadow-md">
-       <source src={url} type="video/mp4" />
-       {text}
-     </video>
-   )
-
+function ContentVideo({ text, url }: { text: string; url: string }) {
+  return (
+    <div className="relative w-full max-w-full max-h-96 overflow-hidden rounded-md shadow-md dark:bg-gray-700">
+      <video
+        controls
+        className="w-full h-auto"
+      >
+        <source src={url} type="video/mp4" />
+        {text}
+      </video>
+    </div>
+  );
 }
 
 function ContentDocument({text, url}: {text: string, url: string}) {
@@ -88,31 +91,40 @@ function RenderContent({ type, text, url }: SquareTextProps) {
 
 
 
-function SquareText({ text, type,url }: SquareTextProps) {
+function SquareText({ text, type,url, toggleMenu, onClick }: SquareTextComponentProps) {
   const [pinned, setPinned] = useState(false);
 
 
-
-
   return (
-    <div className="bg-gray-200 dark:bg-gray-700 py-2 px-2 mx-2 rounded-md shadow-md flex flex-row  justify-around border-2 hover:border-solid border-gray-300 dark:border-gray-700 hover:border-gray-400 transition-border duration-200 ">
+    <div className="flex flex-row justify-between items-stretch  ">
+      <div className="w-full bg-gray-200 dark:bg-gray-700 py-2 px-2 mx-2 rounded-md shadow-md flex flex-row justify-between border-3 hover:border-solid border-gray-300 dark:border-gray-700 hover:border-gray-400 transition-border  gap-2   ">
 
       {<RenderContent type={type} text={text} url={url} />}
 
-      <section className="ml-auto mr-1.5 flex flex-col justify-between">
-        <HiOutlineEllipsisHorizontal className="text-gray-100   "/>
+      <section className="ml-auto flex flex-col justify-between gap-2">
+        {/* Ícono de elipsis */}
+        <HiOutlineEllipsisHorizontal
+          className="text-gray-100 cursor-pointer hover:text-gray-300 transition-colors duration-200"
+          onClick={onClick}
+        />
 
+        {/* Ícono de pin */}
         {pinned ? (
-          <TiPin className="text-gray-100 " onClick={() => setPinned(false)} />
+          <TiPin
+            className="text-gray-100 transition-transform duration-150 hover:scale-115 cursor-pointer"
+            onClick={() => setPinned(false)}
+          />
         ) : (
-          <TiPinOutline className="text-gray-100 " onClick={() => setPinned(true)} />
+          <TiPinOutline
+            className="text-gray-100 transition-transform duration-150 hover:scale-115 cursor-pointer"
+            onClick={() => setPinned(true)}
+          />
         )}
       </section>
-
+    </div>
+    {<OptionSquare toggleMenu={toggleMenu} />}
     </div>
   );
 }
-
-
 
 export default SquareText;

@@ -5,3 +5,10 @@ export type SquareTextProps = {
   text: string;
   url?: string;
 }
+
+export type SquareTextComponentProps = SquareTextProps & {
+
+  toggleMenu: boolean;
+
+  onClick: () => void
+}
