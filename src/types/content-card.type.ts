@@ -1,13 +1,13 @@
-import { handleElement } from "./handle.type";
-import { SquareTextProps } from "./square.type";
+import { fileType } from "./file.type";
 
-export type ContentCardProps = SquareTextProps & {
 
-  toggleActions: handleElement;
-
+export type ContentCardProps = BaseContentFileProps & {
+  type: fileType;
+  toggleActions: ItemActionMenu;
   handleMenu: () => void;
   handleDelete: () => void;
   handleEdit: () => void;
   handleSave: (newText: string) => void;
+  handleFixed: () => void;
 
 }

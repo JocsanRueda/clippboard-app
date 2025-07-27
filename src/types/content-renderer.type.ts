@@ -1,5 +1,4 @@
-import { fileType } from "./square.type";
-
+import { fileType } from "./file.type";
 
 export type ContentRendererProps = {
   type: fileType

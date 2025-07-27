@@ -6,9 +6,8 @@ import ActionMenu from "./Action-Menu";
 import ContentRenderer from "./Content-Renderer";
 
 
-function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete ,handleEdit, handleSave }: ContentCardProps) {
+function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete ,handleEdit, handleSave, handleFixed }: ContentCardProps) {
 
-  const [pinned, setPinned] = useState(false);
 
   const [newText, setNewText] = useState(text);
 
@@ -18,6 +17,16 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
 
   const handledOption=()=>{
     handleMenu();
+  }
+
+  const getPinIcon = () => {
+    return toggleActions.fixed ? (<TiPin
+            className="text-gray-100 transition-transform duration-150 hover:scale-115 cursor-pointer"
+            onClick={handleFixed}
+          />): (<TiPinOutline
+            className="text-gray-100 transition-transform duration-150 hover:scale-115 cursor-pointer"
+            onClick={handleFixed}
+          />)
   }
 
 
@@ -35,17 +44,7 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
         />  
 
        
-        {pinned ? (
-          <TiPin
-            className="text-gray-100 transition-transform duration-150 hover:scale-115 cursor-pointer"
-            onClick={() => setPinned(false)}
-          />
-        ) : (
-          <TiPinOutline
-            className="text-gray-100 transition-transform duration-150 hover:scale-115 cursor-pointer"
-            onClick={() => setPinned(true)}
-          />
-        )}
+        {getPinIcon()}
       </section>
     </div>
     {<ActionMenu

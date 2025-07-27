@@ -1,8 +1,7 @@
 import { data } from "@/mock/data";
-import { handleElement } from "@/types/handle.type";
 import { ItemClipboard } from "@/types/item-clippboard.type";
 import { useState } from "react";
-import SquareText from "./Content-Card";
+import ContentCard from "./Content-Card";
 
 
 function History() {
@@ -18,7 +17,9 @@ function History() {
    const [dataList, setDataList]= useState<ItemClipboard[]>(data)
 
    const handleToggleMenu = (index: number) => {
-     updateToggleActions(index, { showMenu: !toggleActions[index].showMenu, activeEdit: false });
+     const newToggleActions= Array(dataList.length).fill({ showMenu: false, activeEdit: false });
+     newToggleActions[index] = { showMenu: !toggleActions[index].showMenu, activeEdit: false };
+     setToggleActions(newToggleActions);
    }
 
 
@@ -39,7 +40,11 @@ function History() {
       setDataList(newDataList);
    }
 
-   const updateToggleActions = (index: number, updates: Partial<handleElement>) => {
+   const handleFixed = (index: number) => {
+     updateToggleActions(index, { fixed: !toggleActions[index].fixed });
+   }
+
+   const updateToggleActions = (index: number, updates: Partial<ItemActionMenu>) => {
      const newToggleActions = [...toggleActions];
      newToggleActions[index] = { ...newToggleActions[index], ...updates };
      setToggleActions(newToggleActions);
@@ -63,7 +68,7 @@ function History() {
       {dataList.map((item, index) => (
        
 
-          <SquareText 
+          <ContentCard 
           key={index} 
           text={item.text} 
           type={item.type} 
@@ -72,7 +77,10 @@ function History() {
           handleMenu={() => handleToggleMenu(index)} 
           handleDelete={() => handleDelete(index)} 
           handleEdit={() => handleEdit(index)} 
-          handleSave={(newText: string) => handleSave(index, newText)} />
+          handleSave={(newText: string) => handleSave(index, newText)}
+          handleFixed={() => handleFixed(index)} 
+          
+          />
 
       ))}
       </section>
