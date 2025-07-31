@@ -2,9 +2,22 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Capability for the main window",
-  "windows": ["main"],
+  "windows": [
+    "main"
+  ],
   "permissions": [
     "core:default",
-    "opener:default"
+    "opener:default",
+    "clipboard-manager:default",
+    "clipboard-manager:allow-clear",
+    "clipboard-manager:allow-read-text",
+    "clipboard-manager:allow-write-text",
+    "clipboard-manager:allow-read-image",
+    "clipboard-manager:allow-write-image",
+    "clipboard:allow-available-types",
+    "clipboard:allow-start-monitor",
+    "clipboard:allow-has-files",
+    "store:default",
+    "store:default"
   ]
 }

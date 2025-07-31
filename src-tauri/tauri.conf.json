@@ -13,12 +13,14 @@
     "windows": [
       {
         "title": "clippboard",
-        "width": 430,
-        "height": 470,
-        "minWidth": 430,
-        "minHeight": 470,
-        "maxWidth": 650,
-        "maxHeight": 850
+        "width": 400,
+        "height": 440,
+        "minWidth": 400,
+        "minHeight": 440,
+        "maxWidth": 400,
+        "maxHeight": 440,
+        "resizable": false,
+        "fullscreen": false
       }
     ],
     "security": {
@@ -35,5 +37,8 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
+  },
+  "plugins": {
+     "clipboard-manager": null
   }
 }
