@@ -17,7 +17,7 @@
     "clipboard:allow-available-types",
     "clipboard:allow-start-monitor",
     "clipboard:allow-has-files",
-    "store:default",
+    "store:allow-save",
     "store:default"
   ]
 }
