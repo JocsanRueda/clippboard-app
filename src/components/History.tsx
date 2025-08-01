@@ -68,15 +68,17 @@ export const History = () => {
     //delete item from data list
    const handleDelete = async (index: number) => {
 
-      if (index===dataList.length - 1) {
-
-        await clear(); // Clear the clipboard if the last item is deleted
-      }
+      const lenght = dataList.length-1;
 
       const newDataList = (dataList ?? []).filter((_, i) => i !== index);
       const newToggleActions = (toggleActions ?? []).filter((_, i) => i !== index);
       setToggleActions(newToggleActions); 
       setDataList(newDataList);
+
+       if (index===lenght) {
+
+        await clear(); 
+      }
     
    }
  
