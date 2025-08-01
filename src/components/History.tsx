@@ -7,11 +7,10 @@ import { addUnique } from "@/utils/array";
 import { Store } from "@tauri-apps/plugin-store";
 import { useRef, useState } from "react";
 import ContentCard from "./Content-Card";
-
+import { clear } from '@tauri-apps/plugin-clipboard-manager';
 
 export const History = () => {
   
-   
 
    const [dataList, setDataList]= useState<ItemClipboard[]>([])
    const [toggleActions, setToggleActions] = useState<ItemActionMenu[]>(Array(dataList.length).fill(defaultItemClipboard));
@@ -67,7 +66,13 @@ export const History = () => {
     }
 
     //delete item from data list
-   const handleDelete = (index: number) => {
+   const handleDelete = async (index: number) => {
+
+      if (index===dataList.length - 1) {
+
+        await clear(); // Clear the clipboard if the last item is deleted
+      }
+
       const newDataList = (dataList ?? []).filter((_, i) => i !== index);
       const newToggleActions = (toggleActions ?? []).filter((_, i) => i !== index);
       setToggleActions(newToggleActions); 
