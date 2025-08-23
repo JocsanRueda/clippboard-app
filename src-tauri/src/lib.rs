@@ -10,7 +10,9 @@ use tauri::Wry;
 use tauri_plugin_store::Store;
 use tauri_plugin_store::StoreExt;
 
-use crate::store::store::{delete_item_command, save_store_command, update_item_command};
+use crate::store::store::{
+    delete_all_items_command, delete_item_command, save_store_command, update_item_command,
+};
 use serde_json::json;
 use std::sync::{Arc, Mutex};
 use tauri::Manager;
@@ -51,7 +53,8 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             save_store_command,
             update_item_command,
-            delete_item_command
+            delete_item_command,
+            delete_all_items_command
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

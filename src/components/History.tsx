@@ -1,4 +1,4 @@
-import { removeClipboardItem, updateClipboardItem } from "@/api/tauri/clippboard";
+import { removeClipboardItem, updateClipboardItem,deleteAllClipboardItems } from "@/api/tauri/clippboard";
 import { defaultItemClipboard } from "@/default/values";
 import { useClipboardWatcher } from "@/hooks/useClipboardWatcher";
 import { useInitStore } from "@/hooks/useStore";
@@ -8,6 +8,7 @@ import { clear,writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { Store } from "@tauri-apps/plugin-store";
 import { useRef, useState } from "react";
 import ContentCard from "./Content-Card";
+import TopBar from "./TopBar";
 
 export const History = () => {
   
@@ -98,8 +99,12 @@ export const History = () => {
    }
  
    //toggle fixed state
-   const handleFixed = (index: number) => {
+   const handleFixed = async (index: number) => {
      updateToggleActions(index, { fixed: !toggleActions[index].fixed });
+
+     updateDataList(index, { fixed: !dataList[index].fixed });
+
+     await updateClipboardItem(index,(!toggleActions[index].fixed).toString(),"fixed");
    }
 
 
@@ -118,13 +123,24 @@ export const History = () => {
      setDataList(newDataList);
 
    };
-  
+
+   const deleteAllItem=async()=>{
+
+       setDataList(dataList.filter((item) => item.fixed));
+       setToggleActions(toggleActions.filter((action) => action.fixed));
+       await clear();
+       await deleteAllClipboardItems();
+     
+   }
 
 
   return (
+
+    <div>
+      <TopBar deleteFunction={deleteAllItem} />
     <div className="overflow-x-hidden">
       
-      <h2 className={`text-gray-900 dark:text-white mt-1   text-base font-light tracking-tight mx-3`}>Clippboard</h2>
+      <h2 className={`text-gray-900 dark:text-white  text-base font-light tracking-tight mx-3`}>Clippboard</h2>
  
 
      <section className="flex flex-col gap-2 my-2 mx-1">
@@ -149,6 +165,8 @@ export const History = () => {
       </section>
      
     </div>
+    </div>
+    
   );
 }
 

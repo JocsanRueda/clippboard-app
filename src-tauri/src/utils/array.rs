@@ -8,13 +8,15 @@ pub fn add_unique(mut array: Vec<serde_json::Value>, text: &str) -> Vec<serde_js
     let new_item = json!({
         "text": last_value,
         "type": "text",
+        "fixed": false,
         "url": null
     });
 
-    if !array
-        .iter()
-        .any(|item| item["text"] == new_item["text"] && item["type"] == new_item["type"])
-    {
+    if !array.iter().any(|item| {
+        item["text"] == new_item["text"]
+            && item["type"] == new_item["type"]
+            && item["fixed"] == new_item["fixed"]
+    }) {
         array.push(new_item);
     }
 

@@ -26,19 +26,15 @@ pub fn update_item_command(
     state: tauri::State<'_, AppStore>,
     global_history: tauri::State<'_, Arc<Mutex<Vec<serde_json::Value>>>>,
     index: usize,
+    property_name: String,
     new_value: serde_json::Value,
     key: String,
 ) {
     let store = state.0.lock().unwrap();
     let mut history = global_history.lock().unwrap();
 
-    println!(
-        "Updating item at index: {}, new value: {}",
-        index, new_value
-    );
-
     if index < history.len() {
-        history[index]["text"] = new_value; // Actualiza el elemento en el índice especificado
+        history[index][property_name] = new_value; // Actualiza el elemento en el índice especificado
         store.set(key, json!(&*history));
         store.save().expect("Failed to save store");
     } else {
@@ -64,4 +60,23 @@ pub fn delete_item_command(
     } else {
         println!("Index out of range: {}", index);
     }
+}
+#[tauri::command]
+pub fn delete_all_items_command(
+    state: tauri::State<'_, AppStore>,
+    global_history: tauri::State<'_, Arc<Mutex<Vec<serde_json::Value>>>>,
+    key: String,
+) {
+    let store = state.0.lock().unwrap();
+    let mut history = global_history.lock().unwrap();
+
+    let filtered: Vec<serde_json::Value> = history
+        .drain(..)
+        .filter(|item| item["fixed"] == "true")
+        .collect();
+
+    history.extend(filtered);
+
+    store.set(key, json!(&*history));
+    store.save().expect("Failed to save store");
 }

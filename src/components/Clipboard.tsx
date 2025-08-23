@@ -1,7 +1,7 @@
 
 
 import { loadStore } from "@/utils/store";
-import Header from "./Header";
+
 import History from "./History";
 
  function ClipboardBody() {
@@ -13,7 +13,7 @@ import History from "./History";
 
      
 
-     <Header />
+     
 
      <History />
 

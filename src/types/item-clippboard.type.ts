@@ -5,4 +5,5 @@ export type ItemClipboard = {
   type: fileType;
   text: string;
   url?: string;
+  fixed: boolean;
 }

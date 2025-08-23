@@ -1,8 +1,7 @@
-import { useEffect } from "react";
-import { Store } from "@tauri-apps/plugin-store";
-import { CLIPPBOARD_HISTORY_KEY, CLIPPBOARD_STORE_FILE } from "@/utils/constant";
-import { defaultItemClipboard } from "@/default/values";
 import { ItemClipboard } from "@/types/item-clippboard.type";
+import { CLIPPBOARD_HISTORY_KEY, CLIPPBOARD_STORE_FILE } from "@/utils/constant";
+import { Store } from "@tauri-apps/plugin-store";
+import { useEffect } from "react";
 
 // This hook initializes the store and loads existing data into the state.
 // It sets up the store reference and populates the data list and toggle actions.
@@ -19,7 +18,12 @@ export const useInitStore = (
       const storedData = await storeRef.current.get<ItemClipboard[]>(CLIPPBOARD_HISTORY_KEY);
       if (storedData) {
         setDataList(storedData);
-        setToggleActions(Array(storedData.length).fill(defaultItemClipboard));
+
+        const newToggleActions= storedData.map((item)=> {
+          return { showMenu: false, activeEdit: false, fixed: item.fixed || false};
+        })
+        
+        setToggleActions(newToggleActions);
       }
     };
 

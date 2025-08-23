@@ -14,12 +14,19 @@ export const removeClipboardItem = async (index: number) => {
   }
 };
 // update item
-export const updateClipboardItem = async (index: number, text: string,) => {
+export const updateClipboardItem = async (index: number, text: string, property="text") => {
   try {
-    await invoke("update_item_command", { index:index, newValue:text ,key:"history"});
+    await invoke("update_item_command", { index:index, newValue:text ,key:"history", propertyName:property});
   } catch (err) {
     console.error("Error updating item:", err);
   }
 };
 
 
+export const deleteAllClipboardItems = async () => {
+  try {
+    await invoke('delete_all_items_command', { key: "history" });
+  } catch (err) {
+    console.error("Error deleting all items:", err);
+  }
+};
