@@ -1,5 +1,6 @@
-import { readText } from '@tauri-apps/plugin-clipboard-manager';
+
 import { useEffect, useRef } from "react";
+import { listen } from '@tauri-apps/api/event';
 
 
 // This hook watches the clipboard for changes and calls the provided callback
@@ -8,22 +9,21 @@ import { useEffect, useRef } from "react";
 // The `interval` parameter specifies how often to check the clipboard (default is 1000 ms).
 // It is useful for applications that need to monitor clipboard changes in real-time.
 // Usage: Call this hook in a component and provide a function to handle clipboard changes.
-export function useClipboardWatcher(onChange: (newText: string) => void, interval = 1000) {
+export function useClipboardWatcher(onChange: (newText: string) => void) {
   const lastText = useRef("");
 
   useEffect(() => {
-    const timer = setInterval(async () => {
-      try {
-        const currentText = await readText();
-        if (currentText !== lastText.current) {
-          lastText.current = currentText;
-          onChange(currentText);
-        }
-      } catch (err) {
-        console.error("Error reading clipboard:", err);
-      }
-    }, interval);
+    const unlisten= listen<string>("clipboard-changed", (event) => {
 
-    return () => clearInterval(timer);
-  }, [onChange, interval]);
+    const newText= event.payload;
+    lastText.current = newText;
+    onChange(newText);
+  })
+
+    return () => {
+      unlisten.then((f) => f());
+    }
+  }, [onChange]);
+
+
 }

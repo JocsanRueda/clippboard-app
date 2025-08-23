@@ -1,13 +1,13 @@
+import { removeClipboardItem, updateClipboardItem } from "@/api/tauri/clippboard";
 import { defaultItemClipboard } from "@/default/values";
 import { useClipboardWatcher } from "@/hooks/useClipboardWatcher";
-import { useSaveStore } from "@/hooks/useSaveStore";
 import { useInitStore } from "@/hooks/useStore";
 import { ItemClipboard } from "@/types/item-clippboard.type";
 import { addUnique } from "@/utils/array";
+import { clear,writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { Store } from "@tauri-apps/plugin-store";
 import { useRef, useState } from "react";
 import ContentCard from "./Content-Card";
-import { clear } from '@tauri-apps/plugin-clipboard-manager';
 
 export const History = () => {
   
@@ -18,22 +18,23 @@ export const History = () => {
 
 
    // Initialize the store and load existing data
-   useInitStore(storeRef, setDataList, setToggleActions);
+    useInitStore(storeRef, setDataList, setToggleActions);
+
 
 
    // Save the dataList to the store whenever it changes
    useClipboardWatcher((newText) => {
      updateClipboardDataList(newText);
     
-   }, 500);
+   });
 
    // Save the dataList to the store whenever it changes
-   useSaveStore(storeRef, dataList);
+   //useSaveStore(dataList);
 
 
     // Function to update the clipboard data list with new text
    const updateClipboardDataList = (newText: string) => {
-    const newDataList = addUnique(dataList, newText);
+   const newDataList = addUnique(dataList, newText);
 
     // Check if the new data list is different from the current one
     if (newDataList.length !== dataList.length) {
@@ -55,9 +56,19 @@ export const History = () => {
 
 
    //save new text after edit
-   const handleSave = (index: number, newText: string) => {
+   const handleSave = async (index: number, newText: string) => {
+
+      const length = dataList.length-1;
       updateDataList(index, { text: newText });
       updateToggleActions(index, { showMenu: true, activeEdit: false });
+
+      // Update the clipboard item
+      await updateClipboardItem(index,newText);
+
+      if (index === length) {
+        // write the new text to the clipboard
+        await writeText(newText);
+      }
    }
 
    //toggle edit mode
@@ -75,10 +86,14 @@ export const History = () => {
       setToggleActions(newToggleActions); 
       setDataList(newDataList);
 
-       if (index===lenght) {
+      // If the index is the last one, clear the clipboard
+       if (index===lenght) {  
 
         await clear(); 
       }
+
+      // Remove the item from the store
+      await removeClipboardItem(index);
     
    }
  

@@ -18,13 +18,14 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "2", features = [] }
+tauri = { version = "2", features = ["tray-icon"] }
 tauri-plugin-opener = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tauri-plugin-clipboard-manager = "2"
 tauri-plugin-clipboard = "2.1.11"
 tauri-plugin-store = "2"
+unicode-normalization = "0.1"
 
 [tauri]
 plugins = ["clipboard"]
