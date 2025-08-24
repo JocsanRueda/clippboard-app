@@ -6,7 +6,7 @@ import { ItemClipboard } from "@/types/item-clippboard.type";
 import { addUnique } from "@/utils/array";
 import { clear,writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { Store } from "@tauri-apps/plugin-store";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
 
@@ -16,6 +16,7 @@ export const History = () => {
    const [dataList, setDataList]= useState<ItemClipboard[]>([])
    const [toggleActions, setToggleActions] = useState<ItemActionMenu[]>(Array(dataList.length).fill(defaultItemClipboard));
    const storeRef= useRef<Store | null>(null);
+   const [filter, setFilter] = useState<string>("");
 
 
    // Initialize the store and load existing data
@@ -134,17 +135,36 @@ export const History = () => {
    }
 
 
+
+ 
+
+
+const filteredData = useMemo(() => {
+    if (filter.length === 0) return dataList;
+    const lowerCaseFilter = filter.toLowerCase().trim();
+    return dataList.filter(item => item.text.toLowerCase().startsWith(lowerCaseFilter));
+  }, [filter, dataList]);
+
+  const handleMenuClick = (index: number) => () => handleToggleMenu(index);
+  const handleDeleteClick = (index: number) => () => handleDelete(index);
+  const handleEditClick = (index: number) => () => handleEdit(index);
+  const handleSaveClick = (index: number) => (newText: string) => handleSave(index, newText);
+  const handleFixedClick = (index: number) => () => handleFixed(index);
+
+
   return (
 
     <div>
-      <TopBar deleteFunction={deleteAllItem} />
+
+      <TopBar deleteFunction={deleteAllItem} setFilter={setFilter} filter={filter} />
+
     <div className="overflow-x-hidden">
       
       <h2 className={`text-gray-900 dark:text-white  text-base font-light tracking-tight mx-3`}>Clippboard</h2>
  
 
      <section className="flex flex-col gap-2 my-2 mx-1">
-      {dataList.length > 0 && (dataList).map((item, index) => (
+      {filteredData.length > 0 && (filteredData).map((item, index) => (
        
 
           <ContentCard 
@@ -152,12 +172,12 @@ export const History = () => {
           text={item.text} 
           type={item.type} 
           url={item.url} 
-          toggleActions={toggleActions[index]} 
-          handleMenu={() => handleToggleMenu(index)} 
-          handleDelete={() => handleDelete(index)} 
-          handleEdit={() => handleEdit(index)} 
-          handleSave={(newText: string) => handleSave(index, newText)}
-          handleFixed={() => handleFixed(index)} 
+          toggleActions={toggleActions[index]}
+          handleMenu={handleMenuClick(index)}
+          handleDelete={handleDeleteClick(index)}
+          handleEdit={handleEditClick(index)}
+          handleSave={handleSaveClick(index)}
+          handleFixed={handleFixedClick(index)}
           
           />
 

@@ -1,4 +1,4 @@
-import { FaTrashCan } from "react-icons/fa6";
+import { CgTrash } from "react-icons/cg";
 import { FaSave } from "react-icons/fa";
 import { BiSolidPencil } from "react-icons/bi";
 function ActionMenu({
@@ -54,8 +54,8 @@ function ActionMenu({
 
       {/* Delete Button */}
       <section className="bg-gray-200 dark:bg-gray-700 p-2  rounded-md shadow-lg border-3 border-gray-300 dark:border-gray-700 hover:border-gray-400 transition-border duration-200 flex items-center">
-        <FaTrashCan
-          className="transition-[color,scale] duration-100 text-gray-900 dark:text-white hover:text-red-400 m-3 hover:scale-120 "
+        <CgTrash
+          className="transition-[color,scale] duration-100 text-gray-900 dark:text-white hover:text-red-400 m-3 hover:scale-135 scale-120 "
           onClick={handleDelete}
         />
       </section>
