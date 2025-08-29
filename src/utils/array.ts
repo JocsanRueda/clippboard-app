@@ -10,7 +10,7 @@ export function addUnique(array: ItemClipboard[], text: string): ItemClipboard[]
     fixed: false
   };
 
-  if (!array.some(item => item.text === newItem.text && item.type === newItem.type && item.fixed === newItem.fixed)) {
+  if (!array.some(item => item.text === newItem.text && item.type === newItem.type )) {
     return [...array, newItem];
   }
   return array;
