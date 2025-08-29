@@ -1,15 +1,14 @@
-import { removeClipboardItem, updateClipboardItem,deleteAllClipboardItems } from "@/api/tauri/clippboard";
+import { deleteAllClipboardItems, removeClipboardItem, updateClipboardItem,fixedClipboardItem } from "@/api/tauri/clippboard";
 import { defaultItemClipboard } from "@/default/values";
 import { useClipboardWatcher } from "@/hooks/useClipboardWatcher";
 import { useInitStore } from "@/hooks/useStore";
 import { ItemClipboard } from "@/types/item-clippboard.type";
 import { addUnique } from "@/utils/array";
-import { clear,writeText } from '@tauri-apps/plugin-clipboard-manager';
+import { clear, writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { Store } from "@tauri-apps/plugin-store";
 import { useMemo, useRef, useState } from "react";
 import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
-import Modal from "./Modal";
 
 export const History = () => {
   
@@ -18,7 +17,6 @@ export const History = () => {
    const [toggleActions, setToggleActions] = useState<ItemActionMenu[]>(Array(dataList.length).fill(defaultItemClipboard));
    const storeRef= useRef<Store | null>(null);
    const [filter, setFilter] = useState<string>("");
-   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 
    // Initialize the store and load existing data
@@ -107,7 +105,7 @@ export const History = () => {
 
      updateDataList(index, { fixed: !dataList[index].fixed });
 
-     await updateClipboardItem(index,(!toggleActions[index].fixed).toString(),"fixed");
+     await fixedClipboardItem(index,(!toggleActions[index].fixed));
    }
 
 
@@ -153,37 +151,14 @@ const filteredData = useMemo(() => {
   const handleSaveClick = (index: number) => (newText: string) => handleSave(index, newText);
   const handleFixedClick = (index: number) => () => handleFixed(index);
 
-  const handleAccept = async () => {
 
-    setIsModalOpen(false); 
-    await deleteAllItem();
-  };
-
-  const handleReject = () => {
- 
-    setIsModalOpen(false); 
-  };
-
-  const handleClose = () => {
-   
-    setIsModalOpen(false); 
-  };
   return (
 
   <>
-  {isModalOpen && (
-    <Modal
-      title="Limpiar historial?"
-      acceptText="Aceptar"
-      rejectText="Rechazar"
-      onAccept={handleAccept}
-      onReject={handleReject}
-      onClose={handleClose}
-    />
-  )}
+ 
 
-  <div className={`transition-[filter] duration-200 ease-in-out ${isModalOpen ? "blur-sm" : "blur-none"}`}>
-    <TopBar deleteFunction={() => setIsModalOpen(true)} setFilter={setFilter} filter={filter} />
+
+    <TopBar deleteFunction={deleteAllItem} setFilter={setFilter} filter={filter} />
 
     <div className="overflow-x-hidden">
       <h2 className="text-gray-900 dark:text-white text-base font-light tracking-tight mx-3">
@@ -208,7 +183,7 @@ const filteredData = useMemo(() => {
           ))}
       </section>
     </div>
-  </div>
+  
 </>
     
   );

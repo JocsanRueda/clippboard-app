@@ -7,9 +7,10 @@ export function addUnique(array: ItemClipboard[], text: string): ItemClipboard[]
     text: normalizeString(text),
     type: "text",
     url: "",
+    fixed: false
   };
 
-  if (!array.some(item => item.text === newItem.text && item.type === newItem.type)) {
+  if (!array.some(item => item.text === newItem.text && item.type === newItem.type && item.fixed === newItem.fixed)) {
     return [...array, newItem];
   }
   return array;

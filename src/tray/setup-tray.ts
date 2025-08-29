@@ -9,7 +9,7 @@ export async function setupTray() {
 
   if (icon !== null && icon !== undefined) {
     const options = { icon };
-    const tray = await TrayIcon.new(options);
+   await TrayIcon.new(options);
   } else {
     // Handle the case where the icon is null or undefined
     // For example, you could use a fallback icon or log an error

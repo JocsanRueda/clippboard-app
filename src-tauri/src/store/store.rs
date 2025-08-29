@@ -1,14 +1,66 @@
 use crate::AppStore;
 use serde_json::json;
 use std::sync::{Arc, Mutex};
+use std::time::{SystemTime, UNIX_EPOCH};
+use tauri::AppHandle;
 use tauri::Wry;
+use tauri_plugin_clipboard_manager::ClipboardExt;
 use tauri_plugin_store::Store;
 
+// Save the current state of the store
 pub fn save_store(store: &Arc<Store<Wry>>, history: &Vec<serde_json::Value>, key: &str) {
     store.set(key, json!(history));
     store.save().expect("Failed to save store");
 }
 
+// Clean up the store
+pub fn clean_store(store: &Arc<Store<Wry>>, app_handle: AppHandle) -> Vec<serde_json::Value> {
+    const EXPIRATION_SECS: u64 = 60 * 60 * 24;
+
+    let now = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .expect("Time went backwards")
+        .as_secs();
+
+    let mut history: Vec<serde_json::Value> = store
+        .get("history")
+        .unwrap_or(json!([]))
+        .as_array()
+        .cloned()
+        .unwrap_or_default();
+
+    let last_item = history.last().cloned();
+    history.retain(|item| {
+        let is_recent = item
+            .get("timestamp")
+            .and_then(|ts| ts.as_u64())
+            .map(|ts| now.saturating_sub(ts) < EXPIRATION_SECS)
+            .unwrap_or(true);
+
+        let is_fixed = item
+            .get("fixed")
+            .and_then(|fixed| fixed.as_bool())
+            .map(|fixed| fixed)
+            .unwrap_or(true);
+
+        is_recent || is_fixed
+    });
+
+    store.set("history", json!(history));
+    store.save().expect("Failed to save store");
+
+    if let Some(last) = last_item {
+        if !history.contains(&last) {
+            if let Err(e) = app_handle.clipboard().clear() {
+                eprintln!("Failed to clear clipboard: {}", e);
+            }
+        }
+    }
+
+    history
+}
+
+// Save the current state of the store
 #[tauri::command]
 pub fn save_store_command(
     state: tauri::State<'_, AppStore>,
@@ -21,6 +73,7 @@ pub fn save_store_command(
     store.save().expect("Failed to save store");
 }
 
+// Update an item
 #[tauri::command]
 pub fn update_item_command(
     state: tauri::State<'_, AppStore>,
@@ -34,7 +87,7 @@ pub fn update_item_command(
     let mut history = global_history.lock().unwrap();
 
     if index < history.len() {
-        history[index][property_name] = new_value; // Actualiza el elemento en el índice especificado
+        history[index][property_name] = new_value;
         store.set(key, json!(&*history));
         store.save().expect("Failed to save store");
     } else {
@@ -42,6 +95,7 @@ pub fn update_item_command(
     }
 }
 
+// Update an item
 #[tauri::command]
 pub fn delete_item_command(
     state: tauri::State<'_, AppStore>,
@@ -61,6 +115,8 @@ pub fn delete_item_command(
         println!("Index out of range: {}", index);
     }
 }
+
+//Delete all items
 #[tauri::command]
 pub fn delete_all_items_command(
     state: tauri::State<'_, AppStore>,
@@ -79,4 +135,25 @@ pub fn delete_all_items_command(
 
     store.set(key, json!(&*history));
     store.save().expect("Failed to save store");
+}
+
+//Fixed item
+#[tauri::command]
+pub fn fixed_item_command(
+    state: tauri::State<'_, AppStore>,
+    global_history: tauri::State<'_, Arc<Mutex<Vec<serde_json::Value>>>>,
+    index: usize,
+    new_value: bool,
+    key: String,
+) {
+    let store = state.0.lock().unwrap();
+    let mut history = global_history.lock().unwrap();
+
+    if index < history.len() {
+        history[index]["fixed"] = json!(new_value);
+        store.set(key, json!(&*history));
+        store.save().expect("Failed to save store");
+    } else {
+        println!("Index out of range: {}", index);
+    }
 }

@@ -1,15 +1,21 @@
-use serde_json::json;
-
 use crate::utils::string::normalize_string;
+use serde_json::json;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 pub fn add_unique(mut array: Vec<serde_json::Value>, text: &str) -> Vec<serde_json::Value> {
     let last_value = normalize_string(text);
+    let start = SystemTime::now();
+    let timestamp = start
+        .duration_since(UNIX_EPOCH)
+        .expect("Time went backwards")
+        .as_secs();
 
     let new_item = json!({
         "text": last_value,
         "type": "text",
         "fixed": false,
-        "url": null
+        "url": null,
+        "timestamp": timestamp
     });
 
     if !array.iter().any(|item| {

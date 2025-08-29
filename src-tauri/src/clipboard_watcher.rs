@@ -21,7 +21,6 @@ pub fn start_clipboard_watcher(
             if let Ok(current) = app_handle.clipboard().read_text() {
                 if current != last_value && !current.is_empty() {
                     last_value = current.clone();
-                    println!("Current clipboard value: {}", last_value);
 
                     let mut history = global_history.lock().unwrap();
 
@@ -42,7 +41,7 @@ pub fn start_clipboard_watcher(
                 }
             }
 
-            thread::sleep(Duration::from_millis(500));
+            thread::sleep(Duration::from_millis(600));
         }
     });
 }

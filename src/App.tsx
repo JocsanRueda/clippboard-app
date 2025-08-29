@@ -1,7 +1,6 @@
 
 import ClipboardBody from "@/components/Clipboard";
 import { TrayIcon } from '@tauri-apps/api/tray';
-import { Window } from "@tauri-apps/api/window"
 import { useEffect } from "react";
 import "./App.css";
 
@@ -32,7 +31,7 @@ useEffect(() => {
       
     };
 
-    const tray = await TrayIcon.new(options); 
+    await TrayIcon.new(options); 
 
 
   };

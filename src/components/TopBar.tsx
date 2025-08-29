@@ -19,7 +19,7 @@ function TopBar({ deleteFunction, setFilter, filter }: { deleteFunction: () => v
         <input
           type="text"
           placeholder="Search..."
-          className={`bg-transparent focus:outline-none text-white transition-[width,opacity] duration-200 ${
+          className={`bg-transparent focus:outline-none text-white transition-[width,opacity] duration-100 ${
             isSearchVisible ? "w-65 opacity-100" : "w-0 opacity-0"
           }`}
           onChange={(e) => setFilter(e.target.value)}

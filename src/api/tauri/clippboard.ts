@@ -22,11 +22,21 @@ export const updateClipboardItem = async (index: number, text: string, property=
   }
 };
 
-
+// delete all items
 export const deleteAllClipboardItems = async () => {
   try {
     await invoke('delete_all_items_command', { key: CLIPPBOARD_HISTORY_KEY });
   } catch (err) {
     console.error("Error deleting all items:", err);
+  }
+};
+
+
+// update item
+export const fixedClipboardItem = async (index: number, state: boolean) => {
+  try {
+    await invoke("fixed_item_command", { index:index, newValue:state ,key:CLIPPBOARD_HISTORY_KEY});
+  } catch (err) {
+    console.error("Error updating item:", err);
   }
 };
