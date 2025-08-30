@@ -18,11 +18,10 @@ pub fn add_unique(mut array: Vec<serde_json::Value>, text: &str) -> Vec<serde_js
         "timestamp": timestamp
     });
 
-    if !array.iter().any(|item| {
-        item["text"] == new_item["text"]
-            && item["type"] == new_item["type"]
-            && item["fixed"] == new_item["fixed"]
-    }) {
+    if !array
+        .iter()
+        .any(|item| item["text"] == new_item["text"] && item["type"] == new_item["type"])
+    {
         array.push(new_item);
     }
 
