@@ -21,10 +21,10 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
 
   const getPinIcon = () => {
     return toggleActions.fixed ? (<TiPin
-            className="text-gray-100 transition-transform duration-150 hover:scale-115 cursor-pointer"
+            className=" text-gray-600 dark:text-gray-100 transition-transform duration-150 hover:scale-115 cursor-pointer"
             onClick={handleFixed}
           />): (<TiPinOutline
-            className="text-gray-100 transition-transform duration-150 hover:scale-115 cursor-pointer"
+            className=" text-gray-600 dark:text-gray-100 transition-transform duration-150 hover:scale-115 cursor-pointer"
             onClick={handleFixed}
           />)
   }
@@ -39,7 +39,7 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
       <section className="ml-auto flex flex-col justify-between gap-2">
       
         <HiOutlineEllipsisHorizontal
-          className="text-gray-100 cursor-pointer hover:text-gray-300 transition-colors duration-200"
+          className="text-gray-600 dark:text-gray-100 cursor-pointer hover:dark:text-gray-300 hover:text-gray-900  transition-colors duration-200"
           onClick={()=>handledOption()}
         />  
 

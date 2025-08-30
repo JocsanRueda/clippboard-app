@@ -1,0 +1,23 @@
+{
+  "themes": {
+    "light": {
+      "background": "#FFFFFF",
+      "text": "#000000",
+      "primary": "#0066FF",
+      "secondary": "#FF6600"
+    },
+    "dark": {
+      "background": "#121212",
+      "text": "#FFFFFF",
+      "primary": "#BB86FC",
+      "secondary": "#03DAC6"
+    },
+    "solarized": {
+      "background": "#FDF6E3",
+      "text": "#657B83",
+      "primary": "#268BD2",
+      "secondary": "#2AA198"
+    }
+  },
+  "default": "light"
+}

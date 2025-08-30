@@ -9,6 +9,8 @@ import { Store } from "@tauri-apps/plugin-store";
 import { useMemo, useRef, useState } from "react";
 import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
+import { applyTheme } from "@/utils/theme-manager";
+import { themes } from "@/themes/themes.json";
 
 export const History = () => {
   
@@ -17,6 +19,14 @@ export const History = () => {
    const [toggleActions, setToggleActions] = useState<ItemActionMenu[]>(Array(dataList.length).fill(defaultItemClipboard));
    const storeRef= useRef<Store | null>(null);
    const [filter, setFilter] = useState<string>("");
+
+
+   const setTheme = (themeName: "light" | "dark"| "solarized") => {
+    applyTheme(themes[themeName]);
+  };
+
+
+  setTheme("light");
 
 
    // Initialize the store and load existing data
@@ -30,8 +40,7 @@ export const History = () => {
     
    });
 
-   // Save the dataList to the store whenever it changes
-   //useSaveStore(dataList);
+
 
 
     // Function to update the clipboard data list with new text
@@ -160,7 +169,7 @@ const filteredData = useMemo(() => {
 
     <TopBar deleteFunction={deleteAllItem} setFilter={setFilter} filter={filter} />
 
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden bg-background">
       <h2 className="text-gray-900 dark:text-white text-base font-light tracking-tight mx-3">
         Clippboard
       </h2>
