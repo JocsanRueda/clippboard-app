@@ -6,11 +6,16 @@ import reactPlugin from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 
 /** @type {import("eslint").Linter.FlatConfig[]} */
-export default [
+export default  [
   js.configs.recommended,
 
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    ignores: ['node_modules/**', 'dist/**', 'src-tauri/**', 'target/**'],
+  },
+
+  {
+    files: ['src/**/*.ts', 'src/**/*.tsx'],
+    
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -18,20 +23,25 @@ export default [
         sourceType: 'module',
         ecmaFeatures: {
           jsx: true
-        }
-      }
-    },
-    env: {
-      browser: true
+        },
+      },
+      globals: {
+     
+        window: "readonly",
+        document: "readonly",
+        console: "readonly",
+        module: "readonly",
+        require: "readonly",
+      },
     },
     plugins: {
       '@typescript-eslint': tsPlugin,
       react: reactPlugin,
-      'react-hooks': reactHooks
+      'react-hooks': reactHooks,
     },
     rules: {
       // Buenas prácticas TypeScript
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-inferrable-types': 'off',
 
@@ -50,12 +60,16 @@ export default [
       'eol-last': ['warn', 'always'],
       'semi': ['warn', 'always'],
       'quotes': ['warn', 'double'],
-      'indent': ['warn', 2, { SwitchCase: 1 }]
+      'indent': ['warn', 2, { SwitchCase: 1 }],
+      // Reglas de formato
+      'jsx-quotes': ['error', 'prefer-double'], 
+      'react/jsx-indent': ['error', 2], 
+      'react/jsx-indent-props': ['error', 2], 
     },
     settings: {
       react: {
-        version: 'detect'
-      }
-    }
-  }
+        version: 'detect',
+      },
+    },
+  },
 ];

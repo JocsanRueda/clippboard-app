@@ -13,6 +13,6 @@ export function addUnique(array: ItemClipboard[], text: string): ItemClipboard[]
   if (!array.some(item => item.text === newItem.text && item.type === newItem.type )) {
     return [...array, newItem];
   }
-  
+
   return array;
 }

@@ -1,6 +1,7 @@
 import { CgTrash } from "react-icons/cg";
 import { FaSave } from "react-icons/fa";
 import { BiSolidPencil } from "react-icons/bi";
+import { ActionMenuProps } from "@/types/action-menu.type";
 function ActionMenu({
   toggleMenu,
   handleDelete,
@@ -44,11 +45,11 @@ function ActionMenu({
       {
         !disabledEdit && (
           <section
-        className="bg-gray-200 dark:bg-gray-700 p-2 rounded-md shadow-lg border-3 border-gray-300 dark:border-gray-700 hover:border-gray-400 transition-border duration-200 flex items-center"
-        onClick={handleOption}
-      >
-        {getIcon() }
-      </section>
+            className="bg-gray-200 dark:bg-gray-700 p-2 rounded-md shadow-lg border-3 border-gray-300 dark:border-gray-700 hover:border-gray-400 transition-border duration-200 flex items-center"
+            onClick={handleOption}
+          >
+            {getIcon() }
+          </section>
         )
       }
 

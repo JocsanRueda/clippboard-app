@@ -1,1 +1,3 @@
-type DocumentContentProps = BaseContentFileProps;
+import { BaseContentFileProps } from "./base-content-file.type";
+
+export type DocumentContentProps = BaseContentFileProps;

@@ -1,12 +1,12 @@
 import { AiOutlineClose } from "react-icons/ai";
 
 interface ModalProps {
-  title: string; 
-  acceptText: string; 
-  rejectText: string; 
-  onAccept: () => void; 
-  onReject: () => void; 
-  onClose: () => void; 
+  title: string;
+  acceptText: string;
+  rejectText: string;
+  onAccept: () => void;
+  onReject: () => void;
+  onClose: () => void;
 }
 
 const Modal = (props: ModalProps) => {
@@ -16,14 +16,13 @@ const Modal = (props: ModalProps) => {
     <div className="fixed inset-0 flex items-center justify-center  z-50 m-4">
       <div className="bg-gray-200 dark:bg-gray-700 rounded-lg shadow-2xs px-6 py-5 w-96 border-3 border-gray-600 ">
         <div className="flex justify-end items-start   gap-4">
-          
 
-        <button
-          onClick={onClose}
-          className=" text-gray-900 dark:text-white hover:text-gray-500"
-        >
-          <AiOutlineClose />
-        </button>
+          <button
+            onClick={onClose}
+            className=" text-gray-900 dark:text-white hover:text-gray-500"
+          >
+            <AiOutlineClose />
+          </button>
         </div>
         <h2 className="text-gray-900 dark:text-white text-md  mb-7">
           {title}
@@ -32,7 +31,7 @@ const Modal = (props: ModalProps) => {
         {/* Botones */}
         <div className="flex justify-between gap-4">
 
-            <button
+          <button
             onClick={onAccept}
             className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
           >
@@ -45,11 +44,9 @@ const Modal = (props: ModalProps) => {
           >
             {rejectText}
           </button>
-        
+
         </div>
 
-      
-        
       </div>
     </div>
   );

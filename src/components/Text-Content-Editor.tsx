@@ -1,3 +1,4 @@
+import { TextContentEditorProps } from "@/types/text-content-editor.type";
 import { MAX_TEXT_LENGTH } from "@/utils/constant";
 import { truncateString } from "@/utils/string";
 

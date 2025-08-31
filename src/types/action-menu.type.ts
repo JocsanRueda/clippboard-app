@@ -1,4 +1,4 @@
-type ActionMenuProps = {
+export type ActionMenuProps = {
   toggleMenu: boolean;
   handleDelete: () => void;
   disabledEdit?: boolean;

@@ -1,22 +1,16 @@
 
-
 import { loadStore } from "@/utils/store";
 
 import History from "./History";
 
- function ClipboardBody() {
+function ClipboardBody() {
 
   loadStore();
 
   return (
     <div className="min-h-screen min-w-full dark:bg-gray-800 p-1">
 
-     
-
-     
-
-     <History />
-
+      <History />
 
     </div>
   );

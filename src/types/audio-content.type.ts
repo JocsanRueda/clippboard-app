@@ -1,2 +1,3 @@
+import { BaseContentFileProps } from "./base-content-file.type";
 
-type AudioContentProps = BaseContentFileProps;
+export type AudioContentProps = BaseContentFileProps;

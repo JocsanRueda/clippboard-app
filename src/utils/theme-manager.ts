@@ -7,5 +7,3 @@ export function applyTheme(theme: Record<string, string>) {
   });
 }
 
-
-

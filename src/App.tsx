@@ -1,46 +1,44 @@
 
-import ClipboardBody from "@/components/Clipboard";
-import { TrayIcon } from '@tauri-apps/api/tray';
+import { TrayIcon } from "@tauri-apps/api/tray";
 import { useEffect } from "react";
 import "./App.css";
 
-import { Menu } from '@tauri-apps/api/menu';
-
+import { Menu } from "@tauri-apps/api/menu";
+import Settings from "./components/Settings";
 function App() {
 
-useEffect(() => {
-  const setupTray = async () => {
-    
-    const menu = await Menu.new({
-      items: [
-        {
-          id:"settings",
-          text: 'Settings',
-        },
-        {
-          id: 'quit',
-          text: 'Quit',
-          
-        },
-      ],
-    });
+  useEffect(() => {
+    const setupTray = async () => {
 
-    const options = {
-      menu,
-      menuOnLeftClick: true,
-      
+      const menu = await Menu.new({
+        items: [
+          {
+            id:"settings",
+            text: "Settings",
+          },
+          {
+            id: "quit",
+            text: "Quit",
+
+          },
+        ],
+      });
+
+      const options = {
+        menu,
+        menuOnLeftClick: true,
+
+      };
+
+      await TrayIcon.new(options);
+
     };
 
-    await TrayIcon.new(options); 
-
-
-  };
-
-  setupTray();
-}, []);
+    setupTray();
+  }, []);
 
   return (
-    <ClipboardBody />
+    <Settings/>
   );
 }
 

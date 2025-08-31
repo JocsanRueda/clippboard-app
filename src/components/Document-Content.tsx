@@ -1,3 +1,4 @@
+import { DocumentContentProps } from "@/types/document-content.type";
 import { HiDocumentText } from "react-icons/hi2";
 
 function DocumentContent({text, url}: DocumentContentProps  ) {

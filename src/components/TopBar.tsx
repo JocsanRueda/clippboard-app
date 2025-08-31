@@ -3,12 +3,13 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoSettingsSharp } from "react-icons/io5";
 import { CgTrash } from "react-icons/cg";
 import { LuSun,  LuMoon  } from  "react-icons/lu";
+import { TopBarProps } from "@/types/top-bar.type";
 
-function TopBar({ deleteFunction, setFilter, filter }: { deleteFunction: () => void, setFilter: (filter: string) => void, filter: string }) {
+function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-   const toggleTheme = () => {
+  const toggleTheme = () => {
     const htmlElement = document.documentElement;
     if (isDarkMode) {
       htmlElement.classList.remove("dark");
@@ -21,14 +22,10 @@ function TopBar({ deleteFunction, setFilter, filter }: { deleteFunction: () => v
   return (
     <div className="flex justify-end items-center px-2 py-3 dark:bg-gray-800 gap-4 my-2 mx-1 ">
 
-      
-      
-
-
       <div className={`flex items-center ${isSearchVisible ? "bg-gray-300 dark:bg-gray-700 text-gray-900" : ""} text-white rounded-lg px-2 py-1 focus-within:ring-2 focus-within:ring-gray-400 focus-within:dark:ring-blue-400 overflow-hidden`}>
         <FaMagnifyingGlass
           className={`${isSearchVisible ? "text-gray-400 mr-2 scale-95" : "text-gray-900 dark:text-white -m-1 hover:text-blue-400 hover:scale-120"} cursor-pointer transition-[color,scale] duration-100  `}
-          onClick={() => setIsSearchVisible(!isSearchVisible)} 
+          onClick={() => setIsSearchVisible(!isSearchVisible)}
         />
         <input
           type="text"
@@ -65,7 +62,6 @@ function TopBar({ deleteFunction, setFilter, filter }: { deleteFunction: () => v
 
     </div>
 
-    
   );
 }
 
