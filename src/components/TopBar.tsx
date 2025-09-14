@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoSettingsSharp } from "react-icons/io5";
 import { CgTrash } from "react-icons/cg";
@@ -7,15 +7,21 @@ import { TopBarProps } from "@/types/top-bar.type";
 
 function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
-  const toggleTheme = () => {
+  useEffect(() => {
+
     const htmlElement = document.documentElement;
     if (isDarkMode) {
-      htmlElement.classList.remove("dark");
-    } else {
       htmlElement.classList.add("dark");
+    } else {
+      htmlElement.classList.remove("dark");
     }
+
+  },[isDarkMode]);
+
+  const toggleTheme = () => {
+
     setIsDarkMode(!isDarkMode);
   };
 

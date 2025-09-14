@@ -5,6 +5,7 @@ import "./App.css";
 
 import { Menu } from "@tauri-apps/api/menu";
 import Settings from "./components/Settings";
+import { PageProvider } from "./context/Page-Contex";
 function App() {
 
   useEffect(() => {
@@ -38,7 +39,9 @@ function App() {
   }, []);
 
   return (
-    <Settings/>
+    <PageProvider>
+      <Settings/>
+    </PageProvider>
   );
 }
 
