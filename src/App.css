@@ -1,4 +1,36 @@
 @import "tailwindcss";
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 
+@theme {
+
+  --color-default-primary-light: #f3f4f6;
+  --color-default-secondary-light: #99a1af;
+
+  --color-primary: #0f172a; /* principal Color */
+  --color-secondary: #1e293b;/* secondary Color */
+
+  --color-tertiary: #334155;
+  --color-quaternary: #ffffff;
+
+
+  --color-primary-dark: color-mix(in srgb, var(--color-primary)70%, black);
+  --color-primary-light: color-mix(in srgb, var(--color-primary)80%, white);
+  
+  --color-secondary-dark: color-mix(in srgb, var(--color-secondary)70%, black);
+  --color-secondary-light: color-mix(in srgb, var(--color-secondary)80%, white);
+ 
+  --color-tertiary-dark: color-mix(in srgb, var(--color-tertiary)70%, black);
+  --color-tertiary-light: color-mix(in srgb, var(--color-tertiary)80%, white);
+
+  --color-tertiary-dark: color-mix(in srgb, var(--color-tertiary)70%, black);
+  --color-tertiary-light: color-mix(in srgb, var(--color-tertiary)80%, white);
+  
+  
+}
+
+
+.border {
+    border-width: var(--border-width);
+  }

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import "./App.css";
 
 import { Menu } from "@tauri-apps/api/menu";
-import Settings from "./components/Settings";
+import ClipboardBody from "./components/Clipboard";
 import { PageProvider } from "./context/Page-Contex";
 function App() {
 
@@ -40,7 +40,7 @@ function App() {
 
   return (
     <PageProvider>
-      <Settings/>
+      <ClipboardBody/>
     </PageProvider>
   );
 }

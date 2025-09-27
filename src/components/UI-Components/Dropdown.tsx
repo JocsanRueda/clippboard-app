@@ -1,15 +1,11 @@
-import { useState } from "react";
-import { BsCaretUpFill } from "react-icons/bs";
+import { BsCaretUpFill, BsCheckLg } from "react-icons/bs";
 import { DropdownProps } from "../../types/dropdown-type";
-import { BsCheckLg } from "react-icons/bs";
 
-export function Dropdown({ options, onSelect, defaultValue=0,isOpen, onToggle }: DropdownProps) {
-
-  const [selectedValue, setSelectedValue] = useState<string | null>(options[defaultValue].label);
+export function Dropdown({ options, onSelect, selectedValue,isOpen, onToggle }: DropdownProps) {
 
   const handleOptionClick = (index: number) => {
     onSelect(options[index].value);
-    setSelectedValue(options[index].label);
+
     onToggle();
   };
 
@@ -17,10 +13,10 @@ export function Dropdown({ options, onSelect, defaultValue=0,isOpen, onToggle }:
     <div className="relative">
       <button
         onClick={onToggle}
-        className="font-light text-black dark:text-white bg-gray-300 dark:bg-gray-900  border-solid  rounded-lg  px-3 py-2.5 text-center inline-flex items-center border-gray-400   dark:border-gray-700 "
+        className="font-light text-black dark:text-white bg-gray-300 dark:bg-secondary-light border-solid  rounded-lg  px-3 py-2.5 text-center inline-flex items-center border-gray-400   dark:border-tertiary "
         type="button"
       >
-        {selectedValue}
+        {options.find(option => option.value === selectedValue)?.label || "Select"}
 
         <BsCaretUpFill className={`w-3 h-3 ms-3 transition-transform ${
           !isOpen ? "rotate-180" : "rotate-0"

@@ -1,7 +1,8 @@
-import { deleteAllClipboardItems, removeClipboardItem, updateClipboardItem,fixedClipboardItem } from "@/api/tauri/clippboard";
+import { deleteAllClipboardItems, fixedClipboardItem, removeClipboardItem, updateClipboardItem } from "@/api/tauri/clippboard";
 import { defaultItemClipboard } from "@/default/values";
 import { useClipboardWatcher } from "@/hooks/useClipboardWatcher";
 import { useInitStore } from "@/hooks/useStore";
+import { ItemActionMenu } from "@/types/item-action-menu.type";
 import { ItemClipboard } from "@/types/item-clippboard.type";
 import { addUnique } from "@/utils/array";
 import { clear, writeText } from "@tauri-apps/plugin-clipboard-manager";
@@ -9,21 +10,12 @@ import { Store } from "@tauri-apps/plugin-store";
 import { useMemo, useRef, useState } from "react";
 import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
-import { applyTheme } from "@/utils/theme-manager";
-import { themes } from "@/themes/themes.json";
-import { ItemActionMenu } from "@/types/item-action-menu.type";
 export const History = () => {
 
   const [dataList, setDataList]= useState<ItemClipboard[]>([]);
   const [toggleActions, setToggleActions] = useState<ItemActionMenu[]>(Array(dataList.length).fill(defaultItemClipboard));
   const storeRef= useRef<Store | null>(null);
   const [filter, setFilter] = useState<string>("");
-
-  const setTheme = (themeName: "light" | "dark"| "solarized") => {
-    applyTheme(themes[themeName]);
-  };
-
-  setTheme("light");
 
   // Initialize the store and load existing data
   useInitStore(storeRef, setDataList, setToggleActions);
@@ -145,13 +137,13 @@ export const History = () => {
 
   return (
 
-    <div className="min-h-screen min-w-full dark:bg-gray-800 p-1">
+    <div className="min-h-screen min-w-full dark:bg-primary p-1">
 
       <TopBar deleteFunction={deleteAllItem} setFilter={setFilter} filter={filter} />
 
       <div className="overflow-x-hidden bg-background">
-        <h2 className="text-gray-900 dark:text-white text-base font-light tracking-tight mx-3">
-          Clippboard
+        <h2 className="text-gray-900 dark:text-quaternary text-base font-light tracking-tight mx-3">
+          History
         </h2>
 
         <section className="flex flex-col gap-2 my-2 mx-1">

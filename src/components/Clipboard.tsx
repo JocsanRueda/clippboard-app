@@ -1,16 +1,18 @@
 
-import { loadStore } from "@/utils/store";
-
+import { usePageContext } from "@/context/Page-Contex";
+import { PAGES } from "@/constants/constant";
 import History from "./History";
+import Settings from "./Settings";
 
 function ClipboardBody() {
 
-  loadStore();
+  const {currentPage}= usePageContext();
 
   return (
-    <div className="min-h-screen min-w-full dark:bg-gray-800 p-1">
+    <div className="min-h-screen min-w-full dark:bg-primary p-1">
 
-      <History />
+      {currentPage===PAGES.HOME && <History />}
+      {currentPage!==PAGES.HOME && <Settings />}
 
     </div>
   );

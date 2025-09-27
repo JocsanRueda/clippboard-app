@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
-import { CLIPPBOARD_HISTORY_KEY } from "@/utils/constant";
+import { CLIPPBOARD_HISTORY_KEY } from "@/constants/constant";
 
 // remove item
 export const removeClipboardItem = async (index: number) => {

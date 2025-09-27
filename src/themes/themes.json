@@ -1,23 +1,241 @@
-{
-  "themes": {
-    "light": {
-      "background": "#FFFFFF",
-      "text": "#000000",
-      "primary": "#0066FF",
-      "secondary": "#FF6600"
+ {
+    "themes":[{
+      "name": "Minimal Dark",
+      "primaryColor": "#000000",
+      "secondaryColor": "#6a7282",
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#364153"
+
+      
     },
-    "dark": {
-      "background": "#121212",
-      "text": "#FFFFFF",
-      "primary": "#BB86FC",
-      "secondary": "#03DAC6"
+    {
+
+      "name": "Dark Navy",
+      "primaryColor": "#0f172a",     
+      "secondaryColor": "#1e293b",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#334155"       
     },
-    "solarized": {
-      "background": "#FDF6E3",
-      "text": "#657B83",
-      "primary": "#268BD2",
-      "secondary": "#2AA198"
+
+
+    {
+      "name": "Charcoal Gray",
+      "primaryColor": "#0f172a",      
+      "secondaryColor": "#1e293b",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#334155"
+
+    },
+    {
+      "name": "Charcoal Gray two",
+      "primaryColor": "#111827",      
+      "secondaryColor": "#374151",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#4b5563"       
+    },
+
+      
+    {
+      "name": "Forest Night",
+      "primaryColor": "#0f1f17",      
+      "secondaryColor": "#1c4532",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#256d46"       
+    },
+
+   
+    {
+      "name": "Deep Plum",
+      "primaryColor": "#1a0b1e",      
+      "secondaryColor": "#3b1c47",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#5b2b70"       
+    },
+
+    
+    {
+      "name": "Midnight Teal",
+      "primaryColor": "#082f33",      
+      "secondaryColor": "#134e4a",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#1d726d"      
+    },
+
+    
+    {
+      "name": "Elegant Brown",
+      "primaryColor": "#1b130f",      
+      "secondaryColor": "#3c2f2a",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#5c453c"       
+    },
+    
+    {
+      "name": "Slate Blue",
+      "primaryColor": "#0a0f1c",      
+      "secondaryColor": "#1e3a8a",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#3b82f6"      
+    },
+
+    
+    {
+      "name": "Obsidian Gray",
+      "primaryColor": "#0d0d0d",      
+      "secondaryColor": "#2e2e2e",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#525252"      
+    },
+
+    
+    {
+      "name": "Emerald Night",
+      "primaryColor": "#01110f",      
+      "secondaryColor": "#064e3b",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#10b981"       
+    },
+
+    
+    {
+      "name": "Royal Indigo",
+      "primaryColor": "#0f0a1c",      
+      "secondaryColor": "#312e81",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#6366f1"       
+    },
+
+    
+    {
+      "name": "Copper Dark",
+      "primaryColor": "#1a0e09",      
+      "secondaryColor": "#5c2e1a",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#9a5c3c"       
+    },
+
+    
+    {
+      "name": "Crimson Night",
+      "primaryColor": "#170707",      
+      "secondaryColor": "#7f1d1d",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#dc2626"       
+    },
+    
+    {
+      "name": "Arctic Night",
+      "primaryColor": "#0b1120",      
+      "secondaryColor": "#1e3a5f",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#3b82f6"       
+    },
+
+    
+    {
+      "name": "Olive Dark",
+      "primaryColor": "#11120e",      
+      "secondaryColor": "#3f4f1c",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#84cc16"      
+    },
+
+    
+    {
+      "name": "Desert Night",
+      "primaryColor": "#1a1410",      
+      "secondaryColor": "#5c4033",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#d97706"       
+    },
+
+    
+    {
+      "name": "Aqua Noir",
+      "primaryColor": "#041014",      
+      "secondaryColor": "#155e75",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#06b6d4"       
+    },
+
+    
+    {
+      "name": "Velvet Purple",
+      "primaryColor": "#120a1c",      
+      "secondaryColor": "#4c1d95",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#a855f7"       
+    },
+
+    
+    {
+      "name": "Steel Night",
+      "primaryColor": "#0e0f11",      
+      "secondaryColor": "#374151",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#9ca3af"       
+    },
+
+    
+    {
+      "name": "Golden Ash",
+      "primaryColor": "#17120a",      
+      "secondaryColor": "#713f12",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#f59e0b"      
+    },
+
+    
+    {
+      "name": "Midnight Pink",
+      "primaryColor": "#190714",      
+      "secondaryColor": "#831843",    
+      "fontSize": "text-sm",
+      "fontWeight": "font-normal",
+      "borderWidth": "3px",
+      "borderColor": "#ec4899"  
     }
-  },
-  "default": "light"
-}
+  ]
+ }

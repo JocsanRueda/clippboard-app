@@ -1,4 +1,4 @@
-import { PAGES } from "@/utils/constant";
+import { PAGES } from "@/constants/constant";
 import React, { createContext, useState,useMemo, useCallback, useContext } from "react";
 
 type PageContextValue={
@@ -10,7 +10,7 @@ type PageContextValue={
 }
 
 const PageContext= createContext<PageContextValue | null>({
-  currentPage:PAGES.SETTINGS,
+  currentPage:PAGES.HOME,
   lastPage:[],
   handlePage:()=>{},
   goBack:()=>{}
@@ -18,7 +18,7 @@ const PageContext= createContext<PageContextValue | null>({
 
 export const PageProvider: React.FC<{children: React.ReactNode}> = ({ children }) =>{
 
-  const  [currentPage, setCurrentPage]= useState<string | null>(PAGES.SETTINGS);
+  const  [currentPage, setCurrentPage]= useState<string | null>(PAGES.HOME);
   const  [lastPage, setLastPage]= useState<(string | null)[]>([]);
 
   const handlePage= useCallback( (page:string)=>{
