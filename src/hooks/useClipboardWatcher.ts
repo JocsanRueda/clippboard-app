@@ -1,6 +1,7 @@
 
 import { useEffect, useRef } from "react";
 import { listen } from "@tauri-apps/api/event";
+import { CLIPBOARD_EVENT } from "@/constants/constant";
 
 // This hook watches the clipboard for changes and calls the provided callback
 // function whenever the clipboard text changes. It checks for changes at a specified interval.
@@ -13,7 +14,7 @@ export function useClipboardWatcher(onChange: (newText: string) => void) {
   const lastText = useRef("");
 
   useEffect(() => {
-    const unlisten= listen<string>("clipboard-changed", (event) => {
+    const unlisten= listen<string>(CLIPBOARD_EVENT.NEW_ITEM, (event) => {
 
       const newText= event.payload;
       lastText.current = newText;

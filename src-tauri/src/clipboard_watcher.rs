@@ -7,6 +7,8 @@ use tauri::Emitter;
 use tauri::Wry;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use tauri_plugin_store::Store;
+use crate::constants::clipboard_event::NEW_ITEM;
+
 
 /// Starts a clipboard watcher that monitors the clipboard for changes
 pub fn start_clipboard_watcher(
@@ -31,12 +33,12 @@ pub fn start_clipboard_watcher(
                     if last_length < history.len() {
                         // Emit the clipboard change event
                         app_handle
-                            .emit("clipboard-changed", last_value.clone())
+                            .emit(NEW_ITEM, last_value.clone())
                             .unwrap();
 
                         // Save the updated history to the store
                         let store = store_global.lock().unwrap();
-                        save_store(&store, &*history, "history");
+                        save_store(&store, &*history);
                     }
                 }
             }

@@ -1,4 +1,4 @@
-import { ItemClipboard } from "@/types/item-clippboard.type";
+import { ItemClipboard } from "@/types/item-clipboard.type";
 import { normalizeString } from "./string";
 
 export function addUnique(array: ItemClipboard[], text: string): ItemClipboard[] {

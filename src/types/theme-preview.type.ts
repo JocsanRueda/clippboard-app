@@ -1,9 +1,9 @@
 export type ThemePreviewProps = {
   primaryColor: string;
   secondaryColor: string;
-  fontSize: string;
+  fontSize?: string;
   borderWidth: string;
-  borderColor: string;
+  tertiaryColor: string;
   selected?: boolean;
   onClick?: () => void;
 };

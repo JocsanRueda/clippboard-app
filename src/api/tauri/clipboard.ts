@@ -1,12 +1,10 @@
 import { invoke } from "@tauri-apps/api/core";
-import { CLIPPBOARD_HISTORY_KEY } from "@/constants/constant";
 
 // remove item
 export const removeClipboardItem = async (index: number) => {
   try {
     await invoke("delete_item_command", {
       index:index,
-      key: "history"
     });
   } catch (err) {
     console.error("Error deleting item:", err);
@@ -15,7 +13,7 @@ export const removeClipboardItem = async (index: number) => {
 // update item
 export const updateClipboardItem = async (index: number, text: string, property="text") => {
   try {
-    await invoke("update_item_command", { index:index, newValue:text ,key:CLIPPBOARD_HISTORY_KEY, propertyName:property});
+    await invoke("update_item_command", { index:index, newValue:text , propertyName:property});
   } catch (err) {
     console.error("Error updating item:", err);
   }
@@ -24,7 +22,7 @@ export const updateClipboardItem = async (index: number, text: string, property=
 // delete all items
 export const deleteAllClipboardItems = async () => {
   try {
-    await invoke("delete_all_items_command", { key: CLIPPBOARD_HISTORY_KEY });
+    await invoke("delete_all_items_command");
   } catch (err) {
     console.error("Error deleting all items:", err);
   }
@@ -33,7 +31,7 @@ export const deleteAllClipboardItems = async () => {
 // update item
 export const fixedClipboardItem = async (index: number, state: boolean) => {
   try {
-    await invoke("fixed_item_command", { index:index, newValue:state ,key:CLIPPBOARD_HISTORY_KEY});
+    await invoke("fixed_item_command", { index:index, newValue:state });
   } catch (err) {
     console.error("Error updating item:", err);
   }

@@ -5,7 +5,7 @@ import Dropdown from "./UI-Components/Dropdown";
 import { ThemePreviewProps } from "@/types/theme-preview.type";
 import { Theme } from "@/types/theme.type";
 
-import { applyTheme } from "@/utils/theme-manager";
+import { applyTheme } from "@/utils/theme";
 
 export function NewTheme() {
 
@@ -14,8 +14,7 @@ export function NewTheme() {
     secondaryColor: "#f3f4f6",
     fontSize: "14px",
     borderWidth: "2px",
-    borderColor: "#d1d5db",
-    tailwindConfig: false,
+    tertiaryColor: "#d1d5db",
     selected: false,
   });
 
@@ -53,10 +52,10 @@ export function NewTheme() {
   const handleTheme = () => {
 
     const newTheme : Theme = {
-      primary: theme.primaryColor,
-      secondary: theme.secondaryColor,
+      primaryColor: theme.primaryColor,
+      secondaryColor: theme.secondaryColor,
       borderWidth: theme.borderWidth,
-      borderColor: theme.borderColor,
+      tertiaryColor: theme.tertiaryColor,
     };
 
     applyTheme(newTheme);
@@ -66,7 +65,7 @@ export function NewTheme() {
   return(
     <div className="w-full max-w-md flex flex-col justify-center items-center px-2">
 
-      <ThemePreview primaryColor={theme.primaryColor} tailwindConfig={theme.tailwindConfig} fontSize={theme.fontSize}  borderWidth={theme.borderWidth} borderColor={theme.borderColor} secondaryColor={theme.secondaryColor} />
+      <ThemePreview primaryColor={theme.primaryColor} secondaryColor={theme.secondaryColor}  fontSize={theme.fontSize}  borderWidth={theme.borderWidth} tertiaryColor={theme.tertiaryColor} />
 
       <ContentSettings label="Primary Color" className="rounded-t-md border-3 py-3 mt-2">
 
@@ -79,7 +78,7 @@ export function NewTheme() {
       </ContentSettings>
       <ContentSettings label="Border-color" className="border-x-3 border-b-3 py-3">
 
-        <input type="color" className="w-7 h-7  border-3 cursor-pointer rounded-md  border-gray-400" style={{ backgroundColor: theme.borderColor }} onChange={(e) => handleThemeChange("borderColor", e.target.value)} value={theme.borderColor} />
+        <input type="color" className="w-7 h-7  border-3 cursor-pointer rounded-md  border-gray-400" style={{ backgroundColor: theme.tertiaryColor }} onChange={(e) => handleThemeChange("tertiaryColor", e.target.value)} value={theme.tertiaryColor} />
 
       </ContentSettings>
       <ContentSettings label="Border-width" className="border-x-3 border-b-3">

@@ -26,11 +26,36 @@
 
   --color-tertiary-dark: color-mix(in srgb, var(--color-tertiary)70%, black);
   --color-tertiary-light: color-mix(in srgb, var(--color-tertiary)80%, white);
+
+  --border-width-min:calc(var(--border-width) - 1px);
   
   
 }
 
 
-.border {
+.border-width-selected {
     border-width: var(--border-width);
   }
+
+.border-t-width-selected {
+    border-top-width: var(--border-width);
+  }
+.border-b-width-selected {
+    border-bottom-width: var(--border-width);
+  }
+
+.border-l-width-selected {
+    border-left-width: var(--border-width);
+  }
+.border-r-width-selected {
+    border-right-width: var(--border-width);
+  }
+
+ 
+ .border-width-min-selected{
+  border-width: calc(var(--border-width) - 1px);
+ }
+
+ .ring-width-selected{
+ box-shadow: 0 0 0 calc(var(--border-width)-1px) var(--color-tertiary);
+ }

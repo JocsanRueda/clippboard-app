@@ -1,12 +1,17 @@
 export const MAX_TEXT_LENGTH = 200;
-export const CLIPPBOARD_STORE_FILE = ".clipboard.json";
-export const CLIPPBOARD_HISTORY_KEY = "history";
 
-export const CLIPPBOARD_KEY={
-  FILE:".clipboard.json",
+export const DEFAULT_THEME_INDEX = 1;
+
+export const CLIPBOARD_KEY={
+  FILE_HISTORY:".history.json",
+  FILE_SETTINGS:".settings.json",
   HISTORY:"history",
   SETTINGS:"settings",
   THEME:"theme"
+};
+
+export const CLIPBOARD_EVENT={
+  NEW_ITEM:"new-item",
 };
 
 export const PAGES = {
@@ -20,6 +25,5 @@ export const PAGES = {
 export const THEME={
   DARK:"dark",
   LIGHT:"light"
-
 };
 

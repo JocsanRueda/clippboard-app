@@ -29,14 +29,14 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
 
   return (
     <div className="flex flex-row justify-between items-stretch  ">
-      <div className="transition-[border] duration-100 w-full bg-gray-200 dark:bg-secondary py-2 px-2 mx-2 rounded-md shadow-md flex flex-row justify-between border-4 hover:border-solid border-gray-300 dark:border-tertiary-dark hover:border-tertiary transition-border  gap-2   ">
+      <div className="transition-[border] duration-100 w-full bg-gray-200 dark:bg-secondary py-2 px-2 mx-2 rounded-md shadow-md flex flex-row justify-between border-width-selected  border-gray-300 dark:border-tertiary-dark hover:border-tertiary transition-border  gap-2   ">
 
         {<ContentRenderer type={type} text={newText} url={url} editText={toggleActions.activeEdit} setText={setNewText} />}
 
         <section className="ml-auto flex flex-col justify-between gap-2">
 
           <HiOutlineEllipsisHorizontal
-            className="text-gray-600 dark:text-quaternary cursor-pointer hover:dark:text-gray-300 hover:text-gray-900  transition-colors duration-200"
+            className="text-lg text-gray-600 dark:text-quaternary cursor-pointer hover:dark:text-gray-300 hover:text-gray-900  transition-colors duration-200"
             onClick={()=>handledOption()}
           />
 

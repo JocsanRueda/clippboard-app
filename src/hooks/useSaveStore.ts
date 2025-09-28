@@ -1,4 +1,4 @@
-import { ItemClipboard } from "@/types/item-clippboard.type";
+import { ItemClipboard } from "@/types/item-clipboard.type";
 import { useEffect } from "react";
 import { invoke } from "@tauri-apps/api/core";
 

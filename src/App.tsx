@@ -5,7 +5,6 @@ import "./App.css";
 
 import { Menu } from "@tauri-apps/api/menu";
 import ClipboardBody from "./components/Clipboard";
-import { PageProvider } from "./context/Page-Contex";
 function App() {
 
   useEffect(() => {
@@ -39,9 +38,9 @@ function App() {
   }, []);
 
   return (
-    <PageProvider>
-      <ClipboardBody/>
-    </PageProvider>
+
+    <ClipboardBody/>
+
   );
 }
 

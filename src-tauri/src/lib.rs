@@ -2,9 +2,9 @@
 
 mod clipboard_watcher;
 pub mod utils;
-
 pub mod store;
 pub mod structures;
+pub mod constants;
 
 use tauri::Wry;
 use tauri_plugin_store::Store;
@@ -16,6 +16,8 @@ use crate::store::store::{
 };
 use std::sync::{Arc, Mutex};
 use tauri::Manager;
+
+use crate::constants::clipboard_key::FILE_HISTORY;
 pub struct AppStore(pub Arc<Mutex<Arc<Store<Wry>>>>);
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -26,7 +28,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
             // Initialize the store
-            let store = app.store(".clipboard.json").expect("Failed to open store");
+            let store = app.store(FILE_HISTORY).expect("Failed to open store");
             let global_store = Arc::new(Mutex::new(store));
             app.manage(AppStore(global_store.clone()));
 

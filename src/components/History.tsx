@@ -1,24 +1,22 @@
-import { deleteAllClipboardItems, fixedClipboardItem, removeClipboardItem, updateClipboardItem } from "@/api/tauri/clippboard";
+import { deleteAllClipboardItems, fixedClipboardItem, removeClipboardItem, updateClipboardItem } from "@/api/tauri/clipboard";
 import { defaultItemClipboard } from "@/default/values";
 import { useClipboardWatcher } from "@/hooks/useClipboardWatcher";
-import { useInitStore } from "@/hooks/useStore";
+import { useInitStore } from "@/hooks/useInitStore";
 import { ItemActionMenu } from "@/types/item-action-menu.type";
-import { ItemClipboard } from "@/types/item-clippboard.type";
+import { ItemClipboard } from "@/types/item-clipboard.type";
 import { addUnique } from "@/utils/array";
 import { clear, writeText } from "@tauri-apps/plugin-clipboard-manager";
-import { Store } from "@tauri-apps/plugin-store";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
 export const History = () => {
 
   const [dataList, setDataList]= useState<ItemClipboard[]>([]);
   const [toggleActions, setToggleActions] = useState<ItemActionMenu[]>(Array(dataList.length).fill(defaultItemClipboard));
-  const storeRef= useRef<Store | null>(null);
   const [filter, setFilter] = useState<string>("");
 
   // Initialize the store and load existing data
-  useInitStore(storeRef, setDataList, setToggleActions);
+  useInitStore(dataList, setDataList, setToggleActions);
 
   // Save the dataList to the store whenever it changes
   useClipboardWatcher((newText) => {

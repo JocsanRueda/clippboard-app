@@ -1,5 +1,6 @@
 import { ThemePreviewProps } from "@/types/theme-preview.type";
 import { isDark } from "@/utils/theme";
+
 import React from "react";
 import { IoCheckmarkCircle } from "react-icons/io5";
 
@@ -8,7 +9,7 @@ export function ThemePreview({
   secondaryColor ,
   fontSize ,
   borderWidth ,
-  borderColor,
+  tertiaryColor,
   selected = false,
   onClick,
 }: ThemePreviewProps) {
@@ -21,7 +22,7 @@ export function ThemePreview({
 
   const previewStyle: React.CSSProperties = {
     backgroundColor: secondaryColor,
-    borderColor: borderColor,
+    borderColor: tertiaryColor,
     borderWidth: borderWidth,
     borderStyle: "solid",
   };
