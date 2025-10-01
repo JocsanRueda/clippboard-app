@@ -6,7 +6,7 @@ export function TextContentEditor({ text, editText, setText }: TextContentEditor
   if (editText) {
     return (
       <textarea
-        className="w-full h-28 p-2 rounded-md  border-width-min-selected border-gray-300 focus-within:border-tertiary dark:border-tertiary dark:bg-primary text-gray-900 dark:text-quaternary text-base font-light tracking-tight break-words"
+        className="w-full h-28 p-2 rounded-md  border-width-min-selected border-gray-300 focus-within:border-tertiary dark:border-tertiary-dark dark:bg-primary text-gray-900 dark:text-quaternary text-base font-light tracking-tight break-words focus:outline-none"
         value={text}
         onChange={(e) => setText(e.target.value)}
         maxLength={50 * MAX_TEXT_LENGTH}

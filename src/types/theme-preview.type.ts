@@ -5,5 +5,7 @@ export type ThemePreviewProps = {
   borderWidth: string;
   tertiaryColor: string;
   selected?: boolean;
+  userTheme?: boolean;
+  onDelete?: () => void;
   onClick?: () => void;
 };

@@ -1,28 +1,21 @@
-import { useEffect, useState } from "react";
+import { PAGES } from "@/constants/constant";
+import { usePageContext } from "@/context/Page-Contex";
+import { useDarkMode } from "@/hooks/useDarkMode";
+import { TopBarProps } from "@/types/top-bar.type";
+import { getStorageIsDarkMode } from "@/utils/theme";
+import { useState } from "react";
+import { CgTrash } from "react-icons/cg";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoSettingsSharp } from "react-icons/io5";
-import { CgTrash } from "react-icons/cg";
-import { LuSun,  LuMoon  } from  "react-icons/lu";
-import { TopBarProps } from "@/types/top-bar.type";
-import { usePageContext } from "@/context/Page-Contex";
-import { PAGES } from "@/constants/constant";
+import { LuMoon, LuSun } from "react-icons/lu";
 
 function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
 
   const {handlePage}= usePageContext();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(getStorageIsDarkMode());
 
-  useEffect(() => {
-
-    const htmlElement = document.documentElement;
-    if (isDarkMode) {
-      htmlElement.classList.add("dark");
-    } else {
-      htmlElement.classList.remove("dark");
-    }
-
-  },[isDarkMode]);
+  useDarkMode (isDarkMode);
 
   const toggleTheme = () => {
 

@@ -51,6 +51,11 @@
     border-right-width: var(--border-width);
   }
 
+  .border-x-width-selected {
+    border-left-width: var(--border-width);
+    border-right-width: var(--border-width);
+  }
+
  
  .border-width-min-selected{
   border-width: calc(var(--border-width) - 1px);

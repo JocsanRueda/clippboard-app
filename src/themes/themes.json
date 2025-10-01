@@ -1,5 +1,6 @@
  {
     "themes":[{
+      "id": "minimal-dark",
       "name": "Minimal Dark",
       "primaryColor": "#000000",
       "secondaryColor": "#6a7282",
@@ -10,7 +11,8 @@
       
 },
     {
-      "name": "Minimal Dark",
+      "id": "minimal-dark-two",
+      "name": "Minimal Dark 2",
       "primaryColor": "#020715",
       "secondaryColor": "#091221",
       "fontSize": "text-sm",
@@ -19,7 +21,7 @@
       "tertiaryColor": "#364153"
     },
     {
-
+      "id": "dark-navy",
       "name": "Dark Navy",
       "primaryColor": "#0f172a",     
       "secondaryColor": "#1e293b",    
@@ -32,6 +34,7 @@
 
 
     {
+      "id": "charcoal-gray",
       "name": "Charcoal Gray",
       "primaryColor": "#0f172a",      
       "secondaryColor": "#1e293b",    
@@ -42,6 +45,8 @@
 
     },
     {
+      
+      "id": "charcoal-gray-two",
       "name": "Charcoal Gray two",
       "primaryColor": "#111827",      
       "secondaryColor": "#374151",    
@@ -53,6 +58,7 @@
 
       
     {
+      "id": "forest-night",
       "name": "Forest Night",
       "primaryColor": "#0f1f17",      
       "secondaryColor": "#1c4532",    
@@ -64,6 +70,7 @@
 
    
     {
+      "id": "deep-plum",
       "name": "Deep Plum",
       "primaryColor": "#1a0b1e",      
       "secondaryColor": "#3b1c47",    
@@ -75,6 +82,7 @@
 
     
     {
+      "id": "midnight-teal",
       "name": "Midnight Teal",
       "primaryColor": "#082f33",      
       "secondaryColor": "#134e4a",    
@@ -86,6 +94,7 @@
 
     
     {
+      "id": "elegant-brown",
       "name": "Elegant Brown",
       "primaryColor": "#1b130f",      
       "secondaryColor": "#3c2f2a",    
@@ -96,6 +105,7 @@
     },
     
     {
+      "id": "slate-blue",
       "name": "Slate Blue",
       "primaryColor": "#0a0f1c",      
       "secondaryColor": "#1e3a8a",    
@@ -107,6 +117,7 @@
 
     
     {
+      "id": "obsidian-gray",
       "name": "Obsidian Gray",
       "primaryColor": "#0d0d0d",      
       "secondaryColor": "#2e2e2e",    
@@ -118,6 +129,7 @@
 
     
     {
+      "id": "emerald-night",
       "name": "Emerald Night",
       "primaryColor": "#01110f",      
       "secondaryColor": "#064e3b",    
@@ -129,6 +141,7 @@
 
     
     {
+      "id": "royal-indigo",
       "name": "Royal Indigo",
       "primaryColor": "#0f0a1c",      
       "secondaryColor": "#312e81",    
@@ -140,6 +153,7 @@
 
     
     {
+      "id": "copper-dark",
       "name": "Copper Dark",
       "primaryColor": "#1a0e09",      
       "secondaryColor": "#5c2e1a",    
@@ -151,6 +165,7 @@
 
     
     {
+      "id": "crimson-night",
       "name": "Crimson Night",
       "primaryColor": "#170707",      
       "secondaryColor": "#7f1d1d",    
@@ -161,6 +176,7 @@
     },
     
     {
+      "id": "arctic-night",
       "name": "Arctic Night",
       "primaryColor": "#0b1120",      
       "secondaryColor": "#1e3a5f",    
@@ -172,6 +188,7 @@
 
     
     {
+      "id": "olive-dark",
       "name": "Olive Dark",
       "primaryColor": "#11120e",      
       "secondaryColor": "#3f4f1c",    
@@ -183,6 +200,7 @@
 
     
     {
+      "id": "desert-night",
       "name": "Desert Night",
       "primaryColor": "#1a1410",      
       "secondaryColor": "#5c4033",    
@@ -194,6 +212,7 @@
 
     
     {
+      "id": "aqua-noir",
       "name": "Aqua Noir",
       "primaryColor": "#041014",      
       "secondaryColor": "#155e75",    
@@ -205,6 +224,7 @@
 
     
     {
+      "id": "velvet-purple",
       "name": "Velvet Purple",
       "primaryColor": "#120a1c",      
       "secondaryColor": "#4c1d95",    
@@ -216,6 +236,7 @@
 
     
     {
+      "id": "steel-night",
       "name": "Steel Night",
       "primaryColor": "#0e0f11",      
       "secondaryColor": "#374151",    
@@ -227,6 +248,7 @@
 
     
     {
+      "id": "golden-ash",
       "name": "Golden Ash",
       "primaryColor": "#17120a",      
       "secondaryColor": "#713f12",    
@@ -235,9 +257,8 @@
       "borderWidth": "4px",
       "tertiaryColor": "#f59e0b"      
     },
-
-    
     {
+      "id": "midnight-pink",
       "name": "Midnight Pink",
       "primaryColor": "#190714",      
       "secondaryColor": "#831843",    

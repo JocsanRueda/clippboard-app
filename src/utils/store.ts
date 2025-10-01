@@ -1,7 +1,8 @@
-import { SystemSettings } from "@/types/system-settings.type";
-import { Store } from "@tauri-apps/plugin-store";
-import { CLIPBOARD_KEY, DEFAULT_THEME_INDEX } from "../constants/constant";
 import { ItemClipboard } from "@/types/item-clipboard.type";
+import { SystemSettings } from "@/types/system-settings.type";
+import { ThemeFile } from "@/types/theme.type";
+import { Store } from "@tauri-apps/plugin-store";
+import { CLIPBOARD_KEY, DEFAULT_THEME_ID } from "../constants/constant";
 
 // Use Store.load to get a Store instance
 let stores : Record<string, Store> = {};
@@ -56,29 +57,74 @@ export async function getSettings():Promise<SystemSettings | null>{
 
 // store function for theme index
 
-export async function getThemeIndex():Promise<number>{
+export async function getThemeId():Promise<string>{
 
   try{
     const s= await getStoreInstance(CLIPBOARD_KEY.FILE_SETTINGS);
-    const index= await s.get<number>(CLIPBOARD_KEY.THEME);
-    return index || DEFAULT_THEME_INDEX;
+    const id= await s.get<string>(CLIPBOARD_KEY.THEME);
+    return id || DEFAULT_THEME_ID;
   }catch (error) {
-    console.error("Error getting theme index:", error);
+    console.error("Error getting theme id:", error);
     throw error;
   }
 
 }
 
-export async function saveThemeIndex(index:number){
+export async function saveThemeId(id:string){
 
   try{
     const s= await getStoreInstance(CLIPBOARD_KEY.FILE_SETTINGS);
-    await s.set(CLIPBOARD_KEY.THEME,index);
+    await s.set(CLIPBOARD_KEY.THEME,id);
     await s.save();
   }catch (error) {
-    console.error("Error saving theme index:", error);
+    console.error("Error saving theme id:", error);
     throw error;
   }
 
 }
 
+// store function for themes
+export async function getUserThemes():Promise<ThemeFile[] >{
+
+  try{
+    const s= await getStoreInstance(CLIPBOARD_KEY.FILE_THEMES);
+    const themes= await s.get<ThemeFile[]>  (CLIPBOARD_KEY.THEMES);
+    console.log("Themes:", themes);
+    return themes || [];
+  }catch (error) {
+    console.error("Error getting themes:", error);
+    throw error;
+  }
+}
+
+export async function addTheme(newTheme:ThemeFile){
+
+  const themes= await getUserThemes();
+
+  const newThemesList=[...themes,newTheme];
+
+  try{
+    const s= await getStoreInstance(CLIPBOARD_KEY.FILE_THEMES);
+    await s.set(CLIPBOARD_KEY.THEMES,newThemesList);
+    await s.save();
+  }catch (error) {
+    console.error("Error saving themes:", error);
+    throw error;
+  }
+}
+
+export async function deleteTheme(themeId:string){
+
+  const themes= await getUserThemes();
+
+  const newThemesList= themes.filter(t => t.id !== themeId);
+
+  try{
+    const s= await getStoreInstance(CLIPBOARD_KEY.FILE_THEMES);
+    await s.set(CLIPBOARD_KEY.THEMES,newThemesList);
+    await s.save();
+  }catch (error) {
+    console.error("Error deleting theme:", error);
+    throw error;
+  }
+}
