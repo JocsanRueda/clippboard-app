@@ -12,12 +12,12 @@ use tauri_plugin_store::StoreExt;
 
 use crate::store::store::{
     clean_store, delete_all_items_command, delete_item_command, fixed_item_command,
-    save_store_command, update_item_command,
+    save_store_command, update_item_command, get_settings
 };
 use std::sync::{Arc, Mutex};
 use tauri::Manager;
 
-use crate::constants::clipboard_key::FILE_HISTORY;
+use crate::constants::clipboard_key::{FILE_HISTORY,FILE_SETTINGS};
 pub struct AppStore(pub Arc<Mutex<Arc<Store<Wry>>>>);
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -27,13 +27,22 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
+
+            // Initialize settings value
+            let store_settings = app.store(FILE_SETTINGS).expect("Failed to open store");
+
+            let settings = get_settings(&store_settings);
+
             // Initialize the store
             let store = app.store(FILE_HISTORY).expect("Failed to open store");
             let global_store = Arc::new(Mutex::new(store));
             app.manage(AppStore(global_store.clone()));
 
+
+    
+
             // Clean up the store
-            let initial_history = clean_store(&global_store.lock().unwrap(), app.handle().clone());
+            let initial_history = clean_store(&global_store.lock().unwrap(), app.handle().clone(), settings.expiration_time);
 
             let global_history = Arc::new(Mutex::new(initial_history));
             app.manage(global_history.clone());
@@ -42,6 +51,7 @@ pub fn run() {
                 app.handle().clone(),
                 global_store.clone(),
                 global_history.clone(),
+                settings.limit_items,
             );
 
             Ok(())

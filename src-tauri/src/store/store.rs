@@ -6,7 +6,8 @@ use tauri::AppHandle;
 use tauri::Wry;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use tauri_plugin_store::Store;
-use crate::constants::clipboard_key::HISTORY;
+use crate::constants::clipboard_key::{HISTORY,SETTINGS};
+use crate::structures::Settings;
 
 // Save the current state of the store
 pub fn save_store(store: &Arc<Store<Wry>>, history: &Vec<serde_json::Value>) {
@@ -14,9 +15,20 @@ pub fn save_store(store: &Arc<Store<Wry>>, history: &Vec<serde_json::Value>) {
     store.save().expect("Failed to save store");
 }
 
+
+// get settings from the store
+pub fn get_settings(store: &Arc<Store<Wry>>) ->Settings  {
+    store.get(SETTINGS).and_then(|v| serde_json::from_value(v).ok()).unwrap_or(Settings{
+        expiration_time: 24,
+        keyboard_shortcuts: "super+v".to_string(),
+        language: "es".to_string(),
+        limit_items: 100,
+    })
+}
+
 // Clean up the store
-pub fn clean_store(store: &Arc<Store<Wry>>, app_handle: AppHandle) -> Vec<serde_json::Value> {
-    const EXPIRATION_SECS: u64 = 60 * 60 * 24;
+pub fn clean_store(store: &Arc<Store<Wry>>, app_handle: AppHandle, expiration_secs: u64) -> Vec<serde_json::Value> {
+    
 
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)
@@ -35,7 +47,7 @@ pub fn clean_store(store: &Arc<Store<Wry>>, app_handle: AppHandle) -> Vec<serde_
         let is_recent = item
             .get("timestamp")
             .and_then(|ts| ts.as_u64())
-            .map(|ts| now.saturating_sub(ts) < EXPIRATION_SECS)
+            .map(|ts| now.saturating_sub(ts) < expiration_secs)
             .unwrap_or(true);
 
         let is_fixed = item

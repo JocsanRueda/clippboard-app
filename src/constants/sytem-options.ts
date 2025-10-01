@@ -1,19 +1,19 @@
 export const timeOptions = {
   label:"Expiration Time",
-  key:"expirationTime",
+  key:"expiration_time",
   items:[
-    { label: "1 hour", value: 1 },
-    { label: "6 hours", value: 6 },
-    { label: "12 hours", value: 12 },
-    { label: "24 hours", value: 24 },
-    { label: "48 hours", value: 48 },
+    { label: "1 hour", value: 60*60 },
+    { label: "6 hours", value: 60*60*6 },
+    { label: "12 hours", value: 60*60*12 },
+    { label: "24 hours", value: 60*60*24 },
+    { label: "48 hours", value: 60*60*48 },
   ],
   defaultValue: 3,
 };
 
 export const limitItemsOptions = {
   label:"Limit of items",
-  key:"limitItems",
+  key:"limit_items",
   items: [
     { label: "10 items", value: 10 },
     { label: "30 items", value: 30 },
@@ -36,7 +36,7 @@ export const languagesOptions = {
 
 export const keyboardLaunchOptions = {
   label:"Keyboard launch",
-  key:"keyboardShortcuts",
+  key:"keyboard_shortcuts",
   items: [
     { label: "ctrl+v", value: "ctrl+v" },
     { label: "super+v", value: "super+v" },
@@ -46,8 +46,8 @@ export const keyboardLaunchOptions = {
 };
 
 export const DEFAULT_SYSTEM_SETTINGS = {
-  expirationTime: timeOptions.items[timeOptions.defaultValue].value,
-  limitItems: limitItemsOptions.items[limitItemsOptions.defaultValue].value,
-  keyboardShortcuts: keyboardLaunchOptions.items[keyboardLaunchOptions.defaultValue].value,
+  expiration_time: timeOptions.items[timeOptions.defaultValue].value,
+  limit_items: limitItemsOptions.items[limitItemsOptions.defaultValue].value,
+  keyboard_shortcuts: keyboardLaunchOptions.items[keyboardLaunchOptions.defaultValue].value,
   language: languagesOptions.items[languagesOptions.defaultValue].value,
 };

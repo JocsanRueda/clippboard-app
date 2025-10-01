@@ -1,6 +1,6 @@
 export type SystemSettings={
-  expirationTime:number; // in minutes
-  limitItems:number;
-  keyboardShortcuts:string;
+  expiration_time:number; // in seconds
+  limit_items:number;
+  keyboard_shortcuts:string;
   language:string;
 }
