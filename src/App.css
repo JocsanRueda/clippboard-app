@@ -61,6 +61,10 @@
   border-width: calc(var(--border-width) - 1px);
  }
 
+ .border-width-max-selected{
+  border-width: calc(var(--border-width) + 1px);
+ }
+
  .ring-width-selected{
  box-shadow: 0 0 0 calc(var(--border-width)-1px) var(--color-tertiary);
  }

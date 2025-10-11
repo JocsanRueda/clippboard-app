@@ -45,7 +45,7 @@ function ActionMenu({
       {
         !disabledEdit && (
           <section
-            className="bg-gray-200 dark:bg-secondary p-2 rounded-md shadow-lg border-width-selected border-gray-300 dark:border-tertiary-dark hover:border-tertiary  transition-border duration-200 flex items-center"
+            className="bg-gray-200 dark:bg-secondary p-2 rounded-md hover:shadow-lg border-width-selected border-gray-300 dark:border-tertiary-dark hover:border-gray-400 hover:dark:border-tertiary  transition-border duration-200 flex items-center"
             onClick={handleOption}
           >
             {getIcon() }
@@ -54,9 +54,9 @@ function ActionMenu({
       }
 
       {/* Delete Button */}
-      <section className="bg-gray-200 dark:bg-secondary p-2  rounded-md shadow-lg border-width-selected border-gray-300 dark:border-tertiary-dark hover:border-tertiary transition-border duration-200 flex items-center">
+      <section className="bg-gray-200 dark:bg-secondary p-2  rounded-md hover:shadow-lg border-width-selected border-gray-300 dark:border-tertiary-dark hover:border-gray-400 hover:darK:border-tertiary transition-border duration-200 flex items-center">
         <CgTrash
-          className="transition-[color,scale] duration-100 text-gray-900 dark:text-white hover:text-red-400 m-3 hover:scale-135 scale-120 "
+          className="transition-[color,scale] duration-100 text-gray-900 dark:text-white hover:text-red-500 m-3 hover:scale-135 scale-120 "
           onClick={handleDelete}
         />
       </section>

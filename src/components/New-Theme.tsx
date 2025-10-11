@@ -80,7 +80,7 @@ export function NewTheme() {
           maxLength={MAX_LENGTH_THEME_NAME}
           type="text"
           placeholder=" Name your theme"
-          className="bg-primary focus:outline-none  border-width-min-selected border-tertiary-dark focus-within:border-tertiary  rounded-md p-1 text-black dark:text-quaternary transition-[width,opacity] duration-100" required
+          className="dark:bg-primary  focus:outline-none  border-width-min-selected border-gray-400 focus-within:border-gray-500 dark:border-tertiary-dark dark:focus-within:border-tertiary  rounded-md p-1 text-black dark:text-quaternary transition-[width,opacity] duration-100" required
 
         />
       </ContentSettings>
@@ -109,7 +109,7 @@ export function NewTheme() {
         <Dropdown options={fontSizeOptions} onSelect={(value) => handleThemeChange("fontSize", value)} isOpen={openDropdown === 1} selectedValue={theme.fontSize} onToggle={() => handleDropdownToggle(1)} />
       </ContentSettings>
 
-      <input type="submit" value="Save Theme" className="mt-4 mb-6 bg-gray-200 dark:bg-secondary border-width-min-selected border-tertiary-dark hover:dark:border-tertiary   text-dark dark:text-white font-light px-4 py-2 rounded-md cursor-pointer  transition-colors duration-100 disabled "  />
+      <input type="submit" value="Save Theme" className="mt-4 mb-6 bg-gray-200 dark:bg-secondary border-width-selected border-gray-300 dark:border-tertiary-dark hover:dark:border-tertiary   text-dark dark:text-white font-light px-4 py-2 rounded-md cursor-pointer  transition-colors duration-100 disabled "  />
 
     </form>
   );

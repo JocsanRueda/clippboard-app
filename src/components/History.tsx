@@ -135,16 +135,16 @@ export const History = () => {
 
   return (
 
-    <div className="min-h-screen min-w-full dark:bg-primary p-1">
+    <div className="min-h-screen min-w-full bg-gray-200 dark:bg-primary p-1">
 
       <TopBar deleteFunction={deleteAllItem} setFilter={setFilter} filter={filter} />
 
-      <div className="overflow-x-hidden bg-background">
+      <div className="overflow-x-hidden ">
         <h2 className="text-gray-900 dark:text-quaternary text-base font-light tracking-tight mx-3">
           History
         </h2>
 
-        <section className="flex flex-col gap-2 my-2 mx-1">
+        <section className="flex flex-col gap-2 my-2 mx-1 ">
           {filteredData.length > 0 &&
           filteredData.map((item, index) => (
             <ContentCard

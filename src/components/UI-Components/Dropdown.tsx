@@ -13,7 +13,7 @@ export function Dropdown({ options, onSelect, selectedValue,isOpen, onToggle }: 
     <div className="relative">
       <button
         onClick={onToggle}
-        className="font-light text-black dark:text-white bg-gray-300 dark:bg-secondary-light border-solid border-4  rounded-lg  px-3 py-2.5 text-center inline-flex items-center border-gray-400   dark:border-tertiary-dark "
+        className="font-light text-black dark:text-white bg-gray-300 dark:bg-secondary-light border-solid border-width-selected  rounded-lg  px-3 py-2.5 text-center inline-flex items-center border-gray-400   dark:border-tertiary-dark "
         type="button"
       >
         {options.find(option => option.value === selectedValue)?.label || "Select"}
@@ -24,7 +24,7 @@ export function Dropdown({ options, onSelect, selectedValue,isOpen, onToggle }: 
       </button>
 
       {isOpen && (
-        <div className="absolute  left-1/2 -translate-x-1/2 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm min-w-28 max-w-36 dark:bg-primary border-4 border-gray-300 dark:border-tertiary-dark mt-1">
+        <div className="absolute  left-1/2 -translate-x-1/2 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm min-w-28 max-w-36 dark:bg-primary border-width-selected border-gray-300 dark:border-tertiary-dark mt-1">
           <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
             {options.map((option, index) => (
               <li key={option.value}>

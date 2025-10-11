@@ -71,7 +71,7 @@ export function ThemeSettings() {
         />;
       })}
 
-      <div className="bg-gray-200 dark:bg-secondary w-10 h-10  flex  items-center justify-center rounded-md border-width-selected border-primary-light" onClick={()=>handlePage(PAGES.NEW_THEME)} >
+      <div className="bg-gray-200 border-gray-300 dark:bg-secondary w-10 h-10  flex  items-center justify-center rounded-md border-width-selected dark:border-primary-light" onClick={()=>handlePage(PAGES.NEW_THEME)} >
         <IoAddSharp className="w-5 h-5 text-gray-600 dark:text-white hover:scale-120 transition-scale duration-100" />
       </div>
     </div>

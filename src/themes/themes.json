@@ -7,7 +7,7 @@
       "tertiaryColor": "#364153",
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px"
+      "borderWidth": "3px"
       
 },
     {
@@ -17,7 +17,7 @@
       "secondaryColor": "#091221",
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#364153"
     },
     {
@@ -27,7 +27,7 @@
       "secondaryColor": "#1e293b",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#334155",
       "selected": "true"
     },
@@ -40,7 +40,7 @@
       "secondaryColor": "#1e293b",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#334155"
 
     },
@@ -52,7 +52,7 @@
       "secondaryColor": "#374151",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#4b5563"       
     },
 
@@ -64,7 +64,7 @@
       "secondaryColor": "#1c4532",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#256d46"       
     },
 
@@ -76,7 +76,7 @@
       "secondaryColor": "#3b1c47",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#5b2b70"       
     },
 
@@ -88,7 +88,7 @@
       "secondaryColor": "#134e4a",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#1d726d"      
     },
 
@@ -100,7 +100,7 @@
       "secondaryColor": "#3c2f2a",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#5c453c"       
     },
     
@@ -111,7 +111,7 @@
       "secondaryColor": "#1e3a8a",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#3b82f6"      
     },
 
@@ -123,7 +123,7 @@
       "secondaryColor": "#2e2e2e",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#525252"      
     },
 
@@ -135,7 +135,7 @@
       "secondaryColor": "#064e3b",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#10b981"       
     },
 
@@ -147,7 +147,7 @@
       "secondaryColor": "#312e81",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#6366f1"       
     },
 
@@ -159,7 +159,7 @@
       "secondaryColor": "#5c2e1a",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#9a5c3c"       
     },
 
@@ -171,7 +171,7 @@
       "secondaryColor": "#7f1d1d",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#dc2626"       
     },
     
@@ -182,7 +182,7 @@
       "secondaryColor": "#1e3a5f",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#3b82f6"       
     },
 
@@ -194,7 +194,7 @@
       "secondaryColor": "#3f4f1c",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#84cc16"      
     },
 
@@ -206,7 +206,7 @@
       "secondaryColor": "#5c4033",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#d97706"       
     },
 
@@ -218,7 +218,7 @@
       "secondaryColor": "#155e75",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#06b6d4"       
     },
 
@@ -230,7 +230,7 @@
       "secondaryColor": "#4c1d95",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#a855f7"       
     },
 
@@ -242,7 +242,7 @@
       "secondaryColor": "#374151",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#9ca3af"       
     },
 
@@ -254,7 +254,7 @@
       "secondaryColor": "#713f12",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#f59e0b"      
     },
     {
@@ -264,7 +264,7 @@
       "secondaryColor": "#831843",    
       "fontSize": "text-sm",
       "fontWeight": "font-normal",
-      "borderWidth": "4px",
+      "borderWidth": "3px",
       "tertiaryColor": "#ec4899"  
     }
   ]

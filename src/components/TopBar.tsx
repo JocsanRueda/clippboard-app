@@ -25,7 +25,7 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
   return (
     <div className="flex justify-end items-center px-2 py-3 dark:bg-primary gap-4 my-1 mx-1 ">
 
-      <div className={`flex items-center ${isSearchVisible ? "bg-gray-300 dark:bg-secondary text-gray-900" : ""} text-quaternary rounded-lg px-2 py-1 focus-within:ring-2 focus-within:ring-tertiary overflow-hidden`}>
+      <div className={`flex items-center ${isSearchVisible ? "bg-gray-300 dark:bg-secondary text-gray-900" : ""} text-quaternary rounded-lg px-2 py-1 focus-within:ring-2 focus-within:ring-gray-400 dark:focus-within:ring-tertiary overflow-hidden`}>
         <FaMagnifyingGlass
           className={`${isSearchVisible ? "text-gray-400 mr-2 scale-95" : "text-gray-900 dark:text-quaternary -m-1 hover:text-tertiary hover:scale-120"} cursor-pointer transition-[color,scale] duration-100  `}
           onClick={() => setIsSearchVisible(!isSearchVisible)}
@@ -43,13 +43,13 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
 
       {/*  Delete All */}
       <CgTrash
-        className="transition-[color,scale] duration-100 text-gray-900 dark:text-quaternary hover:text-red-400 hover:scale-135 scale-120 "
+        className="transition-[color,scale] duration-100 text-gray-900 dark:text-quaternary dark:hover:text-red-500 hover:scale-135 scale-120 "
         onClick={deleteFunction}
       />
 
       {/* Settings */}
       <IoSettingsSharp
-        className="transition-[color,scale] duration-100 text-gray-900 dark:text-quaternary hover:text-blue-400 hover:scale-120" onClick={() => handlePage(PAGES.SETTINGS)}
+        className="transition-[color,scale] duration-100 text-gray-900 dark:text-quaternary hover:text-secondary-light hover:scale-120" onClick={() => handlePage(PAGES.SETTINGS)}
       />
 
       {/* Toggle Theme */}

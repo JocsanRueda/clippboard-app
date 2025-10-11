@@ -41,7 +41,7 @@ export function SystemSettings(){
 
       <ContentSettings label="Theme" className="rounded-t-md border-width-selected py-3">
 
-        <IoArrowForwardOutline className="w-7.5 h-7.5 text-quaternary  cursor-pointer border-4 border-gray-300 dark:border-none rounded-md  ml-0.5 p-0.5 " onClick={() => handlePage(PAGES.THEME)} />
+        <IoArrowForwardOutline className="w-5 h-5 text-gray-600 dark:text-gray-200  cursor-pointer  border-gray-200 dark:border-none hover:border-gray-400 rounded-md  ml-1.5 " onClick={() => handlePage(PAGES.THEME)} />
 
       </ContentSettings>
 
