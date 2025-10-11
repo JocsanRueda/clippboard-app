@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import ContentSettings from "./Content-Settings";
 import ThemePreview from "./Theme-Preview";
 import Dropdown from "./UI-Components/Dropdown";
+import { useResetScroll } from "@/hooks/useResetScroll";
 
 export function NewTheme() {
 
@@ -15,6 +16,7 @@ export function NewTheme() {
   const {goBack}= usePageContext();
 
   const [theme, setTheme] = useState<ThemePreviewProps>(getThemes()[DEFAULT_THEME_INDEX]);
+  useResetScroll();
 
   const handleThemeChange = (property: keyof ThemePreviewProps, value: string | number) => {
     setTheme((prevTheme) => ({
@@ -68,7 +70,7 @@ export function NewTheme() {
   };
 
   return(
-    <form className="w-full max-w-md flex flex-col justify-center items-center px-2" onSubmit={handleSubmit}>
+    <form className=" w-full max-w-md flex flex-col justify-center items-center px-2 overflow-x-scroll  " onSubmit={handleSubmit}>
 
       <ThemePreview primaryColor={theme.primaryColor} secondaryColor={theme.secondaryColor}  fontSize={theme.fontSize}  borderWidth={theme.borderWidth} tertiaryColor={theme.tertiaryColor} />
 
