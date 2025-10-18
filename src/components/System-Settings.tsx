@@ -1,5 +1,5 @@
 import { PAGES } from "@/constants/constant";
-import { keyboardLaunchOptions, languagesOptions, limitItemsOptions, timeOptions } from "@/constants/sytem-options";
+import { keyboardLaunchOptions, languagesOptions, limitItemsOptions, orderItemsOptions, timeOptions } from "@/constants/sytem-options";
 import { usePageContext } from "@/context/Page-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { SystemSettings as SystemSettingsProps } from "@/types/system-settings.type";
@@ -33,6 +33,7 @@ export function SystemSettings(){
     timeOptions,
     limitItemsOptions,
     languagesOptions,
+    orderItemsOptions,
     keyboardLaunchOptions,
   ];
 

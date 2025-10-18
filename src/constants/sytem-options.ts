@@ -45,9 +45,20 @@ export const keyboardLaunchOptions = {
   defaultValue: 0
 };
 
+export const orderItemsOptions = {
+  label:"Order Items ",
+  key:"order_items",
+  items: [
+    { label: "Ascending", value: "ascending" },
+    { label: "Descending", value: "descending" },
+  ],
+  defaultValue: 0
+};
+
 export const DEFAULT_SYSTEM_SETTINGS = {
   expiration_time: timeOptions.items[timeOptions.defaultValue].value,
   limit_items: limitItemsOptions.items[limitItemsOptions.defaultValue].value,
   keyboard_shortcuts: keyboardLaunchOptions.items[keyboardLaunchOptions.defaultValue].value,
   language: languagesOptions.items[languagesOptions.defaultValue].value,
+  order_items: orderItemsOptions.items[orderItemsOptions.defaultValue].value,
 };

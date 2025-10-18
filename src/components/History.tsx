@@ -9,11 +9,15 @@ import { clear, writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { useMemo, useState } from "react";
 import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
+import { useSystemSettingsContext } from "@/context/System-Settings-Context";
+import { orderItemsOptions } from "@/constants/sytem-options";
 export const History = () => {
 
   const [dataList, setDataList]= useState<ItemClipboard[]>([]);
   const [toggleActions, setToggleActions] = useState<ItemActionMenu[]>(Array(dataList.length).fill(defaultItemClipboard));
   const [filter, setFilter] = useState<string>("");
+
+  const {settings} = useSystemSettingsContext();
 
   // Initialize the store and load existing data
   useInitStore(dataList, setDataList, setToggleActions);
@@ -121,11 +125,21 @@ export const History = () => {
 
   };
 
-  const filteredData = useMemo(() => {
-    if (filter.length === 0) return dataList;
-    const lowerCaseFilter = filter.toLowerCase().trim();
-    return dataList.filter(item => item.text.toLowerCase().startsWith(lowerCaseFilter));
-  }, [filter, dataList]);
+  //filter and order data list
+  const finalData = useMemo(() => {
+    const list = dataList ?? [];
+    const q = (filter || "").toLowerCase().trim();
+
+    // Filter once
+    let res = q ? list.filter(item => item.text.toLowerCase().startsWith(q)) : list;
+
+    // Order (don't mutate original)
+    if (settings.order_items !== orderItemsOptions.items[0].value) {
+      res = res.slice().reverse();
+    }
+
+    return res;
+  }, [dataList, filter, settings.order_items]);
 
   const handleMenuClick = (index: number) => () => handleToggleMenu(index);
   const handleDeleteClick = (index: number) => () => handleDelete(index);
@@ -145,8 +159,8 @@ export const History = () => {
         </h2>
 
         <section className="flex flex-col gap-2 my-2 mx-1 ">
-          {filteredData.length > 0 &&
-          filteredData.map((item, index) => (
+          {finalData.length > 0 &&
+          finalData.map((item, index) => (
             <ContentCard
               key={index + item.text}
               text={item.text}
