@@ -39,7 +39,7 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen rounded-lg overflow-hidden">
       <WindowControls/>
 
       <ClipboardBody />

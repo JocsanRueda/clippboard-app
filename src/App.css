@@ -27,6 +27,9 @@
   --color-tertiary-dark: color-mix(in srgb, var(--color-tertiary)70%, black);
   --color-tertiary-light: color-mix(in srgb, var(--color-tertiary)80%, white);
 
+  --color-quaternary-dark: color-mix(in srgb, var(--color-quaternary)70%, black);
+  --color-quaternary-light: color-mix(in srgb, var(--color-quaternary)80%, white);
+
   --border-width-min:calc(var(--border-width) - 1px);
   
   
