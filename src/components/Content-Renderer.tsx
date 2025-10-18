@@ -6,10 +6,10 @@ import ImageContent from "./Image-Content";
 import TextContentEditor from "./Text-Content-Editor";
 import VideoContent from "./Video-Content";
 
-function ContentRenderer({ type, text, url,editText, setText }: ContentRendererProps) {
+function ContentRenderer({ type, text, url,editText, setText,handleCopy }: ContentRendererProps) {
   switch (type) {
     case "text":
-      return <TextContentEditor text={text} editText={editText} setText={setText} />;
+      return <TextContentEditor text={text} editText={editText} setText={setText} handleCopy={handleCopy} />;
     case "image":
       return <ImageContent text={text} url={url } />;
     case "audio":

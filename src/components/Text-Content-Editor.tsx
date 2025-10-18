@@ -2,7 +2,7 @@ import { TextContentEditorProps } from "@/types/text-content-editor.type";
 import { MAX_TEXT_LENGTH } from "@/constants/constant";
 import { truncateString } from "@/utils/string";
 
-export function TextContentEditor({ text, editText, setText }: TextContentEditorProps) {
+export function TextContentEditor({ text, editText, setText, handleCopy}: TextContentEditorProps) {
   if (editText) {
     return (
       <textarea
@@ -15,7 +15,7 @@ export function TextContentEditor({ text, editText, setText }: TextContentEditor
   } else {
     return (
       <p
-        className="text-gray-950 dark:text-white text-base font-light tracking-tight break-all"
+        className="text-gray-950 dark:text-white text-base font-light tracking-tight break-all" onClick={handleCopy}
       >
         {truncateString(text, MAX_TEXT_LENGTH)}
       </p>

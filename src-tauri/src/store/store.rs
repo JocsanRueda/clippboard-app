@@ -137,7 +137,7 @@ pub fn delete_all_items_command(
 
     let filtered: Vec<serde_json::Value> = history
         .drain(..)
-        .filter(|item| item["fixed"] == "true")
+        .filter(|item| item["fixed"] == true)
         .collect();
 
     history.extend(filtered);

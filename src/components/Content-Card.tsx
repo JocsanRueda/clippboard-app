@@ -5,7 +5,7 @@ import { TiPin, TiPinOutline } from "react-icons/ti";
 import ActionMenu from "./Action-Menu";
 import ContentRenderer from "./Content-Renderer";
 
-function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete ,handleEdit, handleSave, handleFixed }: ContentCardProps) {
+function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete ,handleEdit, handleSave, handleFixed, handleCopy}: ContentCardProps) {
 
   const [newText, setNewText] = useState(text);
 
@@ -31,7 +31,7 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
     <div className="flex flex-row justify-between items-stretch  ">
       <div className="transition-[border] duration-100 w-full bg-gray-200 dark:bg-secondary py-2 px-2 mx-2 rounded-md hover:shadow-lg flex flex-row justify-between border-width-selected  border-gray-300 dark:border-tertiary-dark hover:border-gray-400 hover:dark:border-tertiary-light  transition-border  gap-2   ">
 
-        {<ContentRenderer type={type} text={newText} url={url} editText={toggleActions.activeEdit} setText={setNewText} />}
+        {<ContentRenderer type={type} text={newText} url={url} editText={toggleActions.activeEdit} setText={setNewText} handleCopy={handleCopy} />}
 
         <section className="ml-auto flex flex-col justify-between gap-2">
 

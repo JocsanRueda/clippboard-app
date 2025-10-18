@@ -10,5 +10,6 @@ export type ContentCardProps = BaseContentFileProps & {
   handleEdit: () => void;
   handleSave: (newText: string) => void;
   handleFixed: () => void;
+  handleCopy: () => void;
 
 }

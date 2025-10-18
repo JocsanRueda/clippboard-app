@@ -1,4 +1,6 @@
 import { deleteAllClipboardItems, fixedClipboardItem, removeClipboardItem, updateClipboardItem } from "@/api/tauri/clipboard";
+import { orderItemsOptions } from "@/constants/sytem-options";
+import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { defaultItemClipboard } from "@/default/values";
 import { useClipboardWatcher } from "@/hooks/useClipboardWatcher";
 import { useInitStore } from "@/hooks/useInitStore";
@@ -6,11 +8,9 @@ import { ItemActionMenu } from "@/types/item-action-menu.type";
 import { ItemClipboard } from "@/types/item-clipboard.type";
 import { addUnique } from "@/utils/array";
 import { clear, writeText } from "@tauri-apps/plugin-clipboard-manager";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
-import { useSystemSettingsContext } from "@/context/System-Settings-Context";
-import { orderItemsOptions } from "@/constants/sytem-options";
 export const History = () => {
 
   const [dataList, setDataList]= useState<ItemClipboard[]>([]);
@@ -136,16 +136,27 @@ export const History = () => {
     // Order (don't mutate original)
     if (settings.order_items !== orderItemsOptions.items[0].value) {
       res = res.slice().reverse();
+
     }
 
     return res;
   }, [dataList, filter, settings.order_items]);
+
+  const calcIndex = useCallback((index: number) => {
+    if (settings.order_items === orderItemsOptions.items[0].value) {
+      return index;
+    }
+
+    return finalData.length - 1 - index;
+
+  }, [settings.order_items, finalData.length]);
 
   const handleMenuClick = (index: number) => () => handleToggleMenu(index);
   const handleDeleteClick = (index: number) => () => handleDelete(index);
   const handleEditClick = (index: number) => () => handleEdit(index);
   const handleSaveClick = (index: number) => (newText: string) => handleSave(index, newText);
   const handleFixedClick = (index: number) => () => handleFixed(index);
+  const handleCopyClick = (text: string) => () => { writeText(text); };
 
   return (
 
@@ -158,22 +169,29 @@ export const History = () => {
           History
         </h2>
 
-        <section className="flex flex-col gap-2 my-2 mx-1 ">
+        <section className="flex flex-col gap-2 my-2 mx-1  ">
           {finalData.length > 0 &&
-          finalData.map((item, index) => (
-            <ContentCard
-              key={index + item.text}
-              text={item.text}
-              type={item.type}
-              url={item.url}
-              toggleActions={toggleActions[index]}
-              handleMenu={handleMenuClick(index)}
-              handleDelete={handleDeleteClick(index)}
-              handleEdit={handleEditClick(index)}
-              handleSave={handleSaveClick(index)}
-              handleFixed={handleFixedClick(index)}
-            />
-          ))}
+          finalData.map((item, index) => {
+
+            const newIndex = calcIndex(index);
+            console.log("Rendered Item Index:", newIndex);
+
+            return (
+              <ContentCard
+                key={newIndex + item.text}
+                text={item.text}
+                type={item.type}
+                url={item.url}
+                toggleActions={toggleActions[newIndex]}
+                handleMenu={handleMenuClick(newIndex)}
+                handleDelete={handleDeleteClick(newIndex)}
+                handleEdit={handleEditClick(newIndex)}
+                handleSave={handleSaveClick(newIndex)}
+                handleFixed={handleFixedClick(newIndex)}
+                handleCopy={handleCopyClick(item.text)}
+              />
+            );
+          })}
         </section>
       </div>
 

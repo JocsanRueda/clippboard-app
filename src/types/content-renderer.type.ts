@@ -6,4 +6,5 @@ export type ContentRendererProps = {
   url?: string;
   editText: boolean;
   setText: (newText: string) => void;
+  handleCopy?: () => void;
 };
