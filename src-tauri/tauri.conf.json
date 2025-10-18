@@ -20,7 +20,9 @@
         "maxWidth": 400,
         "maxHeight": 440,
         "resizable": false,
-        "fullscreen": false
+        "fullscreen": false,
+        "decorations": false,
+        "transparent": true
       }
     ],
     "security": {

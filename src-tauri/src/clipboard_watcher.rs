@@ -26,7 +26,7 @@ pub fn start_clipboard_watcher(
                 let mut history = global_history.lock().unwrap();
 
                 if current != last_value && !current.is_empty() && history.len() < max_history {
-                    println!("max_history: {}", max_history);
+                    
                     last_value = current.clone();
 
 

@@ -16,6 +16,7 @@ export function NewTheme() {
   const {goBack}= usePageContext();
 
   const [theme, setTheme] = useState<ThemePreviewProps>(getThemes()[DEFAULT_THEME_INDEX]);
+
   useResetScroll();
 
   const handleThemeChange = (property: keyof ThemePreviewProps, value: string | number) => {

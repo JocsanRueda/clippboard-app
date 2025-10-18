@@ -53,7 +53,7 @@ export function ThemeSettings() {
   };
 
   return(
-    <div className="grid grid-cols-3  place-items-center gap-2">
+    <div className="grid grid-cols-3  place-items-center gap-2 mb-3">
       <h2 className="col-span-3 text-sm font-semibold dark:text-white">{allThemes[themeIndex]?.name ?? "loading..."}</h2>
       {allThemes.map((theme,index)=>{
 

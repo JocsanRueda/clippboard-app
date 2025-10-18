@@ -135,11 +135,11 @@ export const History = () => {
 
   return (
 
-    <div className="min-h-screen min-w-full bg-gray-200 dark:bg-primary p-1">
+    <div className="h-full flex flex-col bg-gray-200 dark:bg-primary">
 
       <TopBar deleteFunction={deleteAllItem} setFilter={setFilter} filter={filter} />
 
-      <div className="overflow-x-hidden ">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden">
         <h2 className="text-gray-900 dark:text-quaternary text-base font-light tracking-tight mx-3">
           History
         </h2>

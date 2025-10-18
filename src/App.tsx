@@ -5,6 +5,7 @@ import "./App.css";
 
 import { Menu } from "@tauri-apps/api/menu";
 import ClipboardBody from "./components/Clipboard";
+import WindowControls from "./components/Window-Controls";
 function App() {
 
   useEffect(() => {
@@ -38,8 +39,12 @@ function App() {
   }, []);
 
   return (
+    <div className="flex flex-col h-screen">
+      <WindowControls/>
 
-    <ClipboardBody/>
+      <ClipboardBody />
+
+    </div>
 
   );
 }
