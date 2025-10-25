@@ -1,3 +1,5 @@
+use crate::constants::clipboard_key::{HISTORY, SETTINGS};
+use crate::structures::Settings;
 use crate::AppStore;
 use serde_json::json;
 use std::sync::{Arc, Mutex};
@@ -6,8 +8,7 @@ use tauri::AppHandle;
 use tauri::Wry;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use tauri_plugin_store::Store;
-use crate::constants::clipboard_key::{HISTORY,SETTINGS};
-use crate::structures::Settings;
+use crate::utils::{delete_image,delete_all_images};
 
 // Save the current state of the store
 pub fn save_store(store: &Arc<Store<Wry>>, history: &Vec<serde_json::Value>) {
@@ -15,21 +16,25 @@ pub fn save_store(store: &Arc<Store<Wry>>, history: &Vec<serde_json::Value>) {
     store.save().expect("Failed to save store");
 }
 
-
 // get settings from the store
-pub fn get_settings(store: &Arc<Store<Wry>>) ->Settings  {
-    store.get(SETTINGS).and_then(|v| serde_json::from_value(v).ok()).unwrap_or(Settings{
-        expiration_time: 24,
-        keyboard_shortcuts: "super+v".to_string(),
-        language: "es".to_string(),
-        limit_items: 100,
-    })
+pub fn get_settings(store: &Arc<Store<Wry>>) -> Settings {
+    store
+        .get(SETTINGS)
+        .and_then(|v| serde_json::from_value(v).ok())
+        .unwrap_or(Settings {
+            expiration_time: 24,
+            keyboard_shortcuts: "super+v".to_string(),
+            language: "es".to_string(),
+            limit_items: 100,
+        })
 }
 
 // Clean up the store
-pub fn clean_store(store: &Arc<Store<Wry>>, app_handle: AppHandle, expiration_secs: u64) -> Vec<serde_json::Value> {
-    
-
+pub fn clean_store(
+    store: &Arc<Store<Wry>>,
+    app_handle: AppHandle,
+    expiration_secs: u64,
+) -> Vec<serde_json::Value> {
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .expect("Time went backwards")
@@ -56,6 +61,18 @@ pub fn clean_store(store: &Arc<Store<Wry>>, app_handle: AppHandle, expiration_se
             .map(|fixed| fixed)
             .unwrap_or(true);
 
+        let path = item
+            .get("path")
+            .and_then(|path| path.as_str())
+            .map(|path| path.to_string());
+
+        if let Some(path) = path {
+            if !is_recent && !is_fixed {
+                delete_image(path);
+            }
+        }
+
+
         is_recent || is_fixed
     });
 
@@ -75,10 +92,7 @@ pub fn clean_store(store: &Arc<Store<Wry>>, app_handle: AppHandle, expiration_se
 
 // Save the current state of the store
 #[tauri::command]
-pub fn save_store_command(
-    state: tauri::State<'_, AppStore>,
-    history: Vec<serde_json::Value>,
-) {
+pub fn save_store_command(state: tauri::State<'_, AppStore>, history: Vec<serde_json::Value>) {
     let store = state.0.lock().unwrap();
 
     store.set(HISTORY, json!(history));
@@ -106,19 +120,22 @@ pub fn update_item_command(
     }
 }
 
-// Update an item
+// delete an item
 #[tauri::command]
 pub fn delete_item_command(
     state: tauri::State<'_, AppStore>,
     global_history: tauri::State<'_, Arc<Mutex<Vec<serde_json::Value>>>>,
     index: usize,
 ) {
-    println!("Deleting item at index: {}", index);
+    
     let store = state.0.lock().unwrap();
     let mut history = global_history.lock().unwrap();
 
     if index < history.len() {
-        history.remove(index);
+        let removed=history.remove(index);
+        if let Some(path) = removed.get("path").and_then(|p| p.as_str()) {
+            delete_image(path.to_string());
+        }
         store.set(HISTORY, json!(&*history));
         store.save().expect("Failed to save store");
     } else {
@@ -144,6 +161,10 @@ pub fn delete_all_items_command(
 
     store.set(HISTORY, json!(&*history));
     store.save().expect("Failed to save store");
+
+    delete_all_images();
+
+
 }
 
 //Fixed item

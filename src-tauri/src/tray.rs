@@ -1,9 +1,8 @@
 // src/tray.rs
 use tauri::{
-    App, Manager,
     menu::{Menu, MenuItem},
     tray::TrayIconBuilder,
-    Wry,
+    App, Manager, Wry,
 };
 
 pub fn setup_tray(app: &App<Wry>) -> tauri::Result<()> {
@@ -26,7 +25,6 @@ pub fn setup_tray(app: &App<Wry>) -> tauri::Result<()> {
             "hidden" => {
                 if let Some(window) = app.get_webview_window("main") {
                     let _ = window.hide();
-                    
                 }
             }
             _ => println!("Evento de menú no manejado: {:?}", event.id),

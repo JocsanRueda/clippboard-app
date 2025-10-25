@@ -13,7 +13,8 @@ export const CLIPBOARD_KEY={
   HISTORY:"history",
   SETTINGS:"settings",
   THEME:"theme",
-  THEMES:"themes"
+  THEMES:"themes",
+  FILE_PATH: "/home/ely/.local/share/com.Tuxclip.app"
 };
 
 export const CLIPBOARD_EVENT={

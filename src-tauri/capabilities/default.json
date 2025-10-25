@@ -21,6 +21,13 @@
     "store:default",
     "core:window:default",
     "core:window:allow-start-dragging",
-    "core:window:allow-close"
+    "core:window:allow-close",
+    "fs:default",
+    {
+      "identifier": "fs:allow-applocaldata-read-recursive",
+      "allow": [{ "path": "$APPLOCALDATA/*" }]
+    }
+
+    
   ]
 }

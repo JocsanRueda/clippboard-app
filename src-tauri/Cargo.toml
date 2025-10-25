@@ -26,6 +26,9 @@ tauri-plugin-clipboard-manager = "2"
 tauri-plugin-clipboard = "2.1.11"
 tauri-plugin-store = "2"
 unicode-normalization = "0.1"
+fs = "0.0.5"
+tauri-plugin-fs = "2"
+image = { version = "0.25", features = ["png"] }
 
 [tauri]
 plugins = ["clipboard"]

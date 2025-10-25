@@ -1,11 +1,23 @@
+import { getImage } from "@/api/tauri/utils";
 import { ImageContentProps } from "@/types/image-content.type";
 
-function ImageContent({text,url}: ImageContentProps) {
+import { useEffect, useState } from "react";
+
+function ImageContent({ text, url }: ImageContentProps) {
+  const [imageSrc, setImageSrc] = useState("");
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      const image = await getImage(url ?? "");
+      setImageSrc(image);
+    };
+    fetchImage();
+  }, [url]);
 
   return (
-    <img src={url} alt={text} className="max-w-full max-h-36 rounded-md shadow-md" />
-  );
 
+    <img src={imageSrc} alt={text} className="max-w-full max-h-30 rounded-md shadow-md " />
+  );
 }
 
 export default ImageContent;

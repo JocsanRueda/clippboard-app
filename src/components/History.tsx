@@ -6,7 +6,8 @@ import { useClipboardWatcher } from "@/hooks/useClipboardWatcher";
 import { useInitStore } from "@/hooks/useInitStore";
 import { ItemActionMenu } from "@/types/item-action-menu.type";
 import { ItemClipboard } from "@/types/item-clipboard.type";
-import { addUnique } from "@/utils/array";
+import { newItemPayload } from "@/types/new-item-payload";
+import { add } from "@/utils/array";
 import { clear, writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { useCallback, useMemo, useState } from "react";
 import ContentCard from "./Content-Card";
@@ -29,8 +30,9 @@ export const History = () => {
   });
 
   // Function to update the clipboard data list with new text
-  const updateClipboardDataList = (newText: string) => {
-    const newDataList = addUnique(dataList, newText);
+  const updateClipboardDataList = (newItem: newItemPayload) => {
+
+    const newDataList = add(dataList, newItem);
 
     // Check if the new data list is different from the current one
     if (newDataList.length !== dataList.length) {
@@ -53,7 +55,7 @@ export const History = () => {
   const handleSave = async (index: number, newText: string) => {
 
     const length = dataList.length-1;
-    updateDataList(index, { text: newText });
+    updateDataList(index, { value: newText });
     updateToggleActions(index, { showMenu: true, activeEdit: false });
 
     // Update the clipboard item
@@ -131,7 +133,7 @@ export const History = () => {
     const q = (filter || "").toLowerCase().trim();
 
     // Filter once
-    let res = q ? list.filter(item => item.text.toLowerCase().startsWith(q)) : list;
+    let res = q ? list.filter(item => item.value.toLowerCase().startsWith(q)) : list;
 
     // Order (don't mutate original)
     if (settings.order_items !== orderItemsOptions.items[0].value) {
@@ -158,6 +160,8 @@ export const History = () => {
   const handleFixedClick = (index: number) => () => handleFixed(index);
   const handleCopyClick = (text: string) => () => { writeText(text); };
 
+  console.log(finalData);
+
   return (
 
     <div className="h-full flex flex-col bg-gray-200 dark:bg-primary">
@@ -177,17 +181,17 @@ export const History = () => {
 
             return (
               <ContentCard
-                key={newIndex + item.text}
-                text={item.text}
+                key={newIndex + item.value}
+                text={item.value}
                 type={item.type}
-                url={item.url}
+                url={item.path}
                 toggleActions={toggleActions[newIndex]}
                 handleMenu={handleMenuClick(newIndex)}
                 handleDelete={handleDeleteClick(newIndex)}
                 handleEdit={handleEditClick(newIndex)}
                 handleSave={handleSaveClick(newIndex)}
                 handleFixed={handleFixedClick(newIndex)}
-                handleCopy={handleCopyClick(item.text)}
+                handleCopy={handleCopyClick(item.value)}
               />
             );
           })}
