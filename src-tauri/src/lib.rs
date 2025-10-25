@@ -1,10 +1,12 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 
 mod clipboard_watcher;
+mod tray;
 pub mod utils;
 pub mod store;
 pub mod structures;
 pub mod constants;
+pub mod window;
 
 use tauri::Wry;
 use tauri_plugin_store::Store;
@@ -14,11 +16,16 @@ use crate::store::store::{
     clean_store, delete_all_items_command, delete_item_command, fixed_item_command,
     save_store_command, update_item_command, get_settings
 };
+
+use crate::window::hide_window_command;
+
 use std::sync::{Arc, Mutex};
 use tauri::Manager;
 
 use crate::constants::clipboard_key::{FILE_HISTORY,FILE_SETTINGS};
 pub struct AppStore(pub Arc<Mutex<Arc<Store<Wry>>>>);
+
+use crate::tray::setup_tray;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -28,6 +35,11 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
 
+
+            // Setup the tray
+            setup_tray(app)?;
+
+            
             // Initialize settings value
             let store_settings = app.store(FILE_SETTINGS).expect("Failed to open store");
 
@@ -61,7 +73,8 @@ pub fn run() {
             update_item_command,
             delete_item_command,
             delete_all_items_command,
-            fixed_item_command
+            fixed_item_command,
+            hide_window_command
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

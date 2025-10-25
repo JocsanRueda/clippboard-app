@@ -174,7 +174,6 @@ export const History = () => {
           finalData.map((item, index) => {
 
             const newIndex = calcIndex(index);
-            console.log("Rendered Item Index:", newIndex);
 
             return (
               <ContentCard

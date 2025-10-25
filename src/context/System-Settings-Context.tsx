@@ -23,7 +23,12 @@ export const SystemSettingsProvider:React.FC<{children: React.ReactNode}> = ({ c
       const s= await getSettings();
       if(s){
 
-        setSystemSettings(s);
+        const newSystemSettings={
+          ...DEFAULT_SYSTEM_SETTINGS,
+          ...s
+        };
+
+        setSystemSettings(newSystemSettings);
       }
 
     }

@@ -18,6 +18,8 @@ export const CLIPBOARD_KEY={
 
 export const CLIPBOARD_EVENT={
   NEW_ITEM:"new-item",
+  HIDDEN:"hide_window_command",
+  SHOW:"show"
 };
 
 export const PAGES = {

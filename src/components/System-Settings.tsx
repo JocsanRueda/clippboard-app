@@ -1,5 +1,5 @@
 import { PAGES } from "@/constants/constant";
-import { keyboardLaunchOptions, languagesOptions, limitItemsOptions, orderItemsOptions, timeOptions } from "@/constants/sytem-options";
+import { keyboardLaunchOptions, languagesOptions, limitItemsOptions, orderItemsOptions, roundedWindowOptions, timeOptions } from "@/constants/sytem-options";
 import { usePageContext } from "@/context/Page-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { SystemSettings as SystemSettingsProps } from "@/types/system-settings.type";
@@ -19,7 +19,7 @@ export function SystemSettings(){
     setOpenDropdown((prev) => (prev === dropdownId ? null : dropdownId));
   };
 
-  const handleSelect = async (key: keyof SystemSettingsProps, value: string | number) => {
+  const handleSelect = async (key: keyof SystemSettingsProps, value: string | number | boolean) => {
     const newSettings={
       ...settings,
       [key]: value
@@ -35,7 +35,10 @@ export function SystemSettings(){
     languagesOptions,
     orderItemsOptions,
     keyboardLaunchOptions,
+    roundedWindowOptions
   ];
+
+  console.log(settings);
 
   return(
     <div className="w-full max-w-md flex flex-col justify-center items-center p-2">

@@ -4,4 +4,5 @@ export type SystemSettings={
   keyboard_shortcuts:string;
   order_items:string;
   language:string;
+  rounded_window:boolean;
 }

@@ -55,10 +55,21 @@ export const orderItemsOptions = {
   defaultValue: 0
 };
 
+export const roundedWindowOptions = {
+  label:"Rounded Window",
+  key:"rounded_window",
+  items: [
+    { label: "Enabled", value: true },
+    { label: "Disabled", value: false },
+  ],
+  defaultValue: 0
+};
+
 export const DEFAULT_SYSTEM_SETTINGS = {
   expiration_time: timeOptions.items[timeOptions.defaultValue].value,
   limit_items: limitItemsOptions.items[limitItemsOptions.defaultValue].value,
   keyboard_shortcuts: keyboardLaunchOptions.items[keyboardLaunchOptions.defaultValue].value,
   language: languagesOptions.items[languagesOptions.defaultValue].value,
   order_items: orderItemsOptions.items[orderItemsOptions.defaultValue].value,
+  rounded_window: roundedWindowOptions.items[roundedWindowOptions.defaultValue].value,
 };

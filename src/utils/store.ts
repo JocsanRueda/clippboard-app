@@ -89,7 +89,6 @@ export async function getUserThemes():Promise<ThemeFile[] >{
   try{
     const s= await getStoreInstance(CLIPBOARD_KEY.FILE_THEMES);
     const themes= await s.get<ThemeFile[]>  (CLIPBOARD_KEY.THEMES);
-    console.log("Themes:", themes);
     return themes || [];
   }catch (error) {
     console.error("Error getting themes:", error);
