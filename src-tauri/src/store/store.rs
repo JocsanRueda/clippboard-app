@@ -1,5 +1,6 @@
 use crate::constants::clipboard_key::{HISTORY, SETTINGS};
 use crate::structures::Settings;
+use crate::utils::{delete_all_images, delete_image};
 use crate::AppStore;
 use serde_json::json;
 use std::sync::{Arc, Mutex};
@@ -8,7 +9,6 @@ use tauri::AppHandle;
 use tauri::Wry;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use tauri_plugin_store::Store;
-use crate::utils::{delete_image,delete_all_images};
 
 // Save the current state of the store
 pub fn save_store(store: &Arc<Store<Wry>>, history: &Vec<serde_json::Value>) {
@@ -72,7 +72,6 @@ pub fn clean_store(
             }
         }
 
-
         is_recent || is_fixed
     });
 
@@ -127,12 +126,11 @@ pub fn delete_item_command(
     global_history: tauri::State<'_, Arc<Mutex<Vec<serde_json::Value>>>>,
     index: usize,
 ) {
-    
     let store = state.0.lock().unwrap();
     let mut history = global_history.lock().unwrap();
 
     if index < history.len() {
-        let removed=history.remove(index);
+        let removed = history.remove(index);
         if let Some(path) = removed.get("path").and_then(|p| p.as_str()) {
             delete_image(path.to_string());
         }
@@ -163,8 +161,6 @@ pub fn delete_all_items_command(
     store.save().expect("Failed to save store");
 
     delete_all_images();
-
-
 }
 
 //Fixed item

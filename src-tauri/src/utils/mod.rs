@@ -1,8 +1,12 @@
 pub mod array;
-pub mod string;
-pub mod files;
 pub mod data;
-pub use files::save_image;
+pub mod files;
+pub mod string;
+pub mod path;
 pub use data::get_data_now;
-pub use files::delete_image;
 pub use files::delete_all_images;
+pub use files::delete_image;
+pub use files::save_image;
+pub use path::get_local_data_path;
+pub use path::GLOBAL_DATA_PATH; 
+pub use files::save_thumbnail;

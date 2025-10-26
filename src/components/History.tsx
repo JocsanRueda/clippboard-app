@@ -1,9 +1,9 @@
 import { deleteAllClipboardItems, fixedClipboardItem, removeClipboardItem, updateClipboardItem } from "@/api/tauri/clipboard";
 import { orderItemsOptions } from "@/constants/sytem-options";
+import { useClipboardContext } from "@/context/Clipboard-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { defaultItemClipboard } from "@/default/values";
 import { useClipboardWatcher } from "@/hooks/useClipboardWatcher";
-import { useInitStore } from "@/hooks/useInitStore";
 import { ItemActionMenu } from "@/types/item-action-menu.type";
 import { ItemClipboard } from "@/types/item-clipboard.type";
 import { newItemPayload } from "@/types/new-item-payload";
@@ -12,16 +12,16 @@ import { clear, writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { useCallback, useMemo, useState } from "react";
 import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
+
+import { NoResult } from "./Not-Result";
+
 export const History = () => {
 
-  const [dataList, setDataList]= useState<ItemClipboard[]>([]);
-  const [toggleActions, setToggleActions] = useState<ItemActionMenu[]>(Array(dataList.length).fill(defaultItemClipboard));
-  const [filter, setFilter] = useState<string>("");
+  const {dataList,setDataList,toggleActions,setToggleActions} = useClipboardContext();
 
   const {settings} = useSystemSettingsContext();
 
-  // Initialize the store and load existing data
-  useInitStore(dataList, setDataList, setToggleActions);
+  const [filter, setFilter] = useState<string>("");
 
   // Save the dataList to the store whenever it changes
   useClipboardWatcher((newText) => {
@@ -174,27 +174,29 @@ export const History = () => {
         </h2>
 
         <section className="flex flex-col gap-2 my-2 mx-1  ">
-          {finalData.length > 0 &&
-          finalData.map((item, index) => {
+          {finalData.length > 0 ?
+            finalData.map((item, index) => {
 
-            const newIndex = calcIndex(index);
+              const newIndex = calcIndex(index);
 
-            return (
-              <ContentCard
-                key={newIndex + item.value}
-                text={item.value}
-                type={item.type}
-                url={item.path}
-                toggleActions={toggleActions[newIndex]}
-                handleMenu={handleMenuClick(newIndex)}
-                handleDelete={handleDeleteClick(newIndex)}
-                handleEdit={handleEditClick(newIndex)}
-                handleSave={handleSaveClick(newIndex)}
-                handleFixed={handleFixedClick(newIndex)}
-                handleCopy={handleCopyClick(item.value)}
-              />
-            );
-          })}
+              return (
+                <ContentCard
+                  key={newIndex + item.value}
+                  text={item.value}
+                  type={item.type}
+                  url={item.path}
+                  toggleActions={toggleActions[newIndex]}
+                  handleMenu={handleMenuClick(newIndex)}
+                  handleDelete={handleDeleteClick(newIndex)}
+                  handleEdit={handleEditClick(newIndex)}
+                  handleSave={handleSaveClick(newIndex)}
+                  handleFixed={handleFixedClick(newIndex)}
+                  handleCopy={handleCopyClick(item.value)}
+                />
+              );
+            }):
+            <NoResult />
+          }
         </section>
       </div>
 

@@ -1,6 +1,6 @@
+use crate::utils::data::get_data_now;
 use crate::utils::string::normalize_string;
 use serde_json::json;
-use crate::utils::data::get_data_now;
 pub fn add_unique(
     mut array: Vec<serde_json::Value>,
     value: &str,
@@ -8,7 +8,7 @@ pub fn add_unique(
     path: &str,
 ) -> Vec<serde_json::Value> {
     let last_value = normalize_string(value);
-    
+
     let timestamp = get_data_now();
 
     let path_json = if path == "" {
