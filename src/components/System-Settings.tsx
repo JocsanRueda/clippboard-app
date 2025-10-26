@@ -38,8 +38,6 @@ export function SystemSettings(){
     roundedWindowOptions
   ];
 
-  console.log(settings);
-
   return(
     <div className="w-full max-w-md flex flex-col justify-center items-center p-2">
 

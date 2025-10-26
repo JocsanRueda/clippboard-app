@@ -1,4 +1,4 @@
-import { deleteAllClipboardItems, fixedClipboardItem, removeClipboardItem, updateClipboardItem } from "@/api/tauri/clipboard";
+import { deleteAllClipboardItems, fixedClipboardItem, removeClipboardItem, updateClipboardItem, writeClipboardImage } from "@/api/tauri/clipboard";
 import { orderItemsOptions } from "@/constants/sytem-options";
 import { useClipboardContext } from "@/context/Clipboard-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
@@ -158,9 +158,15 @@ export const History = () => {
   const handleEditClick = (index: number) => () => handleEdit(index);
   const handleSaveClick = (index: number) => (newText: string) => handleSave(index, newText);
   const handleFixedClick = (index: number) => () => handleFixed(index);
-  const handleCopyClick = (text: string) => () => { writeText(text); };
+  const handleCopyClick = (value: string,type:string) => () => {
 
-  console.log(finalData);
+    if(type==="text"){
+      writeText(value);
+    }else{
+      writeClipboardImage(value);
+    }
+
+  };
 
   return (
 
@@ -191,7 +197,7 @@ export const History = () => {
                   handleEdit={handleEditClick(newIndex)}
                   handleSave={handleSaveClick(newIndex)}
                   handleFixed={handleFixedClick(newIndex)}
-                  handleCopy={handleCopyClick(item.value)}
+                  handleCopy={handleCopyClick(item.type==="text"?item.value:item.path??"", item.type)}
                 />
               );
             }):

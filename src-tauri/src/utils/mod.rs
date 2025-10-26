@@ -10,3 +10,4 @@ pub use files::save_image;
 pub use path::get_local_data_path;
 pub use path::GLOBAL_DATA_PATH; 
 pub use files::save_thumbnail;
+pub use files::write_image_command;

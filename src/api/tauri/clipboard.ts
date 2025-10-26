@@ -36,3 +36,12 @@ export const fixedClipboardItem = async (index: number, state: boolean) => {
     console.error("Error updating item:", err);
   }
 };
+
+// write image
+export const writeClipboardImage = async (fileName: string) => {
+  try {
+    await invoke("write_image_command", { fileName: fileName });
+  } catch (err) {
+    console.error("Error writing image:", err);
+  }
+};

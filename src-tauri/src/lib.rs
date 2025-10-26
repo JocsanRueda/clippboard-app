@@ -23,6 +23,7 @@ use std::sync::{Arc, Mutex};
 use tauri::Manager;
 
 use crate::constants::clipboard_key::{FILE_HISTORY, FILE_SETTINGS};
+use crate::utils::files::write_image_command;
 pub struct AppStore(pub Arc<Mutex<Arc<Store<Wry>>>>);
 //use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers, Shortcut, ShortcutState};
 
@@ -98,7 +99,8 @@ pub fn run() {
             delete_item_command,
             delete_all_items_command,
             fixed_item_command,
-            hide_window_command
+            hide_window_command,
+            write_image_command
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

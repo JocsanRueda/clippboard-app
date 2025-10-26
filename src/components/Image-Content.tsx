@@ -3,7 +3,7 @@ import { ImageContentProps } from "@/types/image-content.type";
 
 import { useEffect, useState } from "react";
 
-function ImageContent({ text, url }: ImageContentProps) {
+function ImageContent({ text, url, handleCopy }: ImageContentProps) {
   const [imageSrc, setImageSrc] = useState("");
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function ImageContent({ text, url }: ImageContentProps) {
 
   return (
 
-    <img src={imageSrc} alt={text} className="max-w-full max-h-30 rounded-md shadow-md object-cover aspect-[16/9]" loading="lazy" />
+    <img src={imageSrc} alt={text} className="max-w-full max-h-30 rounded-md shadow-md object-cover aspect-[16/9]" loading="lazy" onClick={handleCopy} />
 
   );
 }

@@ -7,7 +7,8 @@ use std::path::{ PathBuf};
 use tauri::image::Image;
 use crate::utils::path::get_local_data_path;
 use image::imageops::{self,FilterType};
-
+use tauri::{self};
+use tauri_plugin_clipboard_manager::ClipboardExt;
 
 
 pub fn save_thumbnail(image: &Image<'_>)->String{
@@ -135,4 +136,45 @@ pub fn delete_all_images() {
             }
         }
     });
+}
+
+
+
+#[tauri::command]
+pub fn write_image_command(app: tauri::AppHandle, file_name: String){
+
+ std::thread::spawn(move || {
+    print!("Writing image to clipboard: {}", file_name);
+
+    let local_data_path = get_local_data_path().unwrap();
+
+    let full_path =  format!("{}/images/{}.png", local_data_path, file_name);
+    
+    
+    let img = match image::open(&full_path) {
+        Ok(img) => img,
+        Err(e) => {
+            eprintln!("Failed to open image: {}", e);
+            return;
+        }
+    };
+
+  
+    let rgba = img.to_rgba8();
+    let (w, h) = (img.width(), img.height());
+    
+   
+    let raw = rgba.into_raw(); 
+
+  
+    let tauri_img = Image::new(&raw, w, h);
+
+    
+    app.clipboard()
+        .write_image(&tauri_img)
+        .map_err(|e| format!("Failed to write to clipboard: {:?}", e))
+        .unwrap_or_else(|e| eprintln!("{}", e));
+    
+    ();
+});
 }

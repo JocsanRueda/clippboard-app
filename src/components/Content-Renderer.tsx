@@ -11,7 +11,7 @@ function ContentRenderer({ type, value, url,editText, setText,handleCopy }: Cont
     case "text":
       return <TextContentEditor text={value} editText={editText} setText={setText} handleCopy={handleCopy} />;
     case "image":
-      return <ImageContent text={value} url={url } />;
+      return <ImageContent text={value} url={url }  handleCopy={handleCopy} />;
     case "audio":
       return <AudioContent text={value} url={url} />;
     case "video":
