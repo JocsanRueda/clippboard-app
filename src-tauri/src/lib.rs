@@ -25,7 +25,6 @@ use tauri::Manager;
 use crate::constants::clipboard_key::{FILE_HISTORY, FILE_SETTINGS};
 use crate::utils::files::write_image_command;
 pub struct AppStore(pub Arc<Mutex<Arc<Store<Wry>>>>);
-//use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers, Shortcut, ShortcutState};
 
 use crate::tray::setup_tray;
 use crate::utils::{GLOBAL_DATA_PATH};
@@ -58,7 +57,6 @@ pub fn run() {
                 println!("Global variable initialized successfully.");
             }
 
-        
             
             // Setup the tray
             setup_tray(app)?;

@@ -1,26 +1,21 @@
 use crate::utils::data::get_data_now;
 use crate::utils::string::normalize_string;
 use serde_json::json;
+use crate::constants::clipboard_key::{IMAGE, TEXT};
 pub fn add_unique(
-    mut array: Vec<serde_json::Value>,
+     array: &mut Vec<serde_json::Value>,
     value: &str,
-    type_item: &str,
-    path: &str,
-) -> Vec<serde_json::Value> {
+)  {
     let last_value = normalize_string(value);
 
     let timestamp = get_data_now();
 
-    let path_json = if path == "" {
-        serde_json::Value::Null
-    } else {
-        serde_json::Value::String(path.to_string())
-    };
+
     let new_item = json!({
         "value": last_value,
-        "type": type_item,
+        "type": TEXT,
         "fixed": false,
-        "path": path_json,
+        "path": null,
         "timestamp": timestamp
     });
 
@@ -31,5 +26,29 @@ pub fn add_unique(
         array.push(new_item);
     }
 
-    array
+
+}
+
+
+pub fn add_image(
+    array: &mut Vec<serde_json::Value>
+) {
+    let last_value = normalize_string(IMAGE);
+
+    let timestamp = get_data_now();
+
+
+    let new_item = json!({
+        "value": last_value,
+        "type": IMAGE,
+        "fixed": false,
+        "path": format!("image_{}", timestamp),
+        "timestamp": timestamp
+    });
+
+    
+        array.push(new_item);
+    
+
+   
 }

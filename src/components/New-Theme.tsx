@@ -19,7 +19,7 @@ export function NewTheme() {
 
   useResetScroll();
 
-  const handleThemeChange = (property: keyof ThemePreviewProps, value: string | number) => {
+  const handleThemeChange = (property: keyof ThemePreviewProps, value: string | number | boolean) => {
     setTheme((prevTheme) => ({
       ...prevTheme,
       [property]: value,

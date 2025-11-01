@@ -30,6 +30,8 @@ fs = "0.0.5"
 tauri-plugin-fs = "2"
 image = { version = "0.25", features = ["png"] }
 thread-priority = "3.0.0"
+dirs = "6.0.0"
+notify = "8.2.0"
 
 [tauri]
 plugins = ["clipboard"]

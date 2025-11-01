@@ -1,40 +1,37 @@
-use crate::utils::data::get_data_now;
-use image::codecs::png::PngEncoder;
-use image::{ExtendedColorType, ImageEncoder,ImageBuffer,Rgba};
-use std::fs::{self, File};
-use std::io::BufWriter;
+use std::fs::{self, File,copy};
 use std::path::{ PathBuf};
 use tauri::image::Image;
 use crate::utils::path::get_local_data_path;
-use image::imageops::{self,FilterType};
+use image::{DynamicImage};
 use tauri::{self};
 use tauri_plugin_clipboard_manager::ClipboardExt;
 
 
-pub fn save_thumbnail(image: &Image<'_>)->String{
-     let local_data= get_local_data_path().unwrap();
+pub fn save_thumbnail(image: &DynamicImage,file_name: &str){
+    let local_data = match get_local_data_path() {
+        Ok(path) => path,
+        Err(_) => {
+            eprintln!("Failed to get local data path");
+            return; 
+        }
+    };
 
-    print!("local data path: {}",local_data);
-
-    let date_now = get_data_now().to_string();
-
-    let file_name = format!("image_{}", date_now);
-
-    let rgba = image.rgba();
     let width = image.width();
     let height = image.height();
 
     //thumbail  
-    let thumbail_file_name = format!("thumb_image_{}.bmp", date_now);
+    let thumbail_file_name = format!("thumb_{}.bmp", file_name);
     let thumbail_file_path = format!("{}/images/thumbs/{}", local_data, thumbail_file_name);
     let thumbail_path = PathBuf::from(&thumbail_file_path);
 
     if let Some(parent) = thumbail_path.parent() {
-        fs::create_dir_all(parent).expect("not able to create directory");
+      
+        if let Err(e) = fs::create_dir_all(parent) {
+            eprintln!("Failed to create thumbnail directory: {}", e);
+            return ; 
+        }
     }
 
-    let thumb_buffer = ImageBuffer::<Rgba<u8>, Vec<u8>>::from_raw(width, height, rgba.to_vec())
-        .expect("Failed to create ImageBuffer from raw data");
 
     let (new_width, new_height) = if width > 300 {
         let ratio = height as f32 / width as f32;
@@ -42,50 +39,48 @@ pub fn save_thumbnail(image: &Image<'_>)->String{
     } else {
         (width, height)
     };
+    
 
 
-    let thumb=imageops::resize(&thumb_buffer, new_width, new_height, FilterType::Nearest);
+    let thumb=image.thumbnail(new_width, new_height);
 
-    thumb.save(&thumbail_path).expect("Failed to save thumbail");
+    if let Err(e) = thumb.save(&thumbail_path) {
+        // This is not a critical failure. The main image might still save.
+        // We log the error but still return the file_name.
+        eprintln!("Failed to save thumbnail file: {}", e);
+    }
 
 
-    file_name
+    
     
 }
 
-
-pub fn save_image(image: &Image<'_>,file_name: String)  {
+pub fn copy_image(origin_path: &PathBuf,file_name: &str)  {
 
     let local_data= get_local_data_path().unwrap();
-
-
 
     let file_path = format!("{}/images/{}.png", local_data, file_name);
 
     let path = PathBuf::from(&file_path);
 
     if let Some(parent) = path.parent() {
-        fs::create_dir_all(parent).expect("not able to create directory");
+        if let Err(e) = fs::create_dir_all(parent) {
+            eprintln!("Failed to create images directory: {}", e);
+            return;
+        }
     }
 
-    let rgba = image.rgba();
-    let width = image.width();
-    let height = image.height();
+    let _ = match File::create(&path) {
+        Ok(f) => f,
+        Err(e) => {
+            eprintln!("Failed to create image file [{}]: {}", path.display(), e);
+            return; 
+        }
+    };
 
-    let file = File::create(&path).expect("Unable to save image");
-
-    let writer = BufWriter::new(file);
-
-    let encoder = PngEncoder::new_with_quality(
-        writer, 
-        image::codecs::png::CompressionType::Fast,
-        image::codecs::png::FilterType::Sub,
-        );
-
-    encoder
-        .write_image(rgba, width, height, ExtendedColorType::Rgba8)
-        .expect("Failed to encode image");
-
+    if let Err(e) = copy(&origin_path, &path) {
+        eprintln!("Failed to copy file: {}", e);
+    }
 }
 
 
