@@ -136,40 +136,40 @@ pub fn delete_all_images() {
 
 
 #[tauri::command]
-pub fn write_image_command(app: tauri::AppHandle, file_name: String){
-
- std::thread::spawn(move || {
-    print!("Writing image to clipboard: {}", file_name);
-
-    let local_data_path = get_local_data_path().unwrap();
-
-    let full_path =  format!("{}/images/{}.png", local_data_path, file_name);
-    
-    
-    let img = match image::open(&full_path) {
-        Ok(img) => img,
-        Err(e) => {
-            eprintln!("Failed to open image: {}", e);
-            return;
-        }
-    };
-
-  
-    let rgba = img.to_rgba8();
-    let (w, h) = (img.width(), img.height());
-    
-   
-    let raw = rgba.into_raw(); 
-
-  
-    let tauri_img = Image::new(&raw, w, h);
+pub async fn write_image_command(
+    app: tauri::AppHandle, 
+    file_name: String
+) -> Result<(), String> { 
 
     
-    app.clipboard()
-        .write_image(&tauri_img)
-        .map_err(|e| format!("Failed to write to clipboard: {:?}", e))
-        .unwrap_or_else(|e| eprintln!("{}", e));
-    
-    ();
-});
+    let task_result = tauri::async_runtime::spawn_blocking(move || -> Result<(), String> {
+        
+        
+        let local_data_path = get_local_data_path()
+            .map_err(|e| format!("Error al obtener data path: {}", e))?;
+
+        let full_path =  format!("{}/images/{}.png", local_data_path, file_name);
+        
+        let img = image::open(&full_path)
+            .map_err(|e| format!("Error al abrir la imagen: {}", e))?;
+
+        let rgba = img.to_rgba8();
+        let (w, h) = (img.width(), img.height());
+        let raw = rgba.into_raw(); 
+
+        let tauri_img = Image::new(&raw, w, h);
+
+        app.clipboard()
+            .write_image(&tauri_img)
+            .map_err(|e| format!("Error al escribir al portapapeles: {:?}", e))?;
+        
+        Ok(())
+    }).await;
+
+ 
+    match task_result {
+        Ok(Ok(_)) => Ok(()), 
+        Ok(Err(e)) => Err(e),
+        Err(e) => Err(format!("Error al ejecutar la tarea: {}", e)), 
+    }
 }

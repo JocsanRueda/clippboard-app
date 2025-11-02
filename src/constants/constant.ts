@@ -36,3 +36,4 @@ export const THEME={
   LIGHT:"light"
 };
 
+export const COPY_COLDOWN_TIME=400; // milliseconds

@@ -9,11 +9,12 @@ import { ItemClipboard } from "@/types/item-clipboard.type";
 import { newItemPayload } from "@/types/new-item-payload";
 import { add } from "@/utils/array";
 import { clear, writeText } from "@tauri-apps/plugin-clipboard-manager";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
 
 import { NoResult } from "./Not-Result";
+import { COPY_COLDOWN_TIME } from "@/constants/constant";
 
 export const History = () => {
 
@@ -22,6 +23,8 @@ export const History = () => {
   const {settings} = useSystemSettingsContext();
 
   const [filter, setFilter] = useState<string>("");
+
+  const copyCoolDownRef=useRef<Record<string,number>>({});
 
   // Save the dataList to the store whenever it changes
   useClipboardWatcher((newText) => {
@@ -158,12 +161,29 @@ export const History = () => {
   const handleEditClick = (index: number) => () => handleEdit(index);
   const handleSaveClick = (index: number) => (newText: string) => handleSave(index, newText);
   const handleFixedClick = (index: number) => () => handleFixed(index);
-  const handleCopyClick = (value: string,type:string) => () => {
 
-    if(type==="text"){
-      writeText(value);
-    }else{
-      writeClipboardImage(value);
+  const handleCopyClick = (value: string,type:string) => async () => {
+
+    const key = `${type}-${value}`;
+    const now = Date.now();
+    const lastCopyTime = copyCoolDownRef.current[key] || 0;
+    if (now - lastCopyTime <  COPY_COLDOWN_TIME) return;
+
+    copyCoolDownRef.current[key] = now;
+
+    try{
+      if(type==="text"){
+        await writeText(value);
+      }else{
+        await writeClipboardImage(value);
+
+      }
+    }finally{
+
+      // eslint-disable-next-line no-undef
+      setTimeout(()=>{
+        delete copyCoolDownRef.current[key];
+      },COPY_COLDOWN_TIME);
     }
 
   };

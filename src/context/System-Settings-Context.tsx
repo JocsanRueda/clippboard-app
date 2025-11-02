@@ -21,14 +21,14 @@ export const SystemSettingsProvider:React.FC<{children: React.ReactNode}> = ({ c
   useEffect(()=>{
     async function loadSettings(){
       const s= await getSettings();
+      console.log(s);
       if(s){
 
-        const newSystemSettings={
-          ...DEFAULT_SYSTEM_SETTINGS,
-          ...s
-        };
+        setSystemSettings(s);
+      }else{
+        saveSettings(DEFAULT_SYSTEM_SETTINGS);
+        setSystemSettings(DEFAULT_SYSTEM_SETTINGS);
 
-        setSystemSettings(newSystemSettings);
       }
 
     }

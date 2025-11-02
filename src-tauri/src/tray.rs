@@ -5,6 +5,8 @@ use tauri::{
     App, Manager, Wry,
 };
 
+use crate::window::{show_window_command, hide_window_command};
+
 pub fn setup_tray(app: &App<Wry>) -> tauri::Result<()> {
     let show_i = MenuItem::with_id(app, "show", "Show", true, None::<&str>)?;
     let hidden_i = MenuItem::with_id(app, "hidden", "Hidden", true, None::<&str>)?;
@@ -16,15 +18,14 @@ pub fn setup_tray(app: &App<Wry>) -> tauri::Result<()> {
         .on_menu_event(|app, event| match event.id.as_ref() {
             "show" => {
                 if let Some(window) = app.get_webview_window("main") {
-                    let _ = window.unminimize();
-                    let _ = window.show();
-                    let _ = window.set_focus();
-                    println!("Ventana mostrada");
+                    
+                    show_window_command(window);
+                  
                 }
             }
             "hidden" => {
                 if let Some(window) = app.get_webview_window("main") {
-                    let _ = window.hide();
+                    hide_window_command(window);
                 }
             }
             _ => println!("Evento de menú no manejado: {:?}", event.id),

@@ -1,6 +1,7 @@
 use crate::constants::clipboard_event::NEW_ITEM;
 use crate::constants::clipboard_key::{ TEXT};
 use crate::constants::string::EMPTY;
+use crate::constants::file::MAX_SIZE_BYTES;
 use crate::store::store::save_store;
 use crate::utils::array::{add_image, add_unique};
 use crate::utils::files::{ save_thumbnail,copy_image};
@@ -17,6 +18,7 @@ use tauri_plugin_store::Store;
 use thread_priority::{set_current_thread_priority, ThreadPriority};
 use crate::utils::get_screenshot_path;
 use notify::{Config, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
+use std::fs::metadata;
 
 /// Starts a clipboard watcher that monitors the clipboard for changes
 pub fn start_clipboard_watcher(
@@ -36,6 +38,21 @@ pub fn start_clipboard_watcher(
             let _ = set_current_thread_priority(ThreadPriority::Min);
 
             for path in rx_fast {
+
+
+
+            let metadata= match metadata(&path) {
+                Ok(meta) => meta,
+                Err(e) => {
+                    eprintln!("Failed to get metadata for file {:?}: {}", path, e);
+                    continue;
+                }
+            };
+
+
+            if metadata.len() > MAX_SIZE_BYTES {
+                continue;
+            }
 
             //open image
             let new_image= match  image::open(&path) {

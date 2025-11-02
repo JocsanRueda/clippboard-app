@@ -1,16 +1,18 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 
-mod clipboard_watcher;
+mod watchers;
 pub mod constants;
 pub mod store;
 pub mod structures;
 mod tray;
 pub mod utils;
 pub mod window;
+pub mod shortcut;
 
-use tauri::Wry;
+use tauri::{Wry, WindowEvent,Manager};
 use tauri_plugin_store::Store;
 use tauri_plugin_store::StoreExt;
+use crate::shortcut::setup_global_shortcut;
 
 use crate::store::store::{
     clean_store, delete_all_items_command, delete_item_command, fixed_item_command, get_settings,
@@ -20,7 +22,6 @@ use crate::store::store::{
 use crate::window::{hide_window_command};
 
 use std::sync::{Arc, Mutex};
-use tauri::Manager;
 
 use crate::constants::clipboard_key::{FILE_HISTORY, FILE_SETTINGS};
 use crate::utils::files::write_image_command;
@@ -32,12 +33,38 @@ use crate::utils::{GLOBAL_DATA_PATH};
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .setup(|app| {
+
+            // Initialize settings value
+            let store_settings = app.store(FILE_SETTINGS).expect("Failed to open store");
+            
+
+            let settings = get_settings(&store_settings);
+
+
+            println!("App settings: {:?}", settings);
+
+            let app_handle = app.handle().clone();
+            
+            // Escucha eventos en la ventana principal
+            if let Some(window) = app_handle.get_webview_window("main") {
+                window.on_window_event(move |event| {
+                    if let WindowEvent::CloseRequested { api, .. } = event {
+                      
+                        api.prevent_close();
+
+                        let window = app_handle.get_webview_window("main").unwrap();
+                        hide_window_command(window);
+
+                    }
+                });
+            }
+
 
 
 
@@ -57,15 +84,14 @@ pub fn run() {
                 println!("Global variable initialized successfully.");
             }
 
-            
+            // Setup global shortcut
+            setup_global_shortcut(app, settings.keyboard_shortcuts.clone())?;
+
             // Setup the tray
             setup_tray(app)?;
             
 
-            // Initialize settings value
-            let store_settings = app.store(FILE_SETTINGS).expect("Failed to open store");
-
-            let settings = get_settings(&store_settings);
+            
 
             // Initialize the store
             let store = app.store(FILE_HISTORY).expect("Failed to open store");
@@ -82,7 +108,7 @@ pub fn run() {
             let global_history = Arc::new(Mutex::new(initial_history));
             app.manage(global_history.clone());
 
-            clipboard_watcher::start_clipboard_watcher(
+            watchers::start_clipboard_watcher(
                 app.handle().clone(),
                 global_store.clone(),
                 global_history.clone(),

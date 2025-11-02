@@ -7,6 +7,7 @@ import { useState } from "react";
 import { IoArrowForwardOutline } from "react-icons/io5";
 import ContentSettings from "./Content-Settings";
 import Dropdown from "./UI-Components/Dropdown";
+import ShortcutInput from "./UI-Components/Shorcut-input";
 export function SystemSettings(){
 
   const {handlePage}= usePageContext();
@@ -34,12 +35,11 @@ export function SystemSettings(){
     limitItemsOptions,
     languagesOptions,
     orderItemsOptions,
-    keyboardLaunchOptions,
     roundedWindowOptions
   ];
 
   return(
-    <div className="w-full max-w-md flex flex-col justify-center items-center p-2">
+    <div className="w-full max-w-md flex flex-col justify-center items-center p-2 mb-5">
 
       <ContentSettings label="Theme" className="rounded-t-md border-width-selected py-3">
 
@@ -48,7 +48,7 @@ export function SystemSettings(){
       </ContentSettings>
 
       {settingsConfig.map((cfg, idx) => (
-        <ContentSettings label={cfg.label} key={cfg.key} className={`border-x-4 border-b-width-selected ${idx===settingsConfig.length-1?"rounded-b-md":""}`}>
+        <ContentSettings label={cfg.label} key={cfg.key} className={"border-x-4 border-b-width-selected"}>
           <Dropdown
             options={cfg.items}
             onSelect={(value) => handleSelect(cfg.key as keyof SystemSettingsProps, value)}
@@ -57,7 +57,16 @@ export function SystemSettings(){
             onToggle={() => handleDropdownToggle(idx)}
           />
         </ContentSettings>
+
       ))}
+      <ContentSettings label="Keyboard Launch" className="border-x-width-selected border-b-width-selected rounded-b-md ">
+        <ShortcutInput
+          value={settings.keyboard_shortcuts}
+          onChange={(combo) => handleSelect(keyboardLaunchOptions.key as keyof SystemSettingsProps, combo ?? "")}
+          placeholder="Pulsa la combinación"
+        />
+      </ContentSettings>
+
     </div>
   );
 }

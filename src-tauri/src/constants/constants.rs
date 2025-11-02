@@ -15,3 +15,7 @@ pub mod clipboard_event {
 pub mod string {
     pub const EMPTY: &str = "";
 }
+
+pub mod file {
+    pub const MAX_SIZE_BYTES: u64 = 4 * 1024 * 1024; // 10 MB
+}
