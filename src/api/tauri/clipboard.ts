@@ -45,3 +45,22 @@ export const writeClipboardImage = async (fileName: string) => {
     console.error("Error writing image:", err);
   }
 };
+
+// turn on shortcuts
+export const onShortcuts = async (keys: string) => {
+  try {
+    await invoke("on_shortcuts_command", { keys: keys });
+  } catch (err) {
+    console.error("Error turning on shortcuts:", err);
+  }
+};
+
+// turn off shortcuts
+export const offShortcuts = async (keys: string) => {
+  try {
+    await invoke("off_shortcuts_command", { keys: keys });
+  } catch (err) {
+    console.error("Error turning off shortcuts:", err);
+  }
+};
+

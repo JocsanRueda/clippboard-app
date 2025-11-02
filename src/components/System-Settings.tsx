@@ -1,9 +1,10 @@
+import { offShortcuts, onShortcuts } from "@/api/tauri/clipboard";
 import { PAGES } from "@/constants/constant";
 import { keyboardLaunchOptions, languagesOptions, limitItemsOptions, orderItemsOptions, roundedWindowOptions, timeOptions } from "@/constants/sytem-options";
 import { usePageContext } from "@/context/Page-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { SystemSettings as SystemSettingsProps } from "@/types/system-settings.type";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoArrowForwardOutline } from "react-icons/io5";
 import ContentSettings from "./Content-Settings";
 import Dropdown from "./UI-Components/Dropdown";
@@ -14,7 +15,34 @@ export function SystemSettings(){
 
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
 
+  const [isEditing, setIsEditing]= useState<boolean>(false);
+
   const {settings, setSystemSettings} = useSystemSettingsContext();
+
+  const shorcutsRef= useRef<string>(settings.keyboard_shortcuts);
+
+  useEffect(()=>{
+
+    const handleEditing = async ()=>{
+
+      try{
+        if(isEditing){
+
+          await offShortcuts(shorcutsRef.current);
+        }else{
+
+          await onShortcuts(shorcutsRef.current);
+
+        }
+
+      }catch(error){
+        console.error("Failed to set editing state", error);
+      }
+
+    };
+
+    handleEditing();
+  },[isEditing]);
 
   const handleDropdownToggle = (dropdownId: number) => {
     setOpenDropdown((prev) => (prev === dropdownId ? null : dropdownId));
@@ -28,6 +56,11 @@ export function SystemSettings(){
 
     setSystemSettings(newSettings);
 
+  };
+
+  const handleShorcutChange = async (combo: string) => {
+    handleSelect(keyboardLaunchOptions.key as keyof SystemSettingsProps, combo);
+    shorcutsRef.current = combo;
   };
 
   const settingsConfig = [
@@ -62,8 +95,9 @@ export function SystemSettings(){
       <ContentSettings label="Keyboard Launch" className="border-x-width-selected border-b-width-selected rounded-b-md ">
         <ShortcutInput
           value={settings.keyboard_shortcuts}
-          onChange={(combo) => handleSelect(keyboardLaunchOptions.key as keyof SystemSettingsProps, combo ?? "")}
+          onChange={(combo) => handleShorcutChange(combo ?? "")}
           placeholder="Pulsa la combinación"
+          setEditing={setIsEditing}
         />
       </ContentSettings>
 

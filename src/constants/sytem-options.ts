@@ -38,7 +38,7 @@ export const keyboardLaunchOptions = {
   label:"Keyboard launch",
   key:"keyboard_shortcuts",
   items: [
-    { label: "Ctrl+H", value: "ctrl+h" },
+    { label: "Ctrl+H", value: "Ctrl+H" },
   ],
   defaultValue: 0
 };

@@ -1,8 +1,10 @@
+import { keyboardLaunchOptions } from "@/constants/sytem-options";
 import { useEffect, useRef, useState } from "react";
-
 type Props = {
   value?: string | null;
   placeholder?: string;
+  // eslint-disable-next-line no-unused-vars
+  setEditing?: (state: boolean) => void;
 
   // eslint-disable-next-line no-unused-vars
   onChange: (combo: string | null) => void;
@@ -27,6 +29,7 @@ const KEY_MAP: Record<string, string> = {
 };
 
 const MODIFIER_KEYS = ["Control", "Alt", "Shift", "Meta"];
+const MODIFIER_ALIASES=["Ctrl","Alt","Shift","Meta"];
 const MODIFIER_ORDER: Record<string, number> = {
   Ctrl: 0, Alt: 1, Shift: 2, Meta: 3,
 };
@@ -39,15 +42,15 @@ const normalizeKey = (key: string): string =>
 const modifiersFromEvent = (e: KeyboardEvent): string[] => {
   let i = 0;
   const mods: string[] = [];
-  if (e.ctrlKey) mods[i++] = "Ctrl";
-  if (e.altKey) mods[i++] = "Alt";
-  if (e.shiftKey) mods[i++] = "Shift";
-  if (e.metaKey) mods[i++] = "Meta";
+  if (e.ctrlKey) mods[i++] = MODIFIER_ALIASES[0];
+  if (e.altKey) mods[i++] = MODIFIER_ALIASES[1];
+  if (e.shiftKey) mods[i++] = MODIFIER_ALIASES[2];
+  if (e.metaKey) mods[i++] = MODIFIER_ALIASES[3];
   if (i > 1) mods.sort((a, b) => MODIFIER_ORDER[a] - MODIFIER_ORDER[b]);
   return mods;
 };
 
-export default function ShortcutInput({ value, placeholder, onChange }: Props) {
+export default function ShortcutInput({ value, placeholder, onChange, setEditing }: Props) {
   const [display, setDisplay] = useState(value ?? "");
   const listening = useRef(false);
   const lastValue = useRef(value ?? "");
@@ -70,7 +73,10 @@ export default function ShortcutInput({ value, placeholder, onChange }: Props) {
 
       const key = e.key;
 
-      // Mostrar modificadores mientras se mantienen
+      console.log("Key pressed:", key);
+
+      console.log("Modifier keys state:", e.key);
+
       if (MODIFIER_KEYS.includes(key)) {
         const mods = modifiersFromEvent(e);
         setDisplay(mods.join("+"));
@@ -94,6 +100,7 @@ export default function ShortcutInput({ value, placeholder, onChange }: Props) {
       const combo = (() => {
         const mods = modifiersFromEvent(e);
         const main = normalizeKey(key);
+
         return mods.length ? `${mods.join("+")}+${main}` : main;
       })();
 
@@ -110,11 +117,35 @@ export default function ShortcutInput({ value, placeholder, onChange }: Props) {
 
   const start = () => {
     listening.current = true;
+    setEditing?.(true);
     setDisplay("");
   };
 
   const stop = () => {
     listening.current = false;
+    setEditing?.(false);
+
+    if (!display.includes("+")) {
+
+      const defaultValues= keyboardLaunchOptions.items[0].value.split("+");
+      const mod= defaultValues[0];
+      const key= defaultValues[1];
+
+      if (!MODIFIER_ALIASES.some(mod=> display.includes(mod))) {
+
+        const newDisplay= `${mod}+${display}`;
+        setDisplay(newDisplay);
+        onChange(newDisplay);
+
+      }else{
+        const newDisplay= `${display}+${key}`;
+        setDisplay(newDisplay);
+        onChange(newDisplay);
+
+      }
+
+    }
+
   };
 
   return (

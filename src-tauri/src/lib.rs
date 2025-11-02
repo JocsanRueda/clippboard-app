@@ -12,7 +12,7 @@ pub mod shortcut;
 use tauri::{Wry, WindowEvent,Manager};
 use tauri_plugin_store::Store;
 use tauri_plugin_store::StoreExt;
-use crate::shortcut::setup_global_shortcut;
+use crate::shortcut::{setup_global_shortcut,on_shortcuts_command,off_shortcuts_command};
 
 use crate::store::store::{
     clean_store, delete_all_items_command, delete_item_command, fixed_item_command, get_settings,
@@ -85,7 +85,7 @@ pub fn run() {
             }
 
             // Setup global shortcut
-            setup_global_shortcut(app, settings.keyboard_shortcuts.clone())?;
+            setup_global_shortcut(&app.handle().clone(), settings.keyboard_shortcuts.clone())?;
 
             // Setup the tray
             setup_tray(app)?;
@@ -124,7 +124,9 @@ pub fn run() {
             delete_all_items_command,
             fixed_item_command,
             hide_window_command,
-            write_image_command
+            write_image_command,
+            on_shortcuts_command,
+            off_shortcuts_command
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

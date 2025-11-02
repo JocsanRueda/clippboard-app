@@ -1,9 +1,11 @@
-
 use tauri_plugin_global_shortcut::{
     self, Code, GlobalShortcutExt, Modifiers, Shortcut, ShortcutState,
 };
 
-use crate::window::show_window_command;
+use crate::{ window::show_window_command};
+use tauri::{AppHandle};
+
+
 
 pub fn parse_shortcut(keys: Vec<&str>) -> Option<Shortcut> {
     let mut modifiers = Modifiers::empty();
@@ -57,8 +59,8 @@ pub fn parse_shortcut(keys: Vec<&str>) -> Option<Shortcut> {
     key_code.map(|code| Shortcut::new(Some(modifiers), code))
 }
 
-/// Registra el plugin de atajos globales y el atajo para mostrar/ocultar la ventana.
-pub fn setup_global_shortcut(app: &tauri::App, keys: String) -> Result<(), Box<dyn std::error::Error>> {
+
+pub fn setup_global_shortcut(app: &AppHandle, keys: String) -> Result<(), Box<dyn std::error::Error>> {
     
     #[cfg(desktop)]
     {
@@ -72,7 +74,15 @@ pub fn setup_global_shortcut(app: &tauri::App, keys: String) -> Result<(), Box<d
 
         let manager = app.global_shortcut();
 
+        if manager.is_registered(shortcut.clone()) {
+            return Ok(());
+        } else {
+            manager.unregister_all()?;
+        }
+
             let _= manager.on_shortcut(shortcut.clone(), move |app_handle, _shortcut, event| {
+
+                
                 match event.state() {
                     ShortcutState::Pressed => {
                         use tauri::Manager;
@@ -93,3 +103,24 @@ pub fn setup_global_shortcut(app: &tauri::App, keys: String) -> Result<(), Box<d
 }
 
 
+
+
+#[tauri::command]
+pub fn off_shortcuts_command (app: AppHandle) -> Result<(), String> {
+
+
+    app.global_shortcut().unregister_all().map_err(|e| e.to_string())
+}   
+
+#[tauri::command]
+pub fn  on_shortcuts_command(
+    app: AppHandle, keys: String
+) -> Result<(), String> {
+
+    println!("registes {}",keys);
+
+    setup_global_shortcut(&app, keys).map_err(|e| e.to_string())
+
+
+
+}
