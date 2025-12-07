@@ -8,4 +8,6 @@ export type ThemePreviewProps = {
   userTheme?: boolean;
   onDelete?: () => void;
   onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };

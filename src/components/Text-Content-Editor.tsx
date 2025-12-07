@@ -15,7 +15,7 @@ export function TextContentEditor({ text, editText, setText, handleCopy}: TextCo
   } else {
     return (
       <p
-        className="text-gray-950 dark:text-white text-sm font-light tracking-tight break-all" onClick={handleCopy}
+        className="text-gray-950 dark:text-white font-light tracking-tight break-all pointer-events-none text-(length:--text-base)" onClick={handleCopy}
       >
         {truncateString(text, MAX_TEXT_LENGTH)}
       </p>

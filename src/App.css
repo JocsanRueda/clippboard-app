@@ -3,8 +3,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 
-
 @theme {
+
+   
 
   --color-default-primary-light: #f3f4f6;
   --color-default-secondary-light: #99a1af;
@@ -15,7 +16,7 @@
   --color-tertiary: #334155;
   --color-quaternary: #ffffff;
 
-
+  
   --color-primary-dark: color-mix(in srgb, var(--color-primary)70%, black);
   --color-primary-light: color-mix(in srgb, var(--color-primary)80%, white);
   
@@ -30,12 +31,16 @@
 
   --color-quaternary-dark: color-mix(in srgb, var(--color-quaternary)70%, black);
   --color-quaternary-light: color-mix(in srgb, var(--color-quaternary)80%, white);
-
-  --border-width-min:calc(var(--border-width) - 1px);
-  
   
 }
 
+
+
+
+.text-size {
+  font-size: var(--text-base);
+  line-height: calc(var(--text-base) * 1.5);
+}
 
 .border-width-selected {
     border-width: var(--border-width);
@@ -60,6 +65,11 @@
     border-right-width: var(--border-width);
   }
 
+  .border-y-width-selected {
+    border-top-width: var(--border-width);
+    border-bottom-width: var(--border-width);
+  }
+
  
  .border-width-min-selected{
   border-width: calc(var(--border-width) - 1px);
@@ -72,3 +82,17 @@
  .ring-width-selected{
  box-shadow: 0 0 0 calc(var(--border-width)-1px) var(--color-tertiary);
  }
+
+
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+.no-spinner {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}

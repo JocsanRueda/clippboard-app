@@ -1,10 +1,12 @@
 import { DEFAULT_THEME_INDEX, THEME } from "@/constants/constant";
 import { ThemeFile, ThemesFileJson } from "@/types/theme.type";
 import themesJson from "../themes/themes.json";
-import { getLocalStorageTheme, saveLocalStorageTheme } from "./localStorage";
+import { getLocalStorageSettings, getLocalStorageTheme, saveLocalStorageTheme } from "./localStorage";
 import { getUserThemes } from "./store";
 
-export function applyTheme(theme: ThemeFile) {
+export async function applyTheme(theme: ThemeFile) {
+
+  const systemSettings=getLocalStorageSettings();
 
   const root = document.documentElement;
   root.style.setProperty("--color-primary", theme.primaryColor);
@@ -12,10 +14,17 @@ export function applyTheme(theme: ThemeFile) {
   root.style.setProperty("--color-tertiary", theme.tertiaryColor);
   root.style.setProperty("--border-width", theme.borderWidth);
 
-  saveLocalStorageTheme(theme);
+  if (systemSettings?.font_size) {
+    root.style.fontSize = systemSettings.font_size;
+  }
 
+  saveLocalStorageTheme(theme);
 }
 
+export function applyFontSize(fontSize: string) {
+  const root = document.documentElement;
+  root.style.fontSize = fontSize;
+}
 export function resetTheme() {
 
   const root = document.documentElement;
@@ -24,6 +33,7 @@ export function resetTheme() {
   root.style.removeProperty("--border-width");
   root.style.removeProperty("--color-tertiary");
   root.style.removeProperty("--font-type");
+  root.style.removeProperty("--font-size");
 
 }
 

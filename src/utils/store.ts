@@ -3,6 +3,7 @@ import { SystemSettings } from "@/types/system-settings.type";
 import { ThemeFile } from "@/types/theme.type";
 import { Store } from "@tauri-apps/plugin-store";
 import { CLIPBOARD_KEY, DEFAULT_THEME_ID } from "../constants/constant";
+import { getLocalStorageSettings, saveLocalStorageSettings } from "./localStorage";
 
 // Use Store.load to get a Store instance
 let stores : Record<string, Store> = {};
@@ -35,6 +36,10 @@ export async function saveSettings(settings:SystemSettings){
     const s= await getStoreInstance(CLIPBOARD_KEY.FILE_SETTINGS);
     await s.set(CLIPBOARD_KEY.SETTINGS,settings);
     await s.save();
+
+    //save local storage
+    saveLocalStorageSettings(settings);
+
   }catch (error) {
     console.error("Error saving settings:", error);
     throw error;
@@ -45,6 +50,12 @@ export async function saveSettings(settings:SystemSettings){
 export async function getSettings():Promise<SystemSettings | null>{
 
   try{
+
+    //search in local storage first
+    const settingsStorage= getLocalStorageSettings();
+    if(settingsStorage) return settingsStorage;
+
+    //search in store
     const s= await getStoreInstance(CLIPBOARD_KEY.FILE_SETTINGS);
     const settings= await s.get<SystemSettings>(CLIPBOARD_KEY.SETTINGS);
     return settings || null;

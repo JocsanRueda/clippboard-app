@@ -5,4 +5,5 @@ export type SystemSettings={
   order_items:string;
   language:string;
   rounded_window:boolean;
+  font_size:string;
 }

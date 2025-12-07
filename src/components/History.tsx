@@ -1,4 +1,4 @@
-import { deleteAllClipboardItems, fixedClipboardItem, removeClipboardItem, updateClipboardItem, writeClipboardImage } from "@/api/tauri/clipboard";
+import { deleteAllClipboardItems, fixedClipboardItem, getSystemFont, removeClipboardItem, updateClipboardItem, writeClipboardImage } from "@/api/tauri/clipboard";
 import { orderItemsOptions } from "@/constants/sytem-options";
 import { useClipboardContext } from "@/context/Clipboard-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
@@ -9,7 +9,7 @@ import { ItemClipboard } from "@/types/item-clipboard.type";
 import { newItemPayload } from "@/types/new-item-payload";
 import { add } from "@/utils/array";
 import { clear, writeText } from "@tauri-apps/plugin-clipboard-manager";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
 
@@ -17,6 +17,15 @@ import { NoResult } from "./Not-Result";
 import { COPY_COLDOWN_TIME } from "@/constants/constant";
 
 export const History = () => {
+
+  useEffect(() => {
+    const font = async () => {
+      const systemFont = await getSystemFont();
+      console.log("System Font:", systemFont);
+    };
+
+    font();
+  }, []);
 
   const {dataList,setDataList,toggleActions,setToggleActions} = useClipboardContext();
 
@@ -152,7 +161,7 @@ export const History = () => {
       return index;
     }
 
-    return finalData.length - 1 - index;
+    return finalData.length - index-1;
 
   }, [settings.order_items, finalData.length]);
 
@@ -162,7 +171,13 @@ export const History = () => {
   const handleSaveClick = (index: number) => (newText: string) => handleSave(index, newText);
   const handleFixedClick = (index: number) => () => handleFixed(index);
 
-  const handleCopyClick = (value: string,type:string) => async () => {
+  const handleCopyClick = (index: number) => async () => {
+
+    console.log("copy index",index);
+    console.log("final data",finalData);
+
+    const item = finalData[index];
+    const {type,value,path} = item;
 
     const key = `${type}-${value}`;
     const now = Date.now();
@@ -172,10 +187,14 @@ export const History = () => {
     copyCoolDownRef.current[key] = now;
 
     try{
+
       if(type==="text"){
+
         await writeText(value);
+
       }else{
-        await writeClipboardImage(value);
+        await clear();
+        await writeClipboardImage(path??"");
 
       }
     }finally{
@@ -195,7 +214,7 @@ export const History = () => {
       <TopBar deleteFunction={deleteAllItem} setFilter={setFilter} filter={filter} />
 
       <div className="flex-1 overflow-y-auto overflow-x-hidden">
-        <h2 className="text-gray-900 dark:text-quaternary text-base font-light tracking-tight mx-3">
+        <h2 className="text-gray-900 dark:text-quaternary font-light tracking-tight mx-3">
           History
         </h2>
 
@@ -217,7 +236,7 @@ export const History = () => {
                   handleEdit={handleEditClick(newIndex)}
                   handleSave={handleSaveClick(newIndex)}
                   handleFixed={handleFixedClick(newIndex)}
-                  handleCopy={handleCopyClick(item.type==="text"?item.value:item.path??"", item.type)}
+                  handleCopy={handleCopyClick(index)}
                 />
               );
             }):

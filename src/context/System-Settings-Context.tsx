@@ -20,17 +20,15 @@ export const SystemSettingsProvider:React.FC<{children: React.ReactNode}> = ({ c
 
   useEffect(()=>{
     async function loadSettings(){
-      const s= await getSettings();
-      console.log(s);
-      if(s){
 
+      const s= await getSettings();
+      if(s){
         setSystemSettings(s);
       }else{
         saveSettings(DEFAULT_SYSTEM_SETTINGS);
         setSystemSettings(DEFAULT_SYSTEM_SETTINGS);
 
       }
-
     }
 
     loadSettings();
@@ -41,6 +39,7 @@ export const SystemSettingsProvider:React.FC<{children: React.ReactNode}> = ({ c
     setSystemSettings(settings);
     try{
       await saveSettings(settings);
+
     }catch (error) {
       console.error("Error saving settings:", error);
     }
@@ -57,7 +56,7 @@ export const SystemSettingsProvider:React.FC<{children: React.ReactNode}> = ({ c
 
 };
 
-export function useSystemSettingsContext() {
+export function                     useSystemSettingsContext() {
   const ctx= React.useContext(SystemSettingsContext);
   if(!ctx) throw new Error("useSystemSettingsContext must be used within a SystemSettingsProvider");
   return ctx;

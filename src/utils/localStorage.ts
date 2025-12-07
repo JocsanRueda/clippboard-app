@@ -1,4 +1,6 @@
+import { SystemSettings } from "@/types/system-settings.type";
 import { Theme, ThemeFile } from "@/types/theme.type";
+import { applyFontSize } from "./theme";
 
 export function saveLocalStorageTheme(theme: Theme) {
   // eslint-disable-next-line no-undef
@@ -14,6 +16,27 @@ export function getLocalStorageTheme(): ThemeFile | null {
       return parsedTheme;
     } catch (error) {
       console.error("Error parsing theme from localStorage:", error);
+      return null;
+    }
+  }
+  return null;
+}
+
+export function saveLocalStorageSettings(settings: SystemSettings ) {
+  // eslint-disable-next-line no-undef
+  localStorage.setItem("systemSettings", JSON.stringify(settings));
+  applyFontSize(settings.font_size);
+}
+
+export function getLocalStorageSettings(): SystemSettings | null {
+  // eslint-disable-next-line no-undef
+  const settings = localStorage.getItem("systemSettings");
+  if (settings) {
+    try {
+      const parsedSettings = JSON.parse(settings);
+      return parsedSettings;
+    } catch (error) {
+      console.error("Error parsing system settings from localStorage:", error);
       return null;
     }
   }

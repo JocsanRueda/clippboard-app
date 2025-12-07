@@ -15,6 +15,7 @@ export function ThemeSettings() {
   const {themeId, setThemeId}= useThemeContext();
   const [userThemes, setUserThemes] = useState<ThemeFile[]>([]);
   const [allThemes, setAllThemes] = useState<ThemeFile[]>(getThemes());
+  const [hoveredThemeId, setHoveredThemeId] = useState<number | null>(null);
 
   // load user themes from store
   useEffect(()=>{
@@ -54,7 +55,7 @@ export function ThemeSettings() {
 
   return(
     <div className="grid grid-cols-3  place-items-center gap-2 mb-3">
-      <h2 className="col-span-3 text-sm font-semibold dark:text-white">{allThemes[themeIndex]?.name ?? "loading..."}</h2>
+      <h2 className="col-span-3 text-sm font-semibold dark:text-white fixed z-10 left-1/2 -translate-x-1/2 ">{ (hoveredThemeId !== null ? allThemes[hoveredThemeId]?.name : allThemes[themeIndex]?.name ?? "loading...")}</h2>
       {allThemes.map((theme,index)=>{
 
         return <ThemePreview
@@ -68,6 +69,8 @@ export function ThemeSettings() {
           selected={themeId === theme.id}
           userTheme={theme.userTheme}
           onDelete={() => handleDeleteTheme(theme.id)}
+          onMouseEnter={() => setHoveredThemeId(index)}
+          onMouseLeave={() => setHoveredThemeId(null)}
         />;
       })}
 

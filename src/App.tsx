@@ -9,7 +9,12 @@ function App() {
   const {settings}= useSystemSettingsContext();
 
   return (
-    <div className={`flex flex-col h-screen  overflow-hidden ${settings.rounded_window?"rounded-lg":""}`}>
+    <div className={`font-sans
+        flex flex-col h-screen overflow-hidden
+        ${settings.rounded_window ? "rounded-lg" : ""}
+        border-2 border-black
+      `}
+    >
 
       <WindowControls roundedWindow={settings.rounded_window} />
 

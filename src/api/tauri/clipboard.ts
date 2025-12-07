@@ -1,3 +1,4 @@
+import { Font } from "@/types/fonts.type";
 import { invoke } from "@tauri-apps/api/core";
 
 // remove item
@@ -61,6 +62,39 @@ export const offShortcuts = async (keys: string) => {
     await invoke("off_shortcuts_command", { keys: keys });
   } catch (err) {
     console.error("Error turning off shortcuts:", err);
+  }
+};
+
+// get system font
+export const getSystemFont = async (): Promise<Font> => {
+  try {
+    const font: string = await invoke("get_system_font_command");
+    const fontParts = font.split(" ");
+    const exists = fontParts.length > 0;
+
+    if (!exists) return {exists:false} as Font;
+
+    const fontObj: Font = {
+      name: fontParts[0],
+      size: parseInt(fontParts[1])+"px"  || "12px",
+      exists,
+    };
+
+    return  fontObj;
+  } catch (err) {
+    console.error("Error getting Gnome font:", err);
+    return {} as Font;
+  }
+};
+
+// list fonts
+export const listFont = async () => {
+  try {
+    const fonts: string[] = await invoke("list_font");
+    console.log("Fonts:", fonts);
+  } catch (err) {
+    console.error("Error listing fonts:", err);
+    return [];
   }
 };
 

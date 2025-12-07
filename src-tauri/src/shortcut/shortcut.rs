@@ -117,7 +117,7 @@ pub fn  on_shortcuts_command(
     app: AppHandle, keys: String
 ) -> Result<(), String> {
 
-    println!("registes {}",keys);
+
 
     setup_global_shortcut(&app, keys).map_err(|e| e.to_string())
 

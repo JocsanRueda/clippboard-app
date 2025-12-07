@@ -6,6 +6,8 @@ export const DEFAULT_THEME_ID= "minimal-dark-two";
 
 export const MAX_LENGTH_THEME_NAME=20;
 
+export const ICON_TOP_BAR_SIZE=16;
+
 export const CLIPBOARD_KEY={
   FILE_HISTORY:".history.json",
   FILE_SETTINGS:".settings.json",

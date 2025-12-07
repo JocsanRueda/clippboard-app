@@ -1,14 +1,15 @@
 import { offShortcuts, onShortcuts } from "@/api/tauri/clipboard";
 import { PAGES } from "@/constants/constant";
-import { keyboardLaunchOptions, languagesOptions, limitItemsOptions, orderItemsOptions, roundedWindowOptions, timeOptions } from "@/constants/sytem-options";
+import { keyboardLaunchOptions, languagesOptions, limitItemsOptions, orderItemsOptions, roundedWindowOptions, timeOptions,fontSizeOptions } from "@/constants/sytem-options";
 import { usePageContext } from "@/context/Page-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { SystemSettings as SystemSettingsProps } from "@/types/system-settings.type";
-import { useEffect, useRef, useState } from "react";
+import React,{ useEffect, useRef, useState } from "react";
 import { IoArrowForwardOutline } from "react-icons/io5";
 import ContentSettings from "./Content-Settings";
 import Dropdown from "./UI-Components/Dropdown";
 import ShortcutInput from "./UI-Components/Shorcut-input";
+import { UnityInput } from "./UI-Components/Unitiy-input";
 export function SystemSettings(){
 
   const {handlePage}= usePageContext();
@@ -18,6 +19,8 @@ export function SystemSettings(){
   const [isEditing, setIsEditing]= useState<boolean>(false);
 
   const {settings, setSystemSettings} = useSystemSettingsContext();
+
+  const [tempSettings, setTempSettings]= useState<SystemSettingsProps>(settings);
 
   const shorcutsRef= useRef<string>(settings.keyboard_shortcuts);
 
@@ -34,7 +37,6 @@ export function SystemSettings(){
           await onShortcuts(shorcutsRef.current);
 
         }
-
       }catch(error){
         console.error("Failed to set editing state", error);
       }
@@ -49,12 +51,10 @@ export function SystemSettings(){
   };
 
   const handleSelect = async (key: keyof SystemSettingsProps, value: string | number | boolean) => {
-    const newSettings={
-      ...settings,
-      [key]: value
-    };
-
-    setSystemSettings(newSettings);
+    setTempSettings((prevSettings) => ({
+      ...prevSettings,
+      [key]: value,
+    }));
 
   };
 
@@ -71,36 +71,64 @@ export function SystemSettings(){
     roundedWindowOptions
   ];
 
+  const handleApplySettings = async (e: React.FormEvent) => {
+
+    e.preventDefault();
+
+    if (tempSettings) {
+      setSystemSettings(tempSettings);
+    }
+
+  };
+
   return(
-    <div className="w-full max-w-md flex flex-col justify-center items-center p-2 mb-5">
+    <form onSubmit={handleApplySettings}>
+      <div className="w-full  flex flex-col justify-center items-center p-2 mb-5 overflow-x-scroll " >
 
-      <ContentSettings label="Theme" className="rounded-t-md border-width-selected py-3">
+        <ContentSettings label="Theme" className="rounded-t-md border-width-selected py-3">
 
-        <IoArrowForwardOutline className="w-5 h-5 text-gray-600 dark:text-gray-200  cursor-pointer  border-gray-200 dark:border-none hover:border-gray-400 rounded-md  ml-1.5 " onClick={() => handlePage(PAGES.THEME)} />
+          <IoArrowForwardOutline className="w-5 h-5 text-gray-600 dark:text-gray-200  cursor-pointer  border-gray-200 dark:border-none hover:border-gray-400 rounded-md  ml-1.5 " onClick={() => handlePage(PAGES.THEME)} />
 
-      </ContentSettings>
+        </ContentSettings>
 
-      {settingsConfig.map((cfg, idx) => (
-        <ContentSettings label={cfg.label} key={cfg.key} className={"border-x-4 border-b-width-selected"}>
-          <Dropdown
-            options={cfg.items}
-            onSelect={(value) => handleSelect(cfg.key as keyof SystemSettingsProps, value)}
-            selectedValue={settings[cfg.key as keyof SystemSettingsProps]}
-            isOpen={openDropdown === idx}
-            onToggle={() => handleDropdownToggle(idx)}
+        {settingsConfig.map((cfg, idx) => (
+          <ContentSettings label={cfg.label} key={cfg.key} className={"border-x-width-selected border-b-width-selected width-selected"}>
+            <Dropdown
+              options={cfg.items}
+              onSelect={(value) => handleSelect(cfg.key as keyof SystemSettingsProps, value)}
+              selectedValue={tempSettings[cfg.key as keyof SystemSettingsProps]}
+              isOpen={openDropdown === idx}
+              onToggle={() => handleDropdownToggle(idx)}
+            />
+          </ContentSettings>
+
+        ))}
+
+        <ContentSettings label="Keyboard Launch" className="border-x-width-selected border-b-width-selected ">
+          <ShortcutInput
+            value={settings.keyboard_shortcuts}
+            onChange={(combo) => handleShorcutChange(combo ?? "")}
+            placeholder="Pulsa la combinación"
+            setEditing={setIsEditing}
+          />
+        </ContentSettings>
+        <ContentSettings label="Font Size" className="border-x-width-selected border-b-width-selected rounded-b-md ">
+
+          <UnityInput
+            unity="px"
+            type="number"
+            placeholder="12"
+            value={parseInt(tempSettings.font_size,10)}
+            min={6}
+            max={20}
+            onSelect={(value) =>handleSelect(fontSizeOptions.key as keyof SystemSettingsProps, value+"px" )}
+
           />
         </ContentSettings>
 
-      ))}
-      <ContentSettings label="Keyboard Launch" className="border-x-width-selected border-b-width-selected rounded-b-md ">
-        <ShortcutInput
-          value={settings.keyboard_shortcuts}
-          onChange={(combo) => handleShorcutChange(combo ?? "")}
-          placeholder="Pulsa la combinación"
-          setEditing={setIsEditing}
-        />
-      </ContentSettings>
+        <input type="submit" value="Apply" className="mt-2 mb-6 bg-gray-200 dark:bg-secondary border-width-selected border-gray-300 dark:border-tertiary-dark hover:dark:border-tertiary text-dark dark:text-white font-light px-4 py-2 rounded-md cursor-pointer  transition-colors duration-100 disabled mr-auto"   />
 
-    </div>
+      </div>
+    </form>
   );
 }

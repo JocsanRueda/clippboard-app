@@ -63,6 +63,15 @@ export const roundedWindowOptions = {
   defaultValue: 0
 };
 
+export const fontSizeOptions = {
+  label:"Font Size",
+  key:"font_size",
+  items: [
+    { label: "Small", value: "12" },
+  ],
+  defaultValue: 0
+};
+
 export const DEFAULT_SYSTEM_SETTINGS = {
   expiration_time: timeOptions.items[timeOptions.defaultValue].value,
   limit_items: limitItemsOptions.items[limitItemsOptions.defaultValue].value,
@@ -70,4 +79,5 @@ export const DEFAULT_SYSTEM_SETTINGS = {
   language: languagesOptions.items[languagesOptions.defaultValue].value,
   order_items: orderItemsOptions.items[orderItemsOptions.defaultValue].value,
   rounded_window: roundedWindowOptions.items[roundedWindowOptions.defaultValue].value,
+  font_size: fontSizeOptions.items[fontSizeOptions.defaultValue].value,
 };

@@ -14,6 +14,8 @@ export function ThemePreview({
   onClick,
   userTheme,
   onDelete,
+  onMouseEnter,
+  onMouseLeave,
 }: ThemePreviewProps) {
   const [hovered, setHovered] = React.useState(false);
   const containerStyle: React.CSSProperties = {
@@ -29,8 +31,23 @@ export function ThemePreview({
     borderStyle: "solid",
   };
 
+  const handleMouseEnter = () => {
+
+    setHovered(true);
+    if (onMouseEnter) {
+      onMouseEnter();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+    if (onMouseLeave) {
+      onMouseLeave();
+    }
+  };
+
   return (
-    <div className={"px-3 py-4 relative rounded-md  border-width-selected duration-100  bg-gray-200 dark:hover:border-primary-light border-gray-300 dark:border-primary-dark"} style={containerStyle} onClick={onClick} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div className={"px-3 py-4 relative rounded-md  border-width-selected duration-100  bg-gray-200 dark:hover:border-primary-light border-gray-300 dark:border-primary-dark"} style={containerStyle} onClick={onClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 
       <IoCheckmarkCircle className={`absolute transition-[right] duration top-0 right-0 w-4.5 h-4.5 text-secondary-light ${selected ? "display-block" : "hidden"}`} />
       { userTheme && <IoIosRemoveCircle className={`absolute -top-2.5 -right-1 w-7 h-7 text-gray-400 dark:text-white hover:text-red-500 transition-colors rounded-full  ${hovered ? "display-block" : "hidden"}`} onClick={onDelete} /> }
