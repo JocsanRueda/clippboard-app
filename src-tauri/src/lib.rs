@@ -90,7 +90,7 @@ pub fn run() {
             }
 
             // Setup global shortcut
-            setup_global_shortcut(&app.handle().clone(), settings.keyboard_shortcuts.clone())?;
+            setup_global_shortcut(&app.handle().clone(), settings.keyboard_shortcut.clone())?;
 
             // Setup the tray
             setup_tray(app)?;
@@ -117,7 +117,7 @@ pub fn run() {
                 app.handle().clone(),
                 global_store.clone(),
                 global_history.clone(),
-                settings.limit_items,
+                settings.item_limit, 
             );
 
             Ok(())

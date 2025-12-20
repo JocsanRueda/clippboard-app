@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import ContentSettings from "./Content-Settings";
 import ThemePreview from "./Theme-Preview";
 import Dropdown from "./UI-Components/Dropdown";
+import { useTranslation } from "react-i18next";
 
 export function NewTheme() {
 
@@ -16,6 +17,7 @@ export function NewTheme() {
   const {goBack}= usePageContext();
 
   const [theme, setTheme] = useState<ThemePreviewProps>(getThemes()[DEFAULT_THEME_INDEX]);
+  const { t } = useTranslation();
 
   useResetScroll();
 
@@ -66,45 +68,45 @@ export function NewTheme() {
 
       <ThemePreview primaryColor={theme.primaryColor} secondaryColor={theme.secondaryColor}  fontSize={theme.fontSize}  borderWidth={theme.borderWidth} tertiaryColor={theme.tertiaryColor} />
 
-      <ContentSettings label="Theme Name" className="rounded-t-md border-width-selected py-3 mt-2">
+      <ContentSettings label={t("name")} className="rounded-t-md border-width-selected py-3 mt-2">
 
         <input
           value={themeName}
           onChange={(e) => setThemeName(e.target.value)}
           maxLength={MAX_LENGTH_THEME_NAME}
           type="text"
-          placeholder=" Name your theme"
+          placeholder={t("name")}
           className="dark:bg-primary  focus:outline-none  border-width-min-selected border-gray-400 focus-within:border-gray-500 dark:border-tertiary-dark dark:focus-within:border-tertiary  rounded-md p-1 text-black dark:text-quaternary transition-[width,opacity] duration-100" required
 
         />
       </ContentSettings>
 
-      <ContentSettings label="Secondary Color" className="border-x-width-selected border-b-width-selected py-3">
+      <ContentSettings label={t("primary_color")} className="border-x-width-selected border-b-width-selected py-3">
 
         <input type="color" className="w-7 h-7 outline-none  border-width-min-selected cursor-pointer rounded-md  border-gray-400" style={{ backgroundColor: theme.primaryColor }} onChange={(e) => handleThemeChange("primaryColor", e.target.value)} value={theme.primaryColor} />
       </ContentSettings>
-      <ContentSettings label="Secondary Color" className="border-x-width-selected border-b-width-selected py-3">
+      <ContentSettings label={t("secondary_color")} className="border-x-width-selected border-b-width-selected py-3">
 
         <input type="color" className="w-7 h-7 outline-none  border-width-min-selected cursor-pointer rounded-md  border-gray-400" style={{ backgroundColor: theme.secondaryColor }} onChange={(e) => handleThemeChange("secondaryColor", e.target.value)} value={theme.secondaryColor} />
 
       </ContentSettings>
-      <ContentSettings label="Border color" className="border-x-width-selected border-b-width-selected py-3">
+      <ContentSettings label={t("border_color")} className="border-x-width-selected border-b-width-selected py-3">
 
         <input type="color" className="w-7 h-7 outline-none  border-width-min-selected cursor-pointer rounded-md  border-gray-400" style={{ backgroundColor: theme.tertiaryColor }} onChange={(e) => handleThemeChange("tertiaryColor", e.target.value)} value={theme.tertiaryColor} />
 
       </ContentSettings>
-      <ContentSettings label="Font color" className="border-x-width-selected border-b-width-selected py-3">
+      <ContentSettings label={t("font_color")} className="border-x-width-selected border-b-width-selected py-3">
 
         <input type="color" className="w-7 h-7 outline-none  border-width-min-selected cursor-pointer rounded-md  border-gray-400" style={{ backgroundColor: theme.tertiaryColor }} onChange={(e) => handleThemeChange("tertiaryColor", e.target.value)} value={theme.tertiaryColor} />
 
       </ContentSettings>
-      <ContentSettings label="Border-width" className="border-x-width-selected border-b-width-selected">
+      <ContentSettings label={t("border_width")} className="border-x-width-selected border-b-width-selected">
 
         <Dropdown options={borderWidthOptions} onSelect={(value) => handleThemeChange("borderWidth", value)}  isOpen={openDropdown === 0} selectedValue={theme.borderWidth} onToggle={() => handleDropdownToggle(0)} />
 
       </ContentSettings>
 
-      <input type="submit" value="Save Theme" className="mt-2 mb-6 bg-gray-200 dark:bg-secondary border-width-selected border-gray-300 dark:border-tertiary-dark hover:dark:border-tertiary   text-dark dark:text-white font-light px-4 py-2 rounded-md cursor-pointer  transition-colors duration-100 disabled mr-auto "  />
+      <input type="submit" value={t("save")} className="mt-2 mb-6 bg-gray-200 dark:bg-secondary border-width-selected border-gray-300 dark:border-tertiary-dark hover:dark:border-tertiary   text-dark dark:text-white font-light px-4 py-2 rounded-md cursor-pointer  transition-colors duration-100 disabled mr-auto "  />
 
     </form>
   );

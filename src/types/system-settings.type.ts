@@ -1,9 +1,9 @@
 export type SystemSettings={
   expiration_time:number; // in seconds
-  limit_items:number;
-  keyboard_shortcuts:string;
-  order_items:string;
+  item_limit:number;
+  keyboard_shortcut:string;
+  item_order:string;
   language:string;
-  rounded_window:boolean;
+  rounded_window_corners:boolean;
   font_size:string;
 }

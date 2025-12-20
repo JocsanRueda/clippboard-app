@@ -1,0 +1,20 @@
+{
+  "themes": "Themes",
+  "expiration_time": "Expiration Time",
+  "item_limit": "Item Limit",
+  "language": "Language",
+  "item_order": "Item Order",
+  "rounded_window_corners": "Rounded Window Corners",
+  "keyboard_shortcut": "Keyboard Shortcut",
+  "font_size": "Font Size",
+  "apply": "Apply",
+  "settings": "Settings",
+  "name": "Name",
+  "primary_color": "Primary Color",
+  "secondary_color": "Secondary Color",
+  "border_color": "Border Color",
+  "font_color": "Font Color",
+  "border_width": "Border Width",
+  "guardar": "Save",
+  "cancelar": "Cancel"
+}

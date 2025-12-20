@@ -22,6 +22,7 @@ export const SystemSettingsProvider:React.FC<{children: React.ReactNode}> = ({ c
     async function loadSettings(){
 
       const s= await getSettings();
+      console.log("Loaded settings:", s);
       if(s){
         setSystemSettings(s);
       }else{

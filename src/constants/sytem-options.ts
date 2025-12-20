@@ -13,7 +13,7 @@ export const timeOptions = {
 
 export const limitItemsOptions = {
   label:"Limit of items",
-  key:"limit_items",
+  key:"item_limit",
   items: [
     { label: "10 items", value: 10 },
     { label: "30 items", value: 30 },
@@ -45,7 +45,7 @@ export const keyboardLaunchOptions = {
 
 export const orderItemsOptions = {
   label:"Order Items ",
-  key:"order_items",
+  key:"item_order",
   items: [
     { label: "Ascending", value: "ascending" },
     { label: "Descending", value: "descending" },
@@ -55,7 +55,7 @@ export const orderItemsOptions = {
 
 export const roundedWindowOptions = {
   label:"Rounded Window",
-  key:"rounded_window",
+  key:"rounded_window_corners",
   items: [
     { label: "Enabled", value: true },
     { label: "Disabled", value: false },
@@ -74,10 +74,10 @@ export const fontSizeOptions = {
 
 export const DEFAULT_SYSTEM_SETTINGS = {
   expiration_time: timeOptions.items[timeOptions.defaultValue].value,
-  limit_items: limitItemsOptions.items[limitItemsOptions.defaultValue].value,
-  keyboard_shortcuts: keyboardLaunchOptions.items[keyboardLaunchOptions.defaultValue].value,
+  item_limit: limitItemsOptions.items[limitItemsOptions.defaultValue].value,
+  keyboard_shortcut: keyboardLaunchOptions.items[keyboardLaunchOptions.defaultValue].value,
   language: languagesOptions.items[languagesOptions.defaultValue].value,
-  order_items: orderItemsOptions.items[orderItemsOptions.defaultValue].value,
-  rounded_window: roundedWindowOptions.items[roundedWindowOptions.defaultValue].value,
+  item_order: orderItemsOptions.items[orderItemsOptions.defaultValue].value,
+  rounded_window_corners: roundedWindowOptions.items[roundedWindowOptions.defaultValue].value,
   font_size: fontSizeOptions.items[fontSizeOptions.defaultValue].value,
 };

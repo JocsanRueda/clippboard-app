@@ -140,7 +140,7 @@ pub fn start_clipboard_watcher(
             if let Ok(current) = app_handle.clipboard().read_text() {
                 let mut history = global_history.lock().unwrap();
 
-                if current != last_value  && history.len() < max_history {
+                if current != last_value  && history.len() < max_history  && !current.is_empty() {
                     last_value = current.clone();
 
                     let last_length = history.len();

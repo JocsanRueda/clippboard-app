@@ -1,0 +1,26 @@
+{
+  "history": "Historial",
+  "themes": "Temas",
+  "expiration_time": "Tiempo de expiración",
+  "item_limit": "Límite de elementos",
+  "language": "Idioma",
+  "item_order": "Orden de los elementos",
+  "rounded_window_corners": "Esquinas redondeadas de la ventana",
+  "keyboard_shortcut": "Atajo de teclado",
+  "font_size": "Tamaño de fuente",
+  "apply": "Aplicar",
+  "settings": "Ajustes",
+  "name": "nombre",
+  "primary_color": "color primario",
+  "secondary_color": "color secundario",
+  "border_color": "color del borde",
+  "font_color": "color de la fuente",
+  "border_width": "ancho del borde",
+  "save": "Guardar",
+  "cancelar": "Cancelar",
+  "new_theme": "Nuevo tema",
+  "hours": "horas",
+  "ascending": "ascendente",
+  "descending": "descendente"
+  
+}

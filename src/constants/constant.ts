@@ -26,11 +26,11 @@ export const CLIPBOARD_EVENT={
 };
 
 export const PAGES = {
-  SETTINGS: "Settings",
-  ABOUT: "About",
-  THEME: "Themes",
-  NEW_THEME: "New Theme",
-  HOME: "Home"
+  SETTINGS: "settings",
+  ABOUT: "about",
+  THEME: "themes",
+  NEW_THEME: "new_theme",
+  HOME: "hom"
 };
 
 export const THEME={
@@ -39,3 +39,9 @@ export const THEME={
 };
 
 export const COPY_COLDOWN_TIME=400; // milliseconds
+
+export const LANGUAGES={
+  ENGLISH:"en",
+  SPANISH:"es",
+  default: "en"
+};

@@ -23,9 +23,11 @@ pub fn get_settings(store: &Arc<Store<Wry>>) -> Settings {
         .and_then(|v| serde_json::from_value(v).ok())
         .unwrap_or(Settings {
             expiration_time: 24,
-            keyboard_shortcuts: "ctrl+w".to_string(),
+            keyboard_shortcut: "ctrl+w".to_string(),
             language: "es".to_string(),
-            limit_items: 100,
+            item_limit: 100,
+            rounded_window_corners: false,
+            font_size: 12,
         })
 }
 
