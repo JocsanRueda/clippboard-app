@@ -83,6 +83,8 @@ export function SystemSettings(){
       setSystemSettings(tempSettings);
     }
 
+    handlePage(PAGES.HOME);
+
   };
 
   return(

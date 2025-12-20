@@ -13,13 +13,11 @@
     "windows": [
       {
         "title": "Tuxclip",
-        "width": 390,
+        "width": 380,
         "height": 440,
-        "minWidth": 390,
+        "minWidth": 380,
         "minHeight": 440,
-        "maxWidth": 390,
-        "maxHeight": 440,
-        "resizable": false,
+        "resizable": true,
         "fullscreen": false,
         "decorations": false,
         "transparent": true

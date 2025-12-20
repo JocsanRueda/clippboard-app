@@ -64,7 +64,7 @@ export function NewTheme() {
   };
 
   return(
-    <form className=" w-full max-w-md flex flex-col justify-center items-center px-2 overflow-x-scroll  " onSubmit={handleSubmit}>
+    <form className=" w-full flex flex-col justify-center items-center px-2 overflow-x-scroll  " onSubmit={handleSubmit}>
 
       <ThemePreview primaryColor={theme.primaryColor} secondaryColor={theme.secondaryColor}  fontSize={theme.fontSize}  borderWidth={theme.borderWidth} tertiaryColor={theme.tertiaryColor} />
 
@@ -76,7 +76,7 @@ export function NewTheme() {
           maxLength={MAX_LENGTH_THEME_NAME}
           type="text"
           placeholder={t("name")}
-          className="dark:bg-primary  focus:outline-none  border-width-min-selected border-gray-400 focus-within:border-gray-500 dark:border-tertiary-dark dark:focus-within:border-tertiary  rounded-md p-1 text-black dark:text-quaternary transition-[width,opacity] duration-100" required
+          className= "  dark:bg-primary  focus:outline-none  border-width-min-selected border-gray-400 focus-within:border-gray-500 dark:border-tertiary-dark dark:focus-within:border-tertiary  rounded-md py-1 px-2 text-black dark:text-quaternary transition-[width,opacity] duration-100" required
 
         />
       </ContentSettings>
@@ -100,7 +100,7 @@ export function NewTheme() {
         <input type="color" className="w-7 h-7 outline-none  border-width-min-selected cursor-pointer rounded-md  border-gray-400" style={{ backgroundColor: theme.tertiaryColor }} onChange={(e) => handleThemeChange("tertiaryColor", e.target.value)} value={theme.tertiaryColor} />
 
       </ContentSettings>
-      <ContentSettings label={t("border_width")} className="border-x-width-selected border-b-width-selected">
+      <ContentSettings label={t("border_width")} className="border-x-width-selected border-b-width-selected rounded-b-md">
 
         <Dropdown options={borderWidthOptions} onSelect={(value) => handleThemeChange("borderWidth", value)}  isOpen={openDropdown === 0} selectedValue={theme.borderWidth} onToggle={() => handleDropdownToggle(0)} />
 
