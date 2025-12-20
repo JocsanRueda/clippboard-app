@@ -1,31 +1,24 @@
-import { deleteAllClipboardItems, fixedClipboardItem, getSystemFont, removeClipboardItem, updateClipboardItem, writeClipboardImage } from "@/api/tauri/clipboard";
+import { deleteAllClipboardItems, fixedClipboardItem, removeClipboardItem, updateClipboardItem, writeClipboardImage } from "@/api/tauri/clipboard";
 import { orderItemsOptions } from "@/constants/sytem-options";
 import { useClipboardContext } from "@/context/Clipboard-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { defaultItemClipboard } from "@/default/values";
 import { useClipboardWatcher } from "@/hooks/useClipboardWatcher";
 import { ItemActionMenu } from "@/types/item-action-menu.type";
+
 import { ItemClipboard } from "@/types/item-clipboard.type";
 import { newItemPayload } from "@/types/new-item-payload";
 import { add } from "@/utils/array";
 import { clear, writeText } from "@tauri-apps/plugin-clipboard-manager";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
 
-import { NoResult } from "./Not-Result";
 import { COPY_COLDOWN_TIME } from "@/constants/constant";
+import { NoResult } from "./Not-Result";
 
 export const History = () => {
-
-  useEffect(() => {
-    const font = async () => {
-      const systemFont = await getSystemFont();
-      console.log("System Font:", systemFont);
-    };
-
-    font();
-  }, []);
 
   const {dataList,setDataList,toggleActions,setToggleActions} = useClipboardContext();
 
@@ -34,6 +27,10 @@ export const History = () => {
   const [filter, setFilter] = useState<string>("");
 
   const copyCoolDownRef=useRef<Record<string,number>>({});
+
+  const { t, ready } = useTranslation();
+
+  console.log(ready);
 
   // Save the dataList to the store whenever it changes
   useClipboardWatcher((newText) => {
@@ -148,22 +145,22 @@ export const History = () => {
     let res = q ? list.filter(item => item.value.toLowerCase().startsWith(q)) : list;
 
     // Order (don't mutate original)
-    if (settings.order_items !== orderItemsOptions.items[0].value) {
+    if (settings.item_order !== orderItemsOptions.items[0].value) {
       res = res.slice().reverse();
 
     }
 
     return res;
-  }, [dataList, filter, settings.order_items]);
+  }, [dataList, filter, settings.item_order]);
 
   const calcIndex = useCallback((index: number) => {
-    if (settings.order_items === orderItemsOptions.items[0].value) {
+    if (settings.item_order === orderItemsOptions.items[0].value) {
       return index;
     }
 
     return finalData.length - index-1;
 
-  }, [settings.order_items, finalData.length]);
+  }, [settings.item_order, finalData.length]);
 
   const handleMenuClick = (index: number) => () => handleToggleMenu(index);
   const handleDeleteClick = (index: number) => () => handleDelete(index);
@@ -215,7 +212,7 @@ export const History = () => {
 
       <div className="flex-1 overflow-y-auto overflow-x-hidden">
         <h2 className="text-gray-900 dark:text-quaternary font-light tracking-tight mx-3">
-          History
+          {t("history")}
         </h2>
 
         <section className="flex flex-col gap-2 my-2 mx-1  ">
