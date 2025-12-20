@@ -28,8 +28,8 @@ export const languagesOptions = {
   label:"Language",
   key:"language",
   items: [
-    { label: "English", value: "en" },
-    { label: "Spanish", value: "es" },
+    { label: "english", value: "en" },
+    { label: "spanish", value: "es" },
   ],
   defaultValue: 0,
 };
@@ -47,8 +47,8 @@ export const orderItemsOptions = {
   label:"Order Items ",
   key:"item_order",
   items: [
-    { label: "Ascending", value: "ascending" },
-    { label: "Descending", value: "descending" },
+    { label: "ascending", value: "ascending" },
+    { label: "descending", value: "descending" },
   ],
   defaultValue: 0
 };
@@ -57,8 +57,8 @@ export const roundedWindowOptions = {
   label:"Rounded Window",
   key:"rounded_window_corners",
   items: [
-    { label: "Enabled", value: true },
-    { label: "Disabled", value: false },
+    { label: "enabled", value: true },
+    { label: "disabled", value: false },
   ],
   defaultValue: 0
 };

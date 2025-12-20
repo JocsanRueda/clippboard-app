@@ -19,8 +19,13 @@
   "save": "Guardar",
   "cancelar": "Cancelar",
   "new_theme": "Nuevo tema",
-  "hours": "horas",
-  "ascending": "ascendente",
-  "descending": "descendente"
-  
+  "hours": "Horas",
+  "hour": "Hora",
+  "items": "Elementos",
+  "spanish": "Español",
+  "english": "Inglés",
+  "ascending": "Ascendente",
+  "descending": "Descendente",
+  "enabled": "Habilitado",
+  "disabled": "Deshabilitado"
 }

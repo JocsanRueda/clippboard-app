@@ -11,3 +11,15 @@ export function truncateString(str: string, maxLength: number): string {
   }
   return str.slice(0, maxLength) + "...";
 }
+
+export const extractNumber =( value:string | number ):string=>{
+  if (typeof value === "number") {
+    return value.toString();
+  }
+  const numericValue = value.replace(/\D/g, "");
+  return numericValue;
+};
+
+export const extractLetter =(value:string)=>{
+  return value.replace(/[^a-zA-Z]/g, "");
+};

@@ -16,5 +16,14 @@
   "font_color": "Font Color",
   "border_width": "Border Width",
   "guardar": "Save",
-  "cancelar": "Cancel"
+  "cancelar": "Cancel",
+  "hours": "Hours",
+  "hour": "Hour",
+  "items": "Items",
+  "spanish": "Spanish",
+  "english": "English",
+  "ascending": "Ascending",
+  "descending": "Descending",
+  "enabled": "Enabled",
+  "disabled": "Disabled"
 }
