@@ -51,7 +51,7 @@ jobs:
 
     # 7. Subir binarios empaquetados como artefactos (opcional para debug/release)
     - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@main
       with:
         name: tuxclip-artifacts
         path: src-tauri/target/release/bundle
@@ -64,7 +64,7 @@ jobs:
     steps:
     # Descarga artefactos generados en la etapa anterior
     - name: Download Build Artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@main
       with:
         name: tuxclip-artifacts
         path: artifacts
