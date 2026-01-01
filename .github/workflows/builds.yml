@@ -10,8 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build and Bundle Tuxclip App
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # Se ajusta a Ubuntu 22.04 LTS para compatibilidad
 
     steps:
     # 1. Descarga el repositorio
@@ -27,55 +26,32 @@ jobs:
     - name: Install PNPM
       run: npm install -g pnpm
 
-    # 3. Instala dependencias utilizando PNPM
+    # 3. Instala dependencias del sistema (compatible con Tauri)
+    - name: Install Linux Dependencies for Tauri
+      run: |
+        sudo apt update
+        sudo apt install -y libwebkit2gtk-4.0-dev \
+          build-essential libssl-dev curl
+
+    # 4. Instala TypeScript versión 5.2 o superior
+    - name: Install TypeScript
+      run: pnpm add typescript@5.2 --global
+
+    # 5. Instala dependencias utilizando PNPM
     - name: Install dependencies
       run: pnpm install
 
-    # 4. Construye el proyecto (frontend y bundling de Tauri)
+    # 6. Construye el proyecto (frontend y bundling de Tauri)
     - name: Build frontend and backend
       run: pnpm build
 
-    # 5. Instala Rust y dependencias necesarias para Tauri
-    - name: Install Rust and Tauri dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y libwebkit2gtk-4.0-dev build-essential libssl-dev
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-        source $HOME/.cargo/env
-        rustup update stable
-        rustup target add x86_64-unknown-linux-gnu
-
-    # 6. Construye y empaqueta la app Tauri (.deb)
+    # 7. Construye y empaqueta la app Tauri (.deb)
     - name: Build Tauri App
       run: pnpm tauri build
 
-    # 7. Subir binarios empaquetados como artefactos (opcional para debug/release)
+    # 8. Subir binarios empaquetados como artefactos
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@main
       with:
         name: tuxclip-artifacts
         path: src-tauri/target/release/bundle
-
-  release:
-    name: Release Tuxclip
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-    # Descarga artefactos generados en la etapa anterior
-    - name: Download Build Artifacts
-      uses: actions/download-artifact@main
-      with:
-        name: tuxclip-artifacts
-        path: artifacts
-
-    # Subir los binarios al release de GitHub
-    - name: Publish Release Assets
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: artifacts/*
-        asset_name: |
-          *.deb
-        tag: ${{ github.event.release.tag_name }}
-        overwrite: true
