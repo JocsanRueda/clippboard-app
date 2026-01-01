@@ -31,6 +31,8 @@ pub fn get_settings(store: &Arc<Store<Wry>>) -> Settings {
             rounded_window_corners: false,
             font_size: "12".to_string(),
             item_order:"ascending".to_string(),
+            vertical_size: 380.0 ,
+            horizontal_size: 440.0 ,
         })
 
 

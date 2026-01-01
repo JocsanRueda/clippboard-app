@@ -11,6 +11,7 @@ import Dropdown from "./UI-Components/Dropdown";
 import ShortcutInput from "./UI-Components/Shorcut-input";
 import { UnityInput } from "./UI-Components/Unitiy-input";
 import { useTranslation } from "react-i18next";
+import { resizeWindow } from "@/api/tauri/windows";
 export function SystemSettings(){
 
   const {handlePage}= usePageContext();
@@ -34,13 +35,9 @@ export function SystemSettings(){
       try{
         if(isEditing){
 
-          console.log("Disabling shortcuts");
           await offShortcuts(shorcutsRef.current);
 
         }else{
-
-          console.log("isEditing changed:", isEditing);
-          console.log("Enabling shortcuts");
 
           await onShortcuts(shorcutsRef.current);
 
@@ -88,6 +85,10 @@ export function SystemSettings(){
       setSystemSettings(tempSettings);
     }
 
+    if (tempSettings.vertical_size !== settings.vertical_size || tempSettings.horizontal_size !== settings.horizontal_size) {
+      resizeWindow(tempSettings.horizontal_size, tempSettings.vertical_size);
+    }
+
     handlePage(PAGES.HOME);
 
   };
@@ -123,7 +124,7 @@ export function SystemSettings(){
             setEditing={setIsEditing}
           />
         </ContentSettings>
-        <ContentSettings label={t("font_size")} className="border-x-width-selected border-b-width-selected rounded-b-md ">
+        <ContentSettings label={t("font_size")} className="border-x-width-selected border-b-width-selected ">
 
           <UnityInput
             unity="px"
@@ -133,6 +134,34 @@ export function SystemSettings(){
             min={6}
             max={20}
             onSelect={(value) =>handleSelect(fontSizeOptions.key as keyof SystemSettingsProps, value+"px" )}
+
+          />
+        </ContentSettings>
+
+        <ContentSettings label={t("vertical_size")} className="border-x-width-selected border-b-width-selected  ">
+
+          <UnityInput
+            unity="px"
+            type="number"
+            placeholder="12"
+            value={tempSettings.vertical_size}
+            min={100}
+            max={1000}
+            onSelect={(value) =>handleSelect("vertical_size" as keyof SystemSettingsProps, parseInt(value as string,10) )}
+
+          />
+        </ContentSettings>
+
+        <ContentSettings label={t("horizontal_size")} className="border-x-width-selected border-b-width-selected rounded-b-md ">
+
+          <UnityInput
+            unity="px"
+            type="number"
+            placeholder="12"
+            value={tempSettings.horizontal_size}
+            min={100}
+            max={1000}
+            onSelect={(value) =>handleSelect("horizontal_size" as keyof SystemSettingsProps, parseInt(value as string,10) )}
 
           />
         </ContentSettings>

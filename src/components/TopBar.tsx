@@ -1,5 +1,7 @@
 import { ICON_TOP_BAR_SIZE, PAGES } from "@/constants/constant";
+import { orderItemsOptions } from "@/constants/sytem-options";
 import { usePageContext } from "@/context/Page-Contex";
+import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { TopBarProps } from "@/types/top-bar.type";
 import { getStorageIsDarkMode } from "@/utils/theme";
@@ -8,16 +10,23 @@ import { CgTrash } from "react-icons/cg";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoSettingsSharp } from "react-icons/io5";
 import { LuMoon, LuSun } from "react-icons/lu";
+import { RiSortDesc } from "react-icons/ri";
 
 function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
   const { handlePage } = usePageContext();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(getStorageIsDarkMode());
 
+  const {settings, setSystemSettings} = useSystemSettingsContext();
+
   useDarkMode(isDarkMode);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
+  };
+
+  const handleSort = (value: string) => {
+    setSystemSettings({ ...settings, item_order: value });
   };
 
   return (
@@ -34,8 +43,8 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
         <FaMagnifyingGlass
           size={ICON_TOP_BAR_SIZE}
           className={`${
-            isSearchVisible ? "text-gray-400 mr-2 " : "text-gray-900 dark:text-quaternary -m-1 hover:text-tertiary hover:scale-110"
-          } cursor-pointer transition-[color,scale] duration-10`}
+            isSearchVisible ? "text-gray-400 mr-2" : "text-gray-900 dark:text-quaternary -m-1 hover:text-tertiary hover:scale-110"
+          } cursor-pointer transition-[color,scale] duration-10 overflow-visible`}
           onClick={() => setIsSearchVisible(!isSearchVisible)}
         />
 
@@ -51,7 +60,13 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
         />
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3.5">
+        {/* Sort */}
+        <RiSortDesc
+          size={ICON_TOP_BAR_SIZE}
+          className={`transition-[color,scale,rotate] duration-100 text-gray-900 dark:text-quaternary hover:text-secondary-light hover:scale-120 ${settings.item_order === orderItemsOptions.items[1].value ? "" : "rotate-180"}`}
+          onClick={() => handleSort(settings.item_order === orderItemsOptions.items[1].value ? orderItemsOptions.items[0].value : orderItemsOptions.items[1].value)}
+        />
         {/* Delete All */}
         <CgTrash
           size={ICON_TOP_BAR_SIZE}

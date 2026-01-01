@@ -22,6 +22,8 @@
     "core:window:default",
     "core:window:allow-start-dragging",
     "core:window:allow-close",
+    "core:window:allow-maximize",
+    "core:window:allow-unmaximize",
     "fs:default",
     {
       "identifier": "fs:allow-applocaldata-read-recursive",

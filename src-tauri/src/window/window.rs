@@ -1,6 +1,8 @@
 
 use std::time::Duration;
 use std::thread;
+
+// Hide the window
 #[tauri::command]
 pub fn hide_window_command(window: tauri::WebviewWindow) {
 
@@ -14,6 +16,8 @@ pub fn hide_window_command(window: tauri::WebviewWindow) {
     let _ = window.hide();
 }
 
+
+// Show the window
 pub fn show_window_command(window: tauri::WebviewWindow) {
 
     if let Ok(true) = window.is_visible() {
@@ -37,3 +41,12 @@ pub fn show_window_command(window: tauri::WebviewWindow) {
 }
 
 
+pub fn resize_window(window: &tauri::WebviewWindow, width: f64, height: f64) {
+    let _ = window.set_size(tauri::Size::Logical(tauri::LogicalSize { width, height }));
+}
+
+// Resize the window
+#[tauri::command]
+pub fn resize_window_command(window: tauri::WebviewWindow, width: f64, height: f64) {
+    resize_window(&window, width, height);
+}

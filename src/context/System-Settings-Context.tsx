@@ -22,7 +22,7 @@ export const SystemSettingsProvider:React.FC<{children: React.ReactNode}> = ({ c
     async function loadSettings(){
 
       const s= await getSettings();
-      console.log("Loaded settings:", s);
+
       if(s){
         setSystemSettings(s);
       }else{
@@ -57,7 +57,7 @@ export const SystemSettingsProvider:React.FC<{children: React.ReactNode}> = ({ c
 
 };
 
-export function                     useSystemSettingsContext() {
+export function useSystemSettingsContext() {
   const ctx= React.useContext(SystemSettingsContext);
   if(!ctx) throw new Error("useSystemSettingsContext must be used within a SystemSettingsProvider");
   return ctx;

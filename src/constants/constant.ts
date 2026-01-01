@@ -25,6 +25,10 @@ export const CLIPBOARD_EVENT={
   SHOW:"show"
 };
 
+export const CLIPPBOARD_COMMANDS={
+  RESIZE_WINDOW:"resize_window_command"
+};
+
 export const PAGES = {
   SETTINGS: "settings",
   ABOUT: "about",
@@ -45,3 +49,4 @@ export const LANGUAGES={
   SPANISH:"es",
   default: "en"
 };
+

@@ -6,4 +6,6 @@ export type SystemSettings={
   language:string;
   rounded_window_corners:boolean;
   font_size:string;
+  vertical_size:number;
+  horizontal_size:number;
 }

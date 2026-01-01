@@ -27,5 +27,8 @@
   "ascending": "Ascendente",
   "descending": "Descendente",
   "enabled": "Habilitado",
-  "disabled": "Deshabilitado"
+  "disabled": "Deshabilitado",
+  "vertical_size": "Tamaño vertical",
+  "horizontal_size": "Tamaño horizontal"
+
 }

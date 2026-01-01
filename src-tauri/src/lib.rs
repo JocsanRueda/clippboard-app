@@ -19,7 +19,7 @@ use crate::store::store::{
     save_store_command, update_item_command,
 };
 
-use crate::window::{hide_window_command};
+use crate::window::{hide_window_command,resize_window_command,resize_window};
 
 use std::sync::{Arc, Mutex};
 
@@ -60,22 +60,29 @@ pub fn run() {
 
             let app_handle = app.handle().clone();
             
-            // Escucha eventos en la ventana principal
+            // Handle window close event
             if let Some(window) = app_handle.get_webview_window("main") {
+
+                // Set initial window size
+                
+                resize_window(&window, settings.horizontal_size, settings.vertical_size);
+                
 
                 window.on_window_event(move |event| {
                     if let WindowEvent::CloseRequested { api, .. } = event {
                       
                         api.prevent_close();
 
-                        let window = app_handle.get_webview_window("main").unwrap();
-                        hide_window_command(window);
+                        if let Some(window) = app_handle.get_webview_window("main") {
+                            hide_window_command(window);
+                        }
 
                     }
                 });
             }
 
 
+        
 
 
             let local_data_dir = app.path()
@@ -139,6 +146,7 @@ pub fn run() {
             on_shortcuts_command,
             off_shortcuts_command,
             get_system_font_command,
+            resize_window_command,
             list_font
         ])
         .run(tauri::generate_context!())

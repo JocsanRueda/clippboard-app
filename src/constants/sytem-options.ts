@@ -80,4 +80,6 @@ export const DEFAULT_SYSTEM_SETTINGS = {
   item_order: orderItemsOptions.items[orderItemsOptions.defaultValue].value,
   rounded_window_corners: roundedWindowOptions.items[roundedWindowOptions.defaultValue].value,
   font_size: fontSizeOptions.items[fontSizeOptions.defaultValue].value,
+  vertical_size: 380,
+  horizontal_size: 440
 };
