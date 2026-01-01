@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04  # Se ajusta a Ubuntu 22.04 LTS para compatibilidad
+    runs-on: ubuntu-22.04  # Se mantiene Ubuntu 22.04 para compatibilidad
 
     steps:
     # 1. Descarga el repositorio
@@ -22,34 +22,44 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
-
+    
     - name: Install PNPM
-      run: npm install -g pnpm
-
-    # 3. Instala dependencias del sistema (compatible con Tauri)
-    - name: Install Linux Dependencies for Tauri
       run: |
-        sudo apt update
-        sudo apt install -y libwebkit2gtk-4.0-dev \
-          build-essential libssl-dev curl
+        npm install -g pnpm
+        pnpm setup
+      env:
+        PNPM_HOME: ~/.pnpm
+      shell: bash
+
+    # 3. Agrega PNPM al PATH del sistema
+    - name: Add PNPM to PATH
+      run: echo "export PATH=$PATH:~/.pnpm" >> ~/.bashrc && source ~/.bashrc
+      shell: bash
 
     # 4. Instala TypeScript versión 5.2 o superior
-    - name: Install TypeScript
+    - name: Install TypeScript Globally
       run: pnpm add typescript@5.2 --global
 
     # 5. Instala dependencias utilizando PNPM
     - name: Install dependencies
       run: pnpm install
 
-    # 6. Construye el proyecto (frontend y bundling de Tauri)
+    # 6. Instala dependencias del sistema (compatible con Tauri)
+    - name: Install Linux Dependencies for Tauri
+      run: |
+        sudo apt update
+        sudo apt install -y libwebkit2gtk-4.0-dev \
+          build-essential libssl-dev curl
+
+    # 7. Construye el proyecto (frontend y bundling de Tauri)
     - name: Build frontend and backend
       run: pnpm build
 
-    # 7. Construye y empaqueta la app Tauri (.deb)
+    # 8. Construye y empaqueta la app Tauri (.deb)
     - name: Build Tauri App
       run: pnpm tauri build
 
-    # 8. Subir binarios empaquetados como artefactos
+    # 9. Subir binarios empaquetados como artefactos
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@main
       with:
