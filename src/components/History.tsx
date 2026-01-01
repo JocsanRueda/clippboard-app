@@ -28,9 +28,7 @@ export const History = () => {
 
   const copyCoolDownRef=useRef<Record<string,number>>({});
 
-  const { t, ready } = useTranslation();
-
-  console.log(ready);
+  const { t } = useTranslation();
 
   // Save the dataList to the store whenever it changes
   useClipboardWatcher((newText) => {
@@ -169,9 +167,6 @@ export const History = () => {
   const handleFixedClick = (index: number) => () => handleFixed(index);
 
   const handleCopyClick = (index: number) => async () => {
-
-    console.log("copy index",index);
-    console.log("final data",finalData);
 
     const item = finalData[index];
     const {type,value,path} = item;

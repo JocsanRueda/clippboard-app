@@ -6,6 +6,7 @@ pub struct Settings {
     pub keyboard_shortcut: String,
     pub language: String,
     pub rounded_window_corners: bool,
-    pub font_size: u8,
+    pub font_size: String,
+    pub item_order: String,
    
 }

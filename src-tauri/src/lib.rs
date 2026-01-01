@@ -12,7 +12,7 @@ pub mod shortcut;
 use tauri::{Wry, WindowEvent,Manager};
 use tauri_plugin_store::Store;
 use tauri_plugin_store::StoreExt;
-use crate::shortcut::{setup_global_shortcut,on_shortcuts_command,off_shortcuts_command};
+use crate::shortcut::{on_shortcuts_command,off_shortcuts_command,setup_shortcuts_on_startup};
 
 use crate::store::store::{
     clean_store, delete_all_items_command, delete_item_command, fixed_item_command, get_settings,
@@ -39,19 +39,24 @@ pub fn run() {
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
-        .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .setup(|app| {
 
+            
+                
 
          
             // Initialize settings value
             let store_settings = app.store(FILE_SETTINGS).expect("Failed to open store");
+            
       
 
             let settings = get_settings(&store_settings);
 
+            // enable global shorcut
+            setup_shortcuts_on_startup(app,settings.keyboard_shortcut.clone())?;
 
-            println!("App settings: {:?}", settings);
+
+          
 
             let app_handle = app.handle().clone();
             
@@ -87,17 +92,18 @@ pub fn run() {
                 println!("Global variable was already initialized.");
             } else {
                 println!("Global variable initialized successfully.");
+
+                
             }
 
-            // Setup global shortcut
-            setup_global_shortcut(&app.handle().clone(), settings.keyboard_shortcut.clone())?;
+            
 
+    
             // Setup the tray
             setup_tray(app)?;
             
 
             
-
             // Initialize the store
             let store = app.store(FILE_HISTORY).expect("Failed to open store");
             let global_store = Arc::new(Mutex::new(store));

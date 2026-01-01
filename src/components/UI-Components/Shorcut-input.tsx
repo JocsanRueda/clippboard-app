@@ -73,10 +73,6 @@ export default function ShortcutInput({ value, placeholder, onChange, setEditing
 
       const key = e.key;
 
-      console.log("Key pressed:", key);
-
-      console.log("Modifier keys state:", e.key);
-
       if (MODIFIER_KEYS.includes(key)) {
         const mods = modifiersFromEvent(e);
         setDisplay(mods.join("+"));

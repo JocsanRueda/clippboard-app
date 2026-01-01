@@ -1,108 +1,67 @@
 use tauri_plugin_global_shortcut::{
-    self, Code, GlobalShortcutExt, Modifiers, Shortcut, ShortcutState,
+    GlobalShortcutExt, Shortcut, ShortcutState
 };
 
 use crate::{ window::show_window_command};
-use tauri::{AppHandle};
+use tauri::{AppHandle, App, Manager};
 
-
-
-pub fn parse_shortcut(keys: Vec<&str>) -> Option<Shortcut> {
-    let mut modifiers = Modifiers::empty();
-    let mut key_code: Option<Code> = None;
-
-    for key in keys {
-        match key.to_ascii_uppercase().as_str() {
-            "CTRL" | "CONTROL" => modifiers |= Modifiers::CONTROL,
-            "ALT" => modifiers |= Modifiers::ALT,
-            "SHIFT" => modifiers |= Modifiers::SHIFT,
-            "META" | "SUPER" | "CMD" | "COMMAND" => modifiers |= Modifiers::META,
-
-            // Tecla principal (una sola letra A–Z)
-            other if other.len() == 1 && other.chars().all(|c| c.is_ascii_alphabetic()) => {
-                let ch = other.chars().next().unwrap().to_ascii_uppercase();
-                key_code = match ch {
-                    'A' => Some(Code::KeyA),
-                    'B' => Some(Code::KeyB),
-                    'C' => Some(Code::KeyC),
-                    'D' => Some(Code::KeyD),
-                    'E' => Some(Code::KeyE),
-                    'F' => Some(Code::KeyF),
-                    'G' => Some(Code::KeyG),
-                    'H' => Some(Code::KeyH),
-                    'I' => Some(Code::KeyI),
-                    'J' => Some(Code::KeyJ),
-                    'K' => Some(Code::KeyK),
-                    'L' => Some(Code::KeyL),
-                    'M' => Some(Code::KeyM),
-                    'N' => Some(Code::KeyN),
-                    'O' => Some(Code::KeyO),
-                    'P' => Some(Code::KeyP),
-                    'Q' => Some(Code::KeyQ),
-                    'R' => Some(Code::KeyR),
-                    'S' => Some(Code::KeyS),
-                    'T' => Some(Code::KeyT),
-                    'U' => Some(Code::KeyU),
-                    'V' => Some(Code::KeyV),
-                    'W' => Some(Code::KeyW),
-                    'X' => Some(Code::KeyX),
-                    'Y' => Some(Code::KeyY),
-                    'Z' => Some(Code::KeyZ),
-                    _ => None,
-                };
-            }
-
-            _ => {}
-        }
-    }
-
-    key_code.map(|code| Shortcut::new(Some(modifiers), code))
-}
-
-
-pub fn setup_global_shortcut(app: &AppHandle, keys: String) -> Result<(), Box<dyn std::error::Error>> {
+pub fn register_global_shortcut(app: &AppHandle, keys: String) -> Result<(), Box<dyn std::error::Error>> {
     
     #[cfg(desktop)]
     {
-
-        let array_keys : Vec<&str> = keys.split('+').map(|s| s.trim()).collect();
-        
-        let Some(shortcut) = parse_shortcut(array_keys) else {
-            eprintln!("dont have shortcut keys");
+        if keys.trim().is_empty() {
+            println!("Shortcut keys are empty, skipping registration.");
             return Ok(());
+        }
+
+        // Usamos el parser nativo que soporta todas las teclas (Space, Enter, etc.)
+        let shortcut = match keys.parse::<Shortcut>() {
+            Ok(s) => s,
+            Err(e) => {
+                eprintln!("Error parsing shortcut '{}': {}", keys, e);
+                return Ok(());
+            }
         };
 
         let manager = app.global_shortcut();
 
-        if manager.is_registered(shortcut.clone()) {
-            return Ok(());
-        } else {
-            manager.unregister_all()?;
-        }
+        println!("Registering shortcut: {:?}", shortcut);
 
-            let _= manager.on_shortcut(shortcut.clone(), move |app_handle, _shortcut, event| {
+         manager.unregister_all()?;
 
-                
-                match event.state() {
-                    ShortcutState::Pressed => {
-                        use tauri::Manager;
+         manager.register(shortcut)?;
+    }
+
+
+   
+    Ok(())
+}
+
+pub fn setup_shortcuts_on_startup(
+    app: &App,
+    keys: String,
+)-> Result<(), Box<dyn std::error::Error>>  {
+
+    #[cfg(desktop)]
+    {
+        app.handle().plugin(
+            tauri_plugin_global_shortcut::Builder::new()
+                .with_handler(move |app_handle, _shortcut, event| {
+                    if let ShortcutState::Pressed = event.state() {
                         if let Some(window) = app_handle.get_webview_window("main") {
                             show_window_command(window);
                         }
                     }
-                    ShortcutState::Released => {
-                        println!("Shortcut Released!");
-                    }
-                }
-            });
+                })
+                .build(),
+        )?;
 
-        
+        // Registramos el atajo inicial
+        register_global_shortcut(app.handle(), keys)?;
     }
-
+    
     Ok(())
 }
-
-
 
 
 #[tauri::command]
@@ -117,10 +76,11 @@ pub fn  on_shortcuts_command(
     app: AppHandle, keys: String
 ) -> Result<(), String> {
 
+    register_global_shortcut(app.app_handle(), keys).map_err(|e| e.to_string())
 
 
-    setup_global_shortcut(&app, keys).map_err(|e| e.to_string())
+    
 
-
+    
 
 }

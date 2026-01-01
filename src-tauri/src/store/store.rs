@@ -18,6 +18,8 @@ pub fn save_store(store: &Arc<Store<Wry>>, history: &Vec<serde_json::Value>) {
 
 // get settings from the store
 pub fn get_settings(store: &Arc<Store<Wry>>) -> Settings {
+
+  
     store
         .get(SETTINGS)
         .and_then(|v| serde_json::from_value(v).ok())
@@ -27,8 +29,12 @@ pub fn get_settings(store: &Arc<Store<Wry>>) -> Settings {
             language: "es".to_string(),
             item_limit: 100,
             rounded_window_corners: false,
-            font_size: 12,
+            font_size: "12".to_string(),
+            item_order:"ascending".to_string(),
         })
+
+
+        
 }
 
 // Clean up the store

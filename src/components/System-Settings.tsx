@@ -34,8 +34,13 @@ export function SystemSettings(){
       try{
         if(isEditing){
 
+          console.log("Disabling shortcuts");
           await offShortcuts(shorcutsRef.current);
+
         }else{
+
+          console.log("isEditing changed:", isEditing);
+          console.log("Enabling shortcuts");
 
           await onShortcuts(shorcutsRef.current);
 

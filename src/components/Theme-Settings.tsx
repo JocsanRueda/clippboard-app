@@ -53,8 +53,6 @@ export function ThemeSettings() {
 
   };
 
-  console.log("themeIndex:", themeIndex);  console.log("hoveredThemeIndex:", hoveredThemeIndex);
-
   return(
     <div className="flex flex-col gap-2">
       <span className="mx-auto flex flex-row items-center gap-2">
