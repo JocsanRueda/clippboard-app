@@ -10,56 +10,53 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04  # Se mantiene Ubuntu 22.04 para compatibilidad
+    runs-on: ubuntu-22.04  # Utilizamos Ubuntu 22.04 para máxima compatibilidad
 
     steps:
     # 1. Descarga el repositorio
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 2. Configura Node.js y PNPM
+    # 2. Configura Node.js (garantiza compatibilidad con PNPM)
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 18
-    
-    - name: Install PNPM
+
+    # 3. Instala PNPM (se configura correctamente para evitar errores)
+    - name: Install and Configure PNPM
       run: |
         npm install -g pnpm
         pnpm setup
-      env:
-        PNPM_HOME: ~/.pnpm
+        echo "PNPM_HOME=$(pnpm env get-path)" >> $GITHUB_ENV
+        echo "PATH=$PATH:$(pnpm env get-path)" >> $GITHUB_ENV
+        source $GITHUB_ENV
       shell: bash
-
-    # 3. Agrega PNPM al PATH del sistema
-    - name: Add PNPM to PATH
-      run: echo "export PATH=$PATH:~/.pnpm" >> ~/.bashrc && source ~/.bashrc
-      shell: bash
-
-    # 4. Instala TypeScript versión 5.2 o superior
+    
+    # 4. Instala TypeScript de manera global (usa el directorio global configurado por `pnpm setup`)
     - name: Install TypeScript Globally
       run: pnpm add typescript@5.2 --global
 
-    # 5. Instala dependencias utilizando PNPM
-    - name: Install dependencies
+    # 5. Instala las dependencias del proyecto
+    - name: Install Project Dependencies
       run: pnpm install
 
-    # 6. Instala dependencias del sistema (compatible con Tauri)
-    - name: Install Linux Dependencies for Tauri
+    # 6. Instala dependencias del sistema necesarias para Tauri
+    - name: Install Linux Dependencies
       run: |
         sudo apt update
         sudo apt install -y libwebkit2gtk-4.0-dev \
           build-essential libssl-dev curl
 
-    # 7. Construye el proyecto (frontend y bundling de Tauri)
-    - name: Build frontend and backend
+    # 7. Construye el proyecto (frontend y backend)
+    - name: Build Frontend and Backend
       run: pnpm build
 
-    # 8. Construye y empaqueta la app Tauri (.deb)
+    # 8. Construye y empaqueta la aplicación como un archivo .deb
     - name: Build Tauri App
       run: pnpm tauri build
 
-    # 9. Subir binarios empaquetados como artefactos
+    # 9. Subir binarios empaquetados como artefactos en el flujo
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@main
       with:
