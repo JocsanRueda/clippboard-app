@@ -1,64 +1,64 @@
-name: Build and Release Tuxclip App
+name: Release Tuxclip
+
+permissions:
+  contents: write # Necesario para que el bot pueda crear Releases y subir archivos
 
 on:
   push:
-    branches:
-      - main
-  release:
-    types:
-      - published
+    tags:
+      - 'v*' # Se ejecuta solo cuando subes un tag como v1.0.0, v0.1.0, etc.
+  workflow_dispatch: # Permite ejecutarlo manualmente desde la pestaña Actions si es necesario
 
 jobs:
-  build:
-    runs-on: ubuntu-22.04  # Utilizamos Ubuntu 22.04 para máxima compatibilidad
+  publish-tauri:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        platform: [ubuntu-22.04] # Puedes agregar windows-latest o macos-latest aquí en el futuro
 
     steps:
-    # 1. Descarga el repositorio
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    # 2. Configura Node.js (garantiza compatibilidad con PNPM)
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      # 1. Configurar Rust (Esencial para Tauri)
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
 
-    # 3. Instala PNPM (se configura correctamente para evitar errores)
-    - name: Install and Configure PNPM
-      run: |
-        npm install -g pnpm
-        pnpm setup
-        echo "PNPM_HOME=$(pnpm env get-path)" >> $GITHUB_ENV
-        echo "PATH=$PATH:$(pnpm env get-path)" >> $GITHUB_ENV
-        source $GITHUB_ENV
-      shell: bash
-    
-    # 4. Instala TypeScript de manera global (usa el directorio global configurado por `pnpm setup`)
-    - name: Install TypeScript Globally
-      run: pnpm add typescript@5.2 --global
+      # 2. Instalar dependencias del sistema (Linux/Ubuntu)
+      # Nota: libayatana-appindicator3-dev es CRUCIAL para apps de clipboard/tray en Linux
+      - name: Install Linux dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
 
-    # 5. Instala las dependencias del proyecto
-    - name: Install Project Dependencies
-      run: pnpm install
+      # 3. Configurar PNPM (Forma moderna y rápida)
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9 # O la versión que uses
+          run_install: false
 
-    # 6. Instala dependencias del sistema necesarias para Tauri
-    - name: Install Linux Dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y libwebkit2gtk-4.0-dev \
-          build-essential libssl-dev curl
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
 
-    # 7. Construye el proyecto (frontend y backend)
-    - name: Build Frontend and Backend
-      run: pnpm build
+      # 4. Instalar dependencias del proyecto
+      - name: Install frontend dependencies
+        run: pnpm install
 
-    # 8. Construye y empaqueta la aplicación como un archivo .deb
-    - name: Build Tauri App
-      run: pnpm tauri build
-
-    # 9. Subir binarios empaquetados como artefactos en el flujo
-    - name: Upload Build Artifacts
-      uses: actions/upload-artifact@main
-      with:
-        name: tuxclip-artifacts
-        path: src-tauri/target/release/bundle
+      # 5. Build y Release Automático con Tauri Action
+      # Esta acción compila el frontend, el backend (Rust), crea el .deb/.AppImage
+      # y los sube a un nuevo Release en GitHub basado en tu tag.
+      - name: Build and Create Release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }} # Usa el nombre del tag (ej: v0.1.0)
+          releaseName: 'Tuxclip App v__VERSION__' # Reemplaza __VERSION__ con la versión real
+          releaseBody: 'See the assets to download this version and install.'
+          releaseDraft: true # Lo crea como borrador para que revises antes de publicar (opcional)
+          prerelease: false
