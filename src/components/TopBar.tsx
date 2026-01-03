@@ -66,6 +66,8 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
           size={ICON_TOP_BAR_SIZE}
           className={`transition-[color,scale,rotate] duration-100 text-gray-900 dark:text-quaternary hover:text-secondary-light hover:scale-120 ${settings.item_order === orderItemsOptions.items[1].value ? "" : "rotate-180"}`}
           onClick={() => handleSort(settings.item_order === orderItemsOptions.items[1].value ? orderItemsOptions.items[0].value : orderItemsOptions.items[1].value)}
+
+          style={{strokeWidth:0.5}}
         />
         {/* Delete All */}
         <CgTrash

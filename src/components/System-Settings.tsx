@@ -138,20 +138,6 @@ export function SystemSettings(){
           />
         </ContentSettings>
 
-        <ContentSettings label={t("vertical_size")} className="border-x-width-selected border-b-width-selected  ">
-
-          <UnityInput
-            unity="px"
-            type="number"
-            placeholder="12"
-            value={tempSettings.vertical_size}
-            min={100}
-            max={1000}
-            onSelect={(value) =>handleSelect("vertical_size" as keyof SystemSettingsProps, parseInt(value as string,10) )}
-
-          />
-        </ContentSettings>
-
         <ContentSettings label={t("horizontal_size")} className="border-x-width-selected border-b-width-selected rounded-b-md ">
 
           <UnityInput
@@ -162,6 +148,20 @@ export function SystemSettings(){
             min={100}
             max={1000}
             onSelect={(value) =>handleSelect("horizontal_size" as keyof SystemSettingsProps, parseInt(value as string,10) )}
+
+          />
+        </ContentSettings>
+
+        <ContentSettings label={t("vertical_size")} className="border-x-width-selected border-b-width-selected  ">
+
+          <UnityInput
+            unity="px"
+            type="number"
+            placeholder="12"
+            value={tempSettings.vertical_size}
+            min={100}
+            max={1000}
+            onSelect={(value) =>handleSelect("vertical_size" as keyof SystemSettingsProps, parseInt(value as string,10) )}
 
           />
         </ContentSettings>

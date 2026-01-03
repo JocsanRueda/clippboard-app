@@ -15,8 +15,8 @@
         "title": "Tuxclip",
         "width": 380,
         "height": 440,
-        "minWidth": 380,
-        "minHeight": 440,
+        "minWidth": 280,
+        "minHeight": 340,
         "resizable": true,
         "fullscreen": false,
         "decorations": false,
@@ -24,7 +24,7 @@
       }
     ],
     "security": {
-     "csp": "default-src 'self'; img-src 'self' asset: http://asset.localhost;",
+      "csp": "default-src 'self'; img-src 'self' asset: http://asset.localhost;",
       "assetProtocol": {
         "enable": true,
         "scope": [
@@ -45,6 +45,6 @@
     ]
   },
   "plugins": {
-     "clipboard-manager": null
+    "clipboard-manager": null
   }
 }

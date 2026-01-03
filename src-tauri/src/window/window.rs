@@ -42,11 +42,14 @@ pub fn show_window_command(window: tauri::WebviewWindow) {
 
 
 pub fn resize_window(window: &tauri::WebviewWindow, width: f64, height: f64) {
+    println!("Resizing window to  h{} x v{}", width, height);
     let _ = window.set_size(tauri::Size::Logical(tauri::LogicalSize { width, height }));
 }
 
 // Resize the window
 #[tauri::command]
 pub fn resize_window_command(window: tauri::WebviewWindow, width: f64, height: f64) {
+
+   
     resize_window(&window, width, height);
 }

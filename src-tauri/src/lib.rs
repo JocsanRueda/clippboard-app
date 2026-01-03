@@ -60,28 +60,7 @@ pub fn run() {
 
             let app_handle = app.handle().clone();
             
-            // Handle window close event
-            if let Some(window) = app_handle.get_webview_window("main") {
-
-                // Set initial window size
-                
-                resize_window(&window, settings.horizontal_size, settings.vertical_size);
-                
-
-                window.on_window_event(move |event| {
-                    if let WindowEvent::CloseRequested { api, .. } = event {
-                      
-                        api.prevent_close();
-
-                        if let Some(window) = app_handle.get_webview_window("main") {
-                            hide_window_command(window);
-                        }
-
-                    }
-                });
-            }
-
-
+          
         
 
 
@@ -125,6 +104,42 @@ pub fn run() {
 
             let global_history = Arc::new(Mutex::new(initial_history));
             app.manage(global_history.clone());
+
+
+              // Handle window close event
+            if let Some(window) = app_handle.get_webview_window("main") {
+
+
+
+
+
+                // Set initial window size
+                 resize_window(&window, settings.horizontal_size, settings.vertical_size);
+
+                // Fix: Re-apply resize after a short delay to ensure Linux WM respects it
+                let win_clone = window.clone();
+                let (w, h) = (settings.horizontal_size, settings.vertical_size);
+                std::thread::spawn(move || {
+                    std::thread::sleep(std::time::Duration::from_millis(150));
+                    resize_window(&win_clone, w, h);
+                });
+                
+                
+
+                window.on_window_event(move |event| {
+                    if let WindowEvent::CloseRequested { api, .. } = event {
+                      
+                        api.prevent_close();
+
+                        if let Some(window) = app_handle.get_webview_window("main") {
+                            hide_window_command(window);
+                        }
+
+                    }
+                });
+            }
+
+
 
             watchers::start_clipboard_watcher(
                 app.handle().clone(),
