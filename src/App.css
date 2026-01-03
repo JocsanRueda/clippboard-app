@@ -5,6 +5,8 @@
 
 @theme {
 
+  --breakpoint-xs:25rem;
+
    
 
   --color-default-primary-light: #f3f4f6;

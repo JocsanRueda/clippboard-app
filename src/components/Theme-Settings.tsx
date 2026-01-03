@@ -60,7 +60,7 @@ export function ThemeSettings() {
         <IoCheckmarkCircle className={` transition-[right] duration w-4.5 h-4.5 text-secondary-light ${ hoveredThemeIndex!==themeIndex  ?  "hidden":"display-block" }`} />
       </span>
 
-      <div className="grid  grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-9  place-items-center gap-2 mb-3">
+      <div className="grid  grid-cols-2 xs:grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-9  place-items-center gap-2 mb-3">
 
         {allThemes.map((theme,index)=>{
 

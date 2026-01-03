@@ -138,7 +138,7 @@ export function SystemSettings(){
           />
         </ContentSettings>
 
-        <ContentSettings label={t("horizontal_size")} className="border-x-width-selected border-b-width-selected rounded-b-md ">
+        <ContentSettings label={t("horizontal_size")} className="border-x-width-selected border-b-width-selected  ">
 
           <UnityInput
             unity="px"
@@ -152,7 +152,7 @@ export function SystemSettings(){
           />
         </ContentSettings>
 
-        <ContentSettings label={t("vertical_size")} className="border-x-width-selected border-b-width-selected  ">
+        <ContentSettings label={t("vertical_size")} className="border-x-width-selected border-b-width-selected  rounded-b-md">
 
           <UnityInput
             unity="px"
