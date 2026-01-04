@@ -31,19 +31,19 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
 
   return (
 
-    <div className="flex justify-end items-center px-2 py-2.5 dark:bg-primary mx-1 gap-2">
+    <div className="flex justify-end items-center px-2 py-2.5 dark:bg-primary mx-1 gap-2.5">
 
       <div
-        className={`flex items-center ${
+        className={`flex items-center min-w-0 w-auto max-w-ws  ${
           isSearchVisible
-            ? "flex-grow bg-gray-300 dark:bg-secondary text-gray-900 mr-4"
+            ? "flex-grow bg-gray-300 dark:bg-secondary text-gray-900 "
             : "flex-none"
-        } text-quaternary rounded-lg px-2 py-1 focus-within:ring-2 focus-within:ring-gray-400 dark:focus-within:ring-tertiary overflow-hidden transition-all duration-100`} // Añadido transition-all
+        } text-quaternary rounded-lg  py-1 focus-within:ring-2 focus-within:ring-gray-400 dark:focus-within:ring-tertiary overflow-hidden transition-all duration-100`} // Añadido transition-all
       >
         <FaMagnifyingGlass
           size={ICON_TOP_BAR_SIZE}
           className={`${
-            isSearchVisible ? "text-gray-400 mr-2" : "text-gray-900 dark:text-quaternary -m-1 hover:text-tertiary hover:scale-110"
+            isSearchVisible ? "text-gray-400 mx-2" : "text-gray-900 dark:text-quaternary hover:text-tertiary hover:scale-110"
           } cursor-pointer transition-[color,scale] duration-10 overflow-visible`}
           onClick={() => setIsSearchVisible(!isSearchVisible)}
         />
@@ -60,7 +60,8 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
         />
       </div>
 
-      <div className="flex items-center gap-3.5">
+      <div className=" flex flex-row justify-end items-center gap-2.5">
+
         {/* Sort */}
         <RiSortDesc
           size={ICON_TOP_BAR_SIZE}
@@ -86,11 +87,11 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
         {/* Toggle Theme */}
         <button
           onClick={toggleTheme}
-          className="flex items-center justify-center w-[40px]  bg-gray-300 dark:bg-secondary rounded-full p-0.5 transition-colors duration-300"
+          className="flex items-center justify-center w-[41px]  bg-gray-300 dark:bg-secondary rounded-full p-0.5 transition-colors duration-300"
         >
           <div
             className={`rounded-full shadow-md transform transition-transform duration-300 m-0.5  ${
-              isDarkMode ? "translate-x-[10px]" : "  -translate-x-[10px] bg-white"
+              isDarkMode ? "translate-x-[10.5px]" : "  -translate-x-[10.5px] bg-white"
             }`}
           >
             {isDarkMode ? (
