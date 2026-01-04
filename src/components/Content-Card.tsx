@@ -4,11 +4,14 @@ import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
 import { TiPin, TiPinOutline } from "react-icons/ti";
 import ActionMenu from "./Action-Menu";
 import ContentRenderer from "./Content-Renderer";
+import CopyToast from "./UI-Components/CopyToast";
+import { useTranslation } from "react-i18next";
 
 function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete ,handleEdit, handleSave, handleFixed, handleCopy}: ContentCardProps) {
 
   const [newText, setNewText] = useState(text);
-
+  const [showToast, setShowToast] = useState(false);
+  const { t } = useTranslation();
   const handleSaveText = () => {
     handleSave(newText);
   };
@@ -16,6 +19,19 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
   const handledOption = (e: React.MouseEvent) => {
     e.stopPropagation();
     handleMenu();
+  };
+
+  const handleCopyInternal = () => {
+
+    if (toggleActions.activeEdit) return;
+
+    if (toggleActions.showMenu) {
+      handleMenu();
+    }
+
+    handleCopy();
+
+    setShowToast(true);
   };
 
   const getPinIcon = () => {
@@ -30,7 +46,7 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
 
   return (
     <div className="flex flex-row justify-between items-stretch  ">
-      <div className="transition-[border] duration-100 w-full bg-gray-200 dark:bg-secondary py-2 px-2 mx-2 rounded-md hover:shadow-lg flex flex-row justify-between border-width-selected  border-gray-300 dark:border-tertiary-dark hover:border-gray-400 hover:dark:border-tertiary-light  transition-border  gap-2   " onClick={handleCopy}>
+      <div className="transition-[border] duration-100 w-full bg-gray-200 dark:bg-secondary py-2 px-2 mx-2 rounded-md hover:shadow-lg flex flex-row justify-between border-width-selected  border-gray-300 dark:border-tertiary-dark hover:border-gray-400 hover:dark:border-tertiary-light  transition-border  gap-2   " onClick={handleCopyInternal}>
 
         {<ContentRenderer type={type} value={newText} url={url} editText={toggleActions.activeEdit} setText={setNewText}  />}
 
@@ -44,14 +60,19 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
           {getPinIcon()}
         </section>
       </div>
-      {<ActionMenu
-        toggleMenu={toggleActions.showMenu}
-        handleDelete={handleDelete}
-        disabledEdit={type !== "text"}
-        editText={toggleActions.activeEdit}
-        handleEdit={handleEdit}
-        handleSave={handleSaveText}
-      />}
+
+      {showToast ?
+        <CopyToast onComplete={() => setShowToast(false)} text={t("copied")} /> :
+        <ActionMenu
+          toggleMenu={toggleActions.showMenu}
+          handleDelete={handleDelete}
+          disabledEdit={type !== "text"}
+          editText={toggleActions.activeEdit}
+          handleEdit={handleEdit}
+          handleSave={handleSaveText}
+        />
+      }
+
     </div>
   );
 }
