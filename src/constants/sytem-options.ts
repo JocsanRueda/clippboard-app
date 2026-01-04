@@ -19,7 +19,7 @@ export const limitItemsOptions = {
     { label: "30 items", value: 30 },
     { label: "50 items", value: 50 },
     { label: "100 items", value: 100 },
-    { label: "No limit", value: -1 },
+    { label: "no_limit", value: -1 },
   ],
   defaultValue: 3,
 };

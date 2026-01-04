@@ -6,4 +6,5 @@ export type DropdownProps ={
   onSelect: (value: string | number | boolean) => void;
   isOpen: boolean;
   onToggle: () => void;
+  dropUp?: boolean;
 }

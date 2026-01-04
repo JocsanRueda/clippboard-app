@@ -3,7 +3,7 @@ import { DropdownProps } from "../../types/dropdown-type";
 import { useTranslation } from "react-i18next";
 import { extractLetter, extractNumber } from "@/utils/string";
 
-export function Dropdown({ options, onSelect, selectedValue,isOpen, onToggle }: DropdownProps) {
+export function Dropdown({ options, onSelect, selectedValue,isOpen, onToggle,dropUp }: DropdownProps) {
 
   const { t } = useTranslation();
 
@@ -17,7 +17,7 @@ export function Dropdown({ options, onSelect, selectedValue,isOpen, onToggle }: 
 
     const numberPart=extractNumber(value);
     const letterPart=extractLetter(value);
-    return numberPart.length>0 ? `${numberPart} ${t(letterPart)}` : t(letterPart);
+    return numberPart.length>0 ? `${numberPart} ${t(letterPart)}` : t(value);
 
   };
 
@@ -38,13 +38,14 @@ export function Dropdown({ options, onSelect, selectedValue,isOpen, onToggle }: 
       </button>
 
       {isOpen && (
-        <div className="absolute  left-1/2 -translate-x-1/2 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm min-w-28 max-w-36 dark:bg-primary border-width-selected border-gray-300 dark:border-tertiary-dark mt-1">
-          <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+        <div className={`absolute  left-1/2 -translate-x-1/2  z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm min-w-28 max-w-40 dark:bg-primary border-width-selected border-gray-300 dark:border-tertiary-dark mt-1 ${dropUp ? "-translate-y-[127%]" : ""}`}>
+
+          <ul className="py-2 text-sm text-gray-700 dark:text-gray-200 ">
             {options.map((option, index) => (
               <li key={index}>
                 <button
                   onClick={() => handleOptionClick(index)}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-secondary dark:hover:text-white min-w-0 max-w-full truncate"
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-secondary dark:hover:text-white min-w-0 max-w-full truncate  "
                 >
                   {getLabel(option.label)}
                   {selectedValue === option.value && (

@@ -29,6 +29,7 @@
   "enabled": "Habilitado",
   "disabled": "Deshabilitado",
   "vertical_size": "Tamaño vertical",
-  "horizontal_size": "Tamaño horizontal"
+  "horizontal_size": "Tamaño horizontal",
+  "no_limit": "Sin límite"
 
 }

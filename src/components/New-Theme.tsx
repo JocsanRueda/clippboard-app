@@ -102,7 +102,7 @@ export function NewTheme() {
       </ContentSettings>
       <ContentSettings label={t("border_width")} className="border-x-width-selected border-b-width-selected rounded-b-md">
 
-        <Dropdown options={borderWidthOptions} onSelect={(value) => handleThemeChange("borderWidth", value)}  isOpen={openDropdown === 0} selectedValue={theme.borderWidth} onToggle={() => handleDropdownToggle(0)} />
+        <Dropdown options={borderWidthOptions} onSelect={(value) => handleThemeChange("borderWidth", value)}  isOpen={openDropdown === 0} selectedValue={theme.borderWidth} onToggle={() => handleDropdownToggle(0)} dropUp={true} />
 
       </ContentSettings>
 
