@@ -30,7 +30,7 @@ const CopyToast: React.FC<CopyToastProps> = ({
   return (
     <div
       className={`
-        flex items-center gap-2 px-3 py-1.5
+        flex items-center gap-0.5 px-2 py-1.5
         bg-secondary  backdrop-blur-md 
         border border-width-selected dark:border-tertiary-dark hover:border-tertiary-light rounded-md 
         shadow-[0_4px_12px_rgba(0,0,0,0.5)]
@@ -42,12 +42,12 @@ const CopyToast: React.FC<CopyToastProps> = ({
       }}
     >
 
-      <svg
-        className="w-3.5 h-3.5 text-teal-400"
+      {/* <svg
+        className="w-3 h-3 text-teal-400"
         fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}
       >
         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-      </svg>
+      </svg> */}
 
       <span className="text-xs font-medium text-teal-50/90 tracking-tight">
         {text}
