@@ -21,11 +21,13 @@ export function Dropdown({ options, onSelect, selectedValue,isOpen, onToggle }: 
 
   };
 
+  console.log("Selected Value:", selectedValue);
+
   return (
-    <div className="relative">
+    <div className="relative ">
       <button
         onClick={onToggle}
-        className="font-light text-black dark:text-white bg-gray-300 dark:bg-secondary-light border-solid border-width-selected  rounded-lg  px-3 py-2.5 text-center inline-flex items-center border-gray-400   dark:border-tertiary-dark "
+        className="font-light text-black dark:text-white bg-gray-300 dark:bg-secondary-light border-solid border-width-selected  rounded-lg  px-3 py-2.5 text-center inline-flex items-center border-gray-400   dark:border-tertiary-dark min-w-0 max-w-full truncate "
         type="button"
       >
         {getLabel(options.find(option => option.value === selectedValue)?.label || "Select")}
@@ -42,10 +44,10 @@ export function Dropdown({ options, onSelect, selectedValue,isOpen, onToggle }: 
               <li key={index}>
                 <button
                   onClick={() => handleOptionClick(index)}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-secondary dark:hover:text-white"
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-secondary dark:hover:text-white min-w-0 max-w-full truncate"
                 >
                   {getLabel(option.label)}
-                  {selectedValue === option.label && (
+                  {selectedValue === option.value && (
                     <BsCheckLg className="inline-block w-4 h-4 ms-2" />
                   )}
                 </button>
