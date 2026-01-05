@@ -30,11 +30,14 @@ const CopyToast: React.FC<CopyToastProps> = ({
   return (
     <div
       className={`
+       
+        bg-gray-200 dark:bg-secondary
         flex items-center gap-0.5 px-2 py-1.5
-        bg-secondary  backdrop-blur-md 
-        border border-width-selected dark:border-tertiary-dark hover:border-tertiary-light rounded-md 
-        shadow-[0_4px_12px_rgba(0,0,0,0.5)]
-        pointer-events-none transition-all duration-300 ease-in-out
+        backdrop-blur-md 
+        border border-width-selected border-gray-300 dark:border-tertiary-dark hover:border-gray-400 hover:dark:border-tertiary-light  transition-border
+        rounded-md 
+        transition-transform duration-300 ease-in-out
+        hover:shadow-lg
         ${isExiting ? "opacity-0 translate-x-2" : "opacity-100 translate-x-0"}
       `}
       style={{
@@ -49,7 +52,7 @@ const CopyToast: React.FC<CopyToastProps> = ({
         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
       </svg> */}
 
-      <span className="text-xs font-medium text-teal-50/90 tracking-tight">
+      <span className="text-xs font-medium  text-gray-600 dark:text-quaternary  tracking-tight pointer-events-none">
         {text}
       </span>
 
