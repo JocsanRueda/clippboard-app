@@ -23,7 +23,7 @@ function App() {
     <div className={`font-sans
         flex flex-col h-screen overflow-hidden
         ${settings.rounded_window_corners ? "rounded-lg" : ""}
-        border-2 border-black
+        border-2 border-gray-500
       `}
     >
 

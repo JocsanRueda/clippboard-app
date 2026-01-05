@@ -31,6 +31,8 @@
   "history": "History",
   "new_theme": "New Theme",
   "no_limit": "No Limit",
-  "copied": "Copied!"
+  "copied": "Copied!",
+  "search_shortcut": "Search Shortcut",
+  "delete_shortcut": "Delete Shortcut"
   
 }

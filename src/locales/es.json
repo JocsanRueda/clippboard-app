@@ -31,6 +31,8 @@
   "vertical_size": "Tamaño vertical",
   "horizontal_size": "Tamaño horizontal",
   "no_limit": "Sin límite",
-  "copied": "¡Copiado!"
+  "copied": "¡Copiado!",
+  "search_shortcut": "Atajo de búsqueda",
+  "delete_shortcut": "Atajo de eliminación"
 
 }

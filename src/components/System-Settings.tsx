@@ -124,6 +124,24 @@ export function SystemSettings(){
             setEditing={setIsEditing}
           />
         </ContentSettings>
+
+        <ContentSettings label={t("search_shortcut")} className="border-x-width-selected border-b-width-selected ">
+          <ShortcutInput
+            value={settings.keyboard_shortcut}
+            onChange={(combo) => handleShorcutChange(combo ?? "")}
+            placeholder="Pulsa la combinación"
+            setEditing={setIsEditing}
+          />
+        </ContentSettings>
+
+        <ContentSettings label={t("delete_shortcut")} className="border-x-width-selected border-b-width-selected ">
+          <ShortcutInput
+            value={settings.keyboard_shortcut}
+            onChange={(combo) => handleShorcutChange(combo ?? "")}
+            placeholder="Pulsa la combinación"
+            setEditing={setIsEditing}
+          />
+        </ContentSettings>
         <ContentSettings label={t("font_size")} className="border-x-width-selected border-b-width-selected ">
 
           <UnityInput

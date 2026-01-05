@@ -76,7 +76,7 @@ export function NewTheme() {
           maxLength={MAX_LENGTH_THEME_NAME}
           type="text"
           placeholder={t("name")}
-          className= "  dark:bg-primary  focus:outline-none  border-width-min-selected border-gray-400 focus-within:border-gray-500 dark:border-tertiary-dark dark:focus-within:border-tertiary  rounded-md py-1 px-2 text-black dark:text-quaternary transition-[width,opacity] duration-100" required
+          className= "  dark:bg-primary focus:outline-none  border-width-min-selected border-gray-400 focus-within:border-gray-500 dark:border-tertiary-dark dark:focus-within:border-tertiary  rounded-md py-1 px-2 text-black dark:text-quaternary transition-[width,opacity] duration-100 w-full max-w-90" required
 
         />
       </ContentSettings>
