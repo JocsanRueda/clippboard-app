@@ -1,15 +1,11 @@
+use crate::constants::clipboard_key::{IMAGE, TEXT};
 use crate::utils::data::get_data_now;
 use crate::utils::string::normalize_string;
 use serde_json::json;
-use crate::constants::clipboard_key::{IMAGE, TEXT};
-pub fn add_unique(
-     array: &mut Vec<serde_json::Value>,
-    value: &str,
-)  {
+pub fn add_unique(array: &mut Vec<serde_json::Value>, value: &str) {
     let last_value = normalize_string(value);
 
     let timestamp = get_data_now();
-
 
     let new_item = json!({
         "value": last_value,
@@ -25,18 +21,12 @@ pub fn add_unique(
     {
         array.push(new_item);
     }
-
-
 }
 
-
-pub fn add_image(
-    array: &mut Vec<serde_json::Value>
-) {
+pub fn add_image(array: &mut Vec<serde_json::Value>) {
     let last_value = normalize_string(IMAGE);
 
     let timestamp = get_data_now();
-
 
     let new_item = json!({
         "value": last_value,
@@ -46,9 +36,5 @@ pub fn add_image(
         "timestamp": timestamp
     });
 
-    
-        array.push(new_item);
-    
-
-   
+    array.push(new_item);
 }

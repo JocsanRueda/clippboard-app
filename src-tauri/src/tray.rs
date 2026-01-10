@@ -5,7 +5,7 @@ use tauri::{
     App, Manager, Wry,
 };
 
-use crate::window::{show_window_command, hide_window_command};
+use crate::window::{hide_window_command, show_window_command};
 
 pub fn setup_tray(app: &App<Wry>) -> tauri::Result<()> {
     let show_i = MenuItem::with_id(app, "show", "Show", true, None::<&str>)?;
@@ -18,9 +18,7 @@ pub fn setup_tray(app: &App<Wry>) -> tauri::Result<()> {
         .on_menu_event(|app, event| match event.id.as_ref() {
             "show" => {
                 if let Some(window) = app.get_webview_window("main") {
-                    
                     show_window_command(window);
-                  
                 }
             }
             "hidden" => {

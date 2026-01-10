@@ -149,7 +149,7 @@ export default function ShortcutInput({ value, placeholder, onChange, setEditing
       readOnly
       value={display}
       placeholder={placeholder ?? "Pulsar combinación..."}
-      className="font-light text-black dark:text-white bg-gray-300 dark:bg-secondary-light border-solid border-width-selected  rounded-lg  px-0.5 py-2.5 text-center inline-flex items-center border-gray-400 dark:border-tertiary-dark w-full max-w-30"
+      className="font-light text-black dark:text-white bg-gray-300 dark:bg-secondary-light border-solid border-width-selected  rounded-lg  px-0.5 py-2.5 text-center inline-flex items-center border-gray-400 dark:border-tertiary-dark w-full max-w-45"
       onFocus={start}
       onClick={start}
       onBlur={stop}

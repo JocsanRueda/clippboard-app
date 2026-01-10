@@ -30,7 +30,7 @@ export default function WindowControls({roundedWindow}: {roundedWindow: boolean}
     <div
       id="titlebar"
       data-tauri-drag-region
-      className={`fixed top-0 right-0 w-full flex justify-end items-center bg-gray-300 dark:bg-secondary gap-1.5 z-100 py-0.5 px-2  overflow-hidden border-t-2 border-x-2 border-gray-500 ${roundedWindow?" rounded-t-lg ":""}`}
+      className={`fixed top-0 right-0 w-full flex justify-end items-center bg-gray-300 dark:bg-secondary gap-1.5 z-100 py-0.5 px-2  overflow-hidden border-t-2 border-x-2 border-gray-500 dark:border-gray-800 ${roundedWindow?" rounded-t-lg ":""}`}
     >
 
       <button

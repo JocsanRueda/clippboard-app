@@ -75,11 +75,13 @@ export const fontSizeOptions = {
 export const DEFAULT_SYSTEM_SETTINGS = {
   expiration_time: timeOptions.items[timeOptions.defaultValue].value,
   item_limit: limitItemsOptions.items[limitItemsOptions.defaultValue].value,
-  keyboard_shortcut: keyboardLaunchOptions.items[keyboardLaunchOptions.defaultValue].value,
   language: languagesOptions.items[languagesOptions.defaultValue].value,
   item_order: orderItemsOptions.items[orderItemsOptions.defaultValue].value,
   rounded_window_corners: roundedWindowOptions.items[roundedWindowOptions.defaultValue].value,
   font_size: fontSizeOptions.items[fontSizeOptions.defaultValue].value,
   horizontal_size: 380,
-  vertical_size:440
+  vertical_size:440,
+  keyboard_shortcut: keyboardLaunchOptions.items[keyboardLaunchOptions.defaultValue].value,
+  search_shortcut: "Ctrl+F",
+  delete_all_shortcut: "Ctrl+Del"
 };

@@ -18,26 +18,22 @@ pub fn save_store(store: &Arc<Store<Wry>>, history: &Vec<serde_json::Value>) {
 
 // get settings from the store
 pub fn get_settings(store: &Arc<Store<Wry>>) -> Settings {
-
-  
     store
         .get(SETTINGS)
         .and_then(|v| serde_json::from_value(v).ok())
         .unwrap_or(Settings {
             expiration_time: 24,
-            keyboard_shortcut: "ctrl+w".to_string(),
+            keyboard_shortcut: "Ctrl+H".to_string(),
+            search_shortcut: "Ctrl+F".to_string(),
+            delete_all_shortcut: "Ctrl+Del".to_string(),
             language: "es".to_string(),
             item_limit: 100,
             rounded_window_corners: false,
             font_size: "12".to_string(),
-            item_order:"ascending".to_string(),
-            horizontal_size: 380.0 ,
-            vertical_size: 440.0 ,
-            
+            item_order: "ascending".to_string(),
+            horizontal_size: 380.0,
+            vertical_size: 440.0,
         })
-
-
-        
 }
 
 // Clean up the store

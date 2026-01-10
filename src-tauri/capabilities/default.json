@@ -26,14 +26,14 @@
     "core:window:allow-unmaximize",
     "core:window:allow-minimize",
     "fs:default",
-    {
-      "identifier": "fs:allow-applocaldata-read-recursive",
-      "allow": [{ "path": "$APPLOCALDATA/*" }]
-    },
     "global-shortcut:allow-is-registered",
     "global-shortcut:allow-register",
     "global-shortcut:allow-unregister",
-    "global-shortcut:allow-unregister-all"
+    "global-shortcut:allow-unregister-all",
+    {
+      "identifier": "fs:allow-applocaldata-read-recursive",
+      "allow": [{ "path": "$APPLOCALDATA/*" }]
+    }
 
     
   ]

@@ -25,9 +25,12 @@ export const SystemSettingsProvider:React.FC<{children: React.ReactNode}> = ({ c
 
       if(s){
         setSystemSettings(s);
+        console.log("Loaded settings from store:", s);
       }else{
         saveSettings(DEFAULT_SYSTEM_SETTINGS);
         setSystemSettings(DEFAULT_SYSTEM_SETTINGS);
+
+        console.log("No settings found, initialized with default settings.");
 
       }
     }

@@ -1,9 +1,7 @@
 use std::fs;
 use std::process::Command;
 
-
-
-pub fn get_gnome_font()->String {
+pub fn get_gnome_font() -> String {
     let output = Command::new("gsettings")
         .args(&["get", "org.gnome.desktop.interface", "font-name"])
         .output()
@@ -17,9 +15,7 @@ pub fn get_gnome_font()->String {
     }
 }
 
-
-
-pub fn get_kde_font()->String {
+pub fn get_kde_font() -> String {
     let config_path = dirs::home_dir()
         .unwrap_or_default()
         .join(".config")
@@ -35,48 +31,39 @@ pub fn get_kde_font()->String {
     "DefaultFont".to_string()
 }
 
-
 #[tauri::command]
-pub fn get_system_font_command()->String{
+pub fn get_system_font_command() -> String {
+    let mut font = get_gnome_font();
 
-  let  mut font = get_gnome_font();
-
-
-
-  if font == "" || font == "DefaultFont" {
-      font = get_kde_font();
-  }
-  font
-
-
+    if font == "" || font == "DefaultFont" {
+        font = get_kde_font();
+    }
+    font
 }
 
 #[tauri::command]
-pub fn list_font()-> Result<Vec<String>,String>{
-   
-   use std::process::Command;
-   use std::collections::BTreeSet;
+pub fn list_font() -> Result<Vec<String>, String> {
+    use std::collections::BTreeSet;
+    use std::process::Command;
 
-   let output= Command::new("fc-list")
-       .arg("--format")
-       .arg("%{family}\n")
-         .output()
-         .map_err(|e| format!("Failed to execute fc-list command: {}", e))?;
+    let output = Command::new("fc-list")
+        .arg("--format")
+        .arg("%{family}\n")
+        .output()
+        .map_err(|e| format!("Failed to execute fc-list command: {}", e))?;
 
-        if !output.status.success() {
-            return Err("fc-list command failed".to_string());
-        }
+    if !output.status.success() {
+        return Err("fc-list command failed".to_string());
+    }
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     let mut set = BTreeSet::new();
     for line in stdout.lines() {
         for family in line.split(',') {
-
             let f = family.trim().trim_matches('"');
-            if !f.is_empty(){
+            if !f.is_empty() {
                 set.insert(f.to_string());
             }
-            
         }
     }
 
