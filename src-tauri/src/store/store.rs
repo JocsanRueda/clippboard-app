@@ -26,6 +26,7 @@ pub fn get_settings(store: &Arc<Store<Wry>>) -> Settings {
             keyboard_shortcut: "Ctrl+H".to_string(),
             search_shortcut: "Ctrl+F".to_string(),
             delete_all_shortcut: "Ctrl+Del".to_string(),
+            sort_shortcut: "Ctrl+S".to_string(),
             language: "es".to_string(),
             item_limit: 100,
             rounded_window_corners: false,

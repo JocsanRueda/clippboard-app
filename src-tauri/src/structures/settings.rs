@@ -6,6 +6,7 @@ pub struct Settings {
     pub keyboard_shortcut: String,
     pub search_shortcut: String,
     pub delete_all_shortcut: String,
+    pub sort_shortcut: String,
     pub language: String,
     pub rounded_window_corners: bool,
     pub font_size: String,

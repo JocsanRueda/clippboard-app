@@ -83,5 +83,6 @@ export const DEFAULT_SYSTEM_SETTINGS = {
   vertical_size:440,
   keyboard_shortcut: keyboardLaunchOptions.items[keyboardLaunchOptions.defaultValue].value,
   search_shortcut: "Ctrl+F",
-  delete_all_shortcut: "Ctrl+Del"
+  delete_all_shortcut: "Ctrl+Del",
+  sort_shortcut: "Ctrl+S",
 };

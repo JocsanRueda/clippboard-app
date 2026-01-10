@@ -29,7 +29,7 @@ const KEY_MAP: Record<string, string> = {
 };
 
 const MODIFIER_KEYS = ["Control", "Alt", "Shift", "Meta"];
-const MODIFIER_ALIASES=["Ctrl","Alt","Shift","Meta"];
+const MODIFIER_ALIASES = ["Ctrl", "Alt", "Shift", "Meta"];
 const MODIFIER_ORDER: Record<string, number> = {
   Ctrl: 0, Alt: 1, Shift: 2, Meta: 3,
 };
@@ -48,6 +48,50 @@ const modifiersFromEvent = (e: KeyboardEvent): string[] => {
   if (e.metaKey) mods[i++] = MODIFIER_ALIASES[3];
   if (i > 1) mods.sort((a, b) => MODIFIER_ORDER[a] - MODIFIER_ORDER[b]);
   return mods;
+};
+
+const isModifierToken = (t: string) => MODIFIER_ALIASES.includes(t);
+
+// Normaliza un combo para que tenga entre 2 y 3 tokens:
+// - Si >3 recorta a los primeros 3 (ordena modificadores primero).
+// - Si <2 rellena con valores por defecto (`keyboardLaunchOptions.items[0].value`).
+const normalizeCombo = (raw: string): string => {
+  const defaultParts = keyboardLaunchOptions.items[0].value.split("+");
+  const defaultMod = defaultParts[0];
+  const defaultKey = defaultParts[1] ?? "";
+
+  if (!raw || raw.trim() === "") {
+    return `${defaultMod}+${defaultKey}`;
+  }
+
+  let parts = raw.split("+").map((p) => p.trim()).filter(Boolean);
+
+  // Classify tokens
+  const mods = parts.filter(isModifierToken);
+  const mains = parts.filter((p) => !isModifierToken(p));
+
+  // If too many tokens overall, prefer keeping modifiers first then mains, limit to 3
+  let ordered = [...mods.sort((a, b) => MODIFIER_ORDER[a] - MODIFIER_ORDER[b]), ...mains];
+  if (ordered.length > 3) ordered = ordered.slice(0, 3);
+
+  // Ensure at least one modifier and one main key
+  const hasMod = ordered.some(isModifierToken);
+  const hasMain = ordered.some((p) => !isModifierToken(p));
+
+  if (!hasMod) {
+    ordered = [defaultMod, ...ordered];
+  }
+  if (!hasMain) {
+    ordered = [...ordered, defaultKey];
+  }
+
+  // After padding, if still >3 (rare), trim to 3 keeping modifiers first
+  ordered = [
+    ...ordered.filter(isModifierToken).sort((a, b) => MODIFIER_ORDER[a] - MODIFIER_ORDER[b]),
+    ...ordered.filter((p) => !isModifierToken(p)),
+  ].slice(0, 3);
+
+  return ordered.join("+");
 };
 
 export default function ShortcutInput({ value, placeholder, onChange, setEditing }: Props) {
@@ -85,25 +129,26 @@ export default function ShortcutInput({ value, placeholder, onChange, setEditing
         return;
       }
 
-      if (key === "Backspace") {
-        listening.current = false;
-        lastValue.current = "";
-        setDisplay("");
-        onChange(null);
-        return;
-      }
+      // if (key === "Backspace") {
+
+      //   listening.current = false;
+      //   lastValue.current = "";
+      //   setDisplay("");
+      //   onChange(null);
+      //   return;
+      // }
 
       const combo = (() => {
         const mods = modifiersFromEvent(e);
         const main = normalizeKey(key);
-
         return mods.length ? `${mods.join("+")}+${main}` : main;
       })();
 
       listening.current = false;
-      lastValue.current = combo;
-      setDisplay(combo);
-      onChange(combo);
+      const normalized = normalizeCombo(combo);
+      lastValue.current = normalized;
+      setDisplay(normalized);
+      onChange(normalized);
     };
 
     // Registrar solo una vez
@@ -121,27 +166,9 @@ export default function ShortcutInput({ value, placeholder, onChange, setEditing
     listening.current = false;
     setEditing?.(false);
 
-    if (!display.includes("+")) {
-
-      const defaultValues= keyboardLaunchOptions.items[0].value.split("+");
-      const mod= defaultValues[0];
-      const key= defaultValues[1];
-
-      if (!MODIFIER_ALIASES.some(mod=> display.includes(mod))) {
-
-        const newDisplay= `${mod}+${display}`;
-        setDisplay(newDisplay);
-        onChange(newDisplay);
-
-      }else{
-        const newDisplay= `${display}+${key}`;
-        setDisplay(newDisplay);
-        onChange(newDisplay);
-
-      }
-
-    }
-
+    const normalized = normalizeCombo(display);
+    setDisplay(normalized);
+    onChange(normalized);
   };
 
   return (

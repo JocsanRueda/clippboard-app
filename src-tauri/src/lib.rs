@@ -26,10 +26,12 @@ use crate::constants::clipboard_key::{FILE_HISTORY, FILE_SETTINGS};
 use crate::utils::files::write_image_command;
 
 use crate::utils::settings::{get_system_font_command, list_font};
+
 pub struct AppStore(pub Arc<Mutex<Arc<Store<Wry>>>>);
 
 use crate::tray::setup_tray;
 use crate::utils::GLOBAL_DATA_PATH;
+use tauri_plugin_single_instance;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -38,6 +40,24 @@ pub fn run() {
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+
+
+            print!("Comando externo recibido");
+
+           
+
+         
+                if let Some(window) = app.get_webview_window("main") {
+                    // Lógica robusta para mostrar la ventana
+                    
+                    let _ = window.show();
+                    let _ = window.unminimize();
+                    let _ = window.set_focus();
+                    println!("Ventana mostrada vía comando externo");
+                }
+            
+        }))
         .setup(|app| {
 
          

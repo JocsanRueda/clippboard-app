@@ -21,8 +21,6 @@ export function Dropdown({ options, onSelect, selectedValue,isOpen, onToggle,dro
 
   };
 
-  console.log("Selected Value:", selectedValue);
-
   return (
     <div className="relative ">
       <button

@@ -1,17 +1,19 @@
 import { offShortcuts, onShortcuts } from "@/api/tauri/clipboard";
+import { resizeWindow } from "@/api/tauri/windows";
 import { PAGES } from "@/constants/constant";
-import { keyboardLaunchOptions, languagesOptions, limitItemsOptions, orderItemsOptions, roundedWindowOptions, timeOptions,fontSizeOptions } from "@/constants/sytem-options";
+import { fontSizeOptions, keyboardLaunchOptions, languagesOptions,
+  limitItemsOptions, orderItemsOptions, roundedWindowOptions,
+  timeOptions } from "@/constants/sytem-options";
 import { usePageContext } from "@/context/Page-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { SystemSettings as SystemSettingsProps } from "@/types/system-settings.type";
-import React,{ useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { IoArrowForwardOutline } from "react-icons/io5";
 import ContentSettings from "./Content-Settings";
 import Dropdown from "./UI-Components/Dropdown";
 import ShortcutInput from "./UI-Components/Shorcut-input";
 import { UnityInput } from "./UI-Components/Unitiy-input";
-import { useTranslation } from "react-i18next";
-import { resizeWindow } from "@/api/tauri/windows";
 export function SystemSettings(){
 
   const {handlePage}= usePageContext();
@@ -25,6 +27,9 @@ export function SystemSettings(){
   const [tempSettings, setTempSettings]= useState<SystemSettingsProps>(settings);
 
   const shorcutsRef= useRef<string>(settings.keyboard_shortcut);
+  const shorcutsSearchRef= useRef<string>(settings.search_shortcut);
+  const shorcutsDeleteRef= useRef<string>(settings.delete_all_shortcut);
+  const shortcutsSortRef= useRef<string>(settings.sort_shortcut);
 
   const { t } = useTranslation();
 
@@ -64,9 +69,17 @@ export function SystemSettings(){
 
   };
 
-  const handleShorcutChange = async (combo: string) => {
-    handleSelect(keyboardLaunchOptions.key as keyof SystemSettingsProps, combo);
-    shorcutsRef.current = combo;
+  const handleShorcutChange = async (combo: string, key: string) => {
+    handleSelect(key as keyof SystemSettingsProps, combo);
+    if (key === "keyboard_shortcut") {
+      shorcutsRef.current = combo;
+    } else if (key === "search_shortcut") {
+      shorcutsSearchRef.current = combo;
+    } else if (key === "delete_all_shortcut") {
+      shorcutsDeleteRef.current = combo;
+    } else{
+      shortcutsSortRef.current = combo;
+    }
   };
 
   const settingsConfig = [
@@ -119,7 +132,7 @@ export function SystemSettings(){
         <ContentSettings label={t("keyboard_shortcut")} className="border-x-width-selected border-b-width-selected ">
           <ShortcutInput
             value={settings.keyboard_shortcut}
-            onChange={(combo) => handleShorcutChange(combo ?? "")}
+            onChange={(combo) => handleShorcutChange(combo ?? "", keyboardLaunchOptions.key)}
             placeholder="Pulsa la combinación"
             setEditing={setIsEditing}
           />
@@ -128,7 +141,7 @@ export function SystemSettings(){
         <ContentSettings label={t("search_shortcut")} className="border-x-width-selected border-b-width-selected ">
           <ShortcutInput
             value={settings.search_shortcut}
-            onChange={(combo) => handleShorcutChange(combo ?? "")}
+            onChange={(combo) => handleShorcutChange(combo ?? "", "search_shortcut")}
             placeholder="Pulsa la combinación"
             setEditing={setIsEditing}
           />
@@ -137,11 +150,21 @@ export function SystemSettings(){
         <ContentSettings label={t("delete_all_shortcut")} className="border-x-width-selected border-b-width-selected ">
           <ShortcutInput
             value={settings.delete_all_shortcut}
-            onChange={(combo) => handleShorcutChange(combo ?? "")}
+            onChange={(combo) => handleShorcutChange(combo ?? "", "delete_all_shortcut")}
             placeholder="Pulsa la combinación"
             setEditing={setIsEditing}
           />
         </ContentSettings>
+
+        <ContentSettings label={t("sort_shortcut")} className="border-x-width-selected border-b-width-selected ">
+          <ShortcutInput
+            value={settings.sort_shortcut}
+            onChange={(combo) => handleShorcutChange(combo ?? "", "sort_shortcut")}
+            placeholder="Pulsa la combinación"
+            setEditing={setIsEditing}
+          />
+        </ContentSettings>
+
         <ContentSettings label={t("font_size")} className="border-x-width-selected border-b-width-selected ">
 
           <UnityInput

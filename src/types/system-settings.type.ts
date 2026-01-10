@@ -4,6 +4,7 @@ export type SystemSettings={
   keyboard_shortcut:string;
   search_shortcut:string;
   delete_all_shortcut:string;
+  sort_shortcut:string;
   item_order:string;
   language:string;
   rounded_window_corners:boolean;

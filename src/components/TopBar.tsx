@@ -5,12 +5,14 @@ import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { TopBarProps } from "@/types/top-bar.type";
 import { getStorageIsDarkMode } from "@/utils/theme";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CgTrash } from "react-icons/cg";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoSettingsSharp } from "react-icons/io5";
 import { LuMoon, LuSun } from "react-icons/lu";
 import { RiSortDesc } from "react-icons/ri";
+
+import { useHotkeys } from "react-hotkeys-hook";
 
 function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
   const { handlePage } = usePageContext();
@@ -18,6 +20,11 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
   const [isDarkMode, setIsDarkMode] = useState(getStorageIsDarkMode());
 
   const {settings, setSystemSettings} = useSystemSettingsContext();
+
+  const [onFocus, setOnFocus]= useState<boolean>(false);
+
+  // eslint-disable-next-line no-undef
+  const input = useRef<HTMLInputElement>(null);
 
   useDarkMode(isDarkMode);
 
@@ -28,6 +35,43 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
   const handleSort = (value: string) => {
     setSystemSettings({ ...settings, item_order: value });
   };
+
+  //search hotkey
+  useHotkeys(settings.search_shortcut,(event)=>{
+
+    event.preventDefault();
+
+    console.log("search hotkey activated");
+    setIsSearchVisible(!isSearchVisible);
+    if(!isSearchVisible){
+      // eslint-disable-next-line no-undef
+      setTimeout(()=>{
+
+        if (onFocus) {
+          input.current?.blur();
+          setOnFocus(false);
+        }else{
+          input.current?.focus();
+          setOnFocus(true);
+        }
+
+      },100);
+    }
+  });
+
+  // delete all hotkey
+
+  useHotkeys(settings.delete_all_shortcut,(event)=>{
+    event.preventDefault();
+    deleteFunction();
+  });
+
+  // sort shortcut
+  useHotkeys(settings.sort_shortcut,(event)=>{
+    event.preventDefault();
+
+    handleSort(settings.item_order === orderItemsOptions.items[1].value ? orderItemsOptions.items[0].value : orderItemsOptions.items[1].value);
+  });
 
   return (
 
@@ -49,6 +93,7 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
         />
 
         <input
+          ref={input}
           type="text"
           placeholder="Search..."
           className={`bg-transparent focus:outline-none text-black dark:text-quaternary transition-[width,opacity] duration-100 ${
@@ -57,6 +102,8 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
           }`}
           onChange={(e) => setFilter(e.target.value)}
           value={filter}
+          onFocus={() => setOnFocus(true)}
+          onBlur={() => setOnFocus(false)}
         />
       </div>
 
