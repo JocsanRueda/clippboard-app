@@ -74,13 +74,13 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
 
   return (
 
-    <div className="flex justify-end items-center px-2 py-2.5 dark:bg-primary mx-1 gap-2.5">
+    <div className="flex justify-end items-center px-2 py-2.5 dark:bg-primary mx-1 gap-2.5 over">
 
       <div
         className={`flex items-center min-w-0 w-auto max-w-ws  ${
           isSearchVisible
             ? "flex-grow bg-gray-300 dark:bg-secondary text-gray-900 "
-            : "flex-none"
+            : "flex-none overflow-visible"
         } text-quaternary rounded-lg  py-1 focus-within:ring-2 focus-within:ring-gray-400 dark:focus-within:ring-tertiary overflow-hidden transition-all duration-100`} // Añadido transition-all
       >
         <FaMagnifyingGlass
