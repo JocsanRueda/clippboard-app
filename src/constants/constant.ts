@@ -31,10 +31,11 @@ export const CLIPPBOARD_COMMANDS={
 
 export const PAGES = {
   SETTINGS: "settings",
+  SYSTEM_SETTINGS: "system_settings",
   ABOUT: "about",
   THEME: "themes",
   NEW_THEME: "new_theme",
-  HOME: "hom"
+  HOME: "home"
 };
 
 export const THEME={

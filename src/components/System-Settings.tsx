@@ -1,15 +1,16 @@
 import { offShortcuts, onShortcuts } from "@/api/tauri/clipboard";
 import { resizeWindow } from "@/api/tauri/windows";
 import { PAGES } from "@/constants/constant";
-import { fontSizeOptions, keyboardLaunchOptions, languagesOptions,
+import {
+  fontSizeOptions, keyboardLaunchOptions, languagesOptions,
   limitItemsOptions, orderItemsOptions, roundedWindowOptions,
-  timeOptions } from "@/constants/sytem-options";
+  timeOptions
+} from "@/constants/sytem-options";
 import { usePageContext } from "@/context/Page-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { SystemSettings as SystemSettingsProps } from "@/types/system-settings.type";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { IoArrowForwardOutline } from "react-icons/io5";
 import ContentSettings from "./Content-Settings";
 import Dropdown from "./UI-Components/Dropdown";
 import ShortcutInput from "./UI-Components/Shorcut-input";
@@ -110,14 +111,8 @@ export function SystemSettings(){
     <form onSubmit={handleApplySettings}>
       <div className="w-full  flex flex-col justify-center items-center p-2 mb-5 overflow-x-scroll " >
 
-        <ContentSettings label={t("themes")} className="rounded-t-md border-width-selected py-3">
-
-          <IoArrowForwardOutline className="w-5 h-5 text-gray-600 dark:text-gray-200  cursor-pointer  border-gray-200 dark:border-none hover:border-gray-400 rounded-md  ml-1.5 " onClick={() => handlePage(PAGES.THEME)} />
-
-        </ContentSettings>
-
         {settingsConfig.map((cfg, idx) => (
-          <ContentSettings label={t(cfg.key)} key={t(cfg.key)} className={"border-x-width-selected border-b-width-selected width-selected"}>
+          <ContentSettings label={t(cfg.key)} key={t(cfg.key)} className={idx==0?"rounded-t-md border-width-selected py-3":"border-x-width-selected border-b-width-selected width-selected"}>
             <Dropdown
               options={cfg.items}
               onSelect={(value) => handleSelect(cfg.key as keyof SystemSettingsProps, value)}
@@ -193,7 +188,7 @@ export function SystemSettings(){
           />
         </ContentSettings>
 
-        <ContentSettings label={t("vertical_size")} className="border-width-selected py-3 ">
+        <ContentSettings label={t("vertical_size")} className="border-x-width-selected border-b-width-selected  rounded-b-md py-3 ">
 
           <UnityInput
             unity="px"
@@ -205,12 +200,6 @@ export function SystemSettings(){
             onSelect={(value) =>handleSelect("vertical_size" as keyof SystemSettingsProps, parseInt(value as string,10) )}
 
           />
-        </ContentSettings>
-
-        <ContentSettings label={t("about")} className=" border-x-width-selected border-b-width-selected  rounded-b-md py-3">
-
-          <IoArrowForwardOutline className="w-5 h-5 text-gray-600 dark:text-gray-200  cursor-pointer  border-gray-200 dark:border-none hover:border-gray-400 rounded-md  ml-1.5 " onClick={() => handlePage(PAGES.ABOUT)} />
-
         </ContentSettings>
 
         <input type="submit" value={t("apply")} className="mt-2 mb-6 bg-gray-200 dark:bg-secondary border-width-selected border-gray-300 dark:border-tertiary-dark hover:dark:border-tertiary text-dark dark:text-white font-light px-4 py-2 rounded-md cursor-pointer  transition-colors duration-100 disabled mr-auto"   />

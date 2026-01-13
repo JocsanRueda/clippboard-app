@@ -1,8 +1,8 @@
 
-import { usePageContext } from "@/context/Page-Contex";
 import { PAGES } from "@/constants/constant";
+import { usePageContext } from "@/context/Page-Contex";
+import GeneralSettings from "./General-Settings";
 import History from "./History";
-import Settings from "./Settings";
 
 function ClipboardBody() {
 
@@ -12,7 +12,7 @@ function ClipboardBody() {
     <div className="flex-1 min-h-0 bg-gray-200 dark:bg-primary px-1 mt-6">
 
       {currentPage===PAGES.HOME && <History />}
-      {currentPage!==PAGES.HOME && <Settings />}
+      {currentPage!==PAGES.HOME && <GeneralSettings />}
 
     </div>
   );
