@@ -8,7 +8,6 @@ pub mod utils;
 mod watchers;
 pub mod window;
 
-
 use tauri::{Manager, WindowEvent, Wry};
 use tauri_plugin_store::Store;
 use tauri_plugin_store::StoreExt;
@@ -36,31 +35,36 @@ use tauri_plugin_single_instance;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_autostart::Builder::new().build())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
-
-
             print!("Comando externo recibido");
 
-           
+            if let Some(window) = app.get_webview_window("main") {
+                // Lógica robusta para mostrar la ventana
 
-         
-                if let Some(window) = app.get_webview_window("main") {
-                    // Lógica robusta para mostrar la ventana
-                    
-                    let _ = window.show();
-                    let _ = window.unminimize();
-                    let _ = window.set_focus();
-                    println!("Ventana mostrada vía comando externo");
-                }
-            
+                let _ = window.show();
+                let _ = window.unminimize();
+                let _ = window.set_focus();
+                println!("Ventana mostrada vía comando externo");
+            }
         }))
         .setup(|app| {
 
-         
+            //auto launch setup
+
+            
+            use tauri_plugin_autostart::MacosLauncher;
+
+            let _ = app.handle().plugin(tauri_plugin_autostart::init(
+                MacosLauncher::LaunchAgent,
+                Some(vec!["--flag1", "--flag2"]),
+
+            ));
+
 
             // Initialize settings value
             let store_settings = app.store(FILE_SETTINGS).expect("Failed to open store");
@@ -147,7 +151,6 @@ pub fn run() {
             fixed_item_command,
             hide_window_command,
             write_image_command,
-      
             get_system_font_command,
             resize_window_command,
             list_font
