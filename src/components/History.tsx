@@ -8,7 +8,7 @@ import { ItemActionMenu } from "@/types/item-action-menu.type";
 
 import { ItemClipboard } from "@/types/item-clipboard.type";
 import { newItemPayload } from "@/types/new-item-payload";
-import { add } from "@/utils/array";
+import { add, getOtherIndexEqual } from "@/utils/array";
 import { clear, writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,6 +16,7 @@ import ContentCard from "./Content-Card";
 import TopBar from "./TopBar";
 
 import { COPY_COLDOWN_TIME } from "@/constants/constant";
+import { normalizeString } from "@/utils/string";
 import { NoResult } from "./Not-Result";
 
 export const History = () => {
@@ -61,17 +62,31 @@ export const History = () => {
   //save new text after edit
   const handleSave = async (index: number, newText: string) => {
 
+    const newTextNormalized= normalizeString(newText);
+
     const length = dataList.length-1;
-    updateDataList(index, { value: newText });
-    updateToggleActions(index, { showMenu: true, activeEdit: false });
 
-    // Update the clipboard item
-    await updateClipboardItem(index,newText);
+    if (newTextNormalized !== finalData[index].value) {;
 
-    if (index === length) {
+      const newDataList = updateDataList(index, { value: newTextNormalized });
+
+      await updateClipboardItem(index, newTextNormalized);
+
+      if (index === length) {
       // write the new text to the clipboard
-      await writeText(newText);
+        await writeText(newTextNormalized);
+      }
+
+      const indexValue= getOtherIndexEqual(newDataList,newTextNormalized,index);
+
+      if(indexValue!==-1 ){
+
+        await handleDelete(indexValue,newDataList);
+      }
     }
+
+    updateToggleActions(index, { showMenu: false, activeEdit: false });
+
   };
 
   //toggle edit mode
@@ -80,11 +95,11 @@ export const History = () => {
   };
 
   //delete item from data list
-  const handleDelete = async (index: number) => {
+  const handleDelete = async (index: number,list?:ItemClipboard[]) => {
 
     const lenght = dataList.length-1;
 
-    const newDataList = (dataList ?? []).filter((_, i) => i !== index);
+    const newDataList = (list ?? dataList ?? []).filter((_, i) => i !== index);
     const newToggleActions = (toggleActions ?? []).filter((_, i) => i !== index);
     setToggleActions(newToggleActions);
     setDataList(newDataList);
@@ -97,6 +112,8 @@ export const History = () => {
 
     // Remove the item from the store
     await removeClipboardItem(index);
+
+    return newDataList;
 
   };
 
@@ -118,10 +135,13 @@ export const History = () => {
 
   // Update dataList state for a specific index
 
-  const updateDataList = (index: number, updates: Partial<ItemClipboard>) => {
-    const newDataList = [...(dataList ?? [])];
+  const updateDataList = (index: number, updates: Partial<ItemClipboard>,list?:ItemClipboard[]) => {
+    const newDataList = [...(list ?? dataList ?? [])];
     newDataList[index] = { ...newDataList[index], ...updates };
+
     setDataList(newDataList);
+
+    return newDataList;
 
   };
 
@@ -228,7 +248,7 @@ export const History = () => {
                   handleEdit={handleEditClick(newIndex)}
                   handleSave={handleSaveClick(newIndex)}
                   handleFixed={handleFixedClick(newIndex)}
-                  handleCopy={handleCopyClick(index)}
+                  handleCopy={handleCopyClick(newIndex)}
                 />
               );
             }):

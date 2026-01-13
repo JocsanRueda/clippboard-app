@@ -115,6 +115,8 @@ pub fn update_item_command(
     property_name: String,
     new_value: serde_json::Value,
 ) {
+
+    println!("updating item at index {} ", index);
     let store = state.0.lock().unwrap();
     let mut history = global_history.lock().unwrap();
 
@@ -134,6 +136,8 @@ pub fn delete_item_command(
     global_history: tauri::State<'_, Arc<Mutex<Vec<serde_json::Value>>>>,
     index: usize,
 ) {
+
+    println!("Deleting item at index: {}", index);
     let store = state.0.lock().unwrap();
     let mut history = global_history.lock().unwrap();
 

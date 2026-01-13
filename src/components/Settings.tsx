@@ -5,6 +5,7 @@ import { ThemeSettings } from "./Theme-Settings";
 import { PAGES } from "@/constants/constant";
 import { NewTheme } from "./New-Theme";
 import { useTranslation } from "react-i18next";
+import About from "@/pages/About";
 
 export function Settings(){
 
@@ -22,6 +23,7 @@ export function Settings(){
         {currentPage === PAGES.SETTINGS && <SystemSettings  />}
         {currentPage === PAGES.THEME && <ThemeSettings  />}
         {currentPage ===PAGES.NEW_THEME && <NewTheme />}
+        {currentPage === PAGES.ABOUT && <About />}
       </div>
 
     </div>

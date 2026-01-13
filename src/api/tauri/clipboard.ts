@@ -12,7 +12,7 @@ export const removeClipboardItem = async (index: number) => {
   }
 };
 // update item
-export const updateClipboardItem = async (index: number, text: string, property="text") => {
+export const updateClipboardItem = async (index: number, text: string, property="value") => {
   try {
     await invoke("update_item_command", { index:index, newValue:text , propertyName:property});
   } catch (err) {

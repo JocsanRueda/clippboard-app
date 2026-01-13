@@ -2,6 +2,7 @@
 export type TextContentEditorProps = {
   text: string;
   editText: boolean;
-  setText: (newText: string) => void;
+  newText?: string;
+  setNewText: (newText: string) => void;
   handleCopy?: () => void;
 };

@@ -41,7 +41,6 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
 
     event.preventDefault();
 
-    console.log("search hotkey activated");
     setIsSearchVisible(!isSearchVisible);
     if(!isSearchVisible){
       // eslint-disable-next-line no-undef

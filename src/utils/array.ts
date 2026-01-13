@@ -2,6 +2,23 @@ import { ItemClipboard } from "@/types/item-clipboard.type";
 import { newItemPayload } from "@/types/new-item-payload";
 import { normalizeString } from "./string";
 
+export function alreadyExists(array: ItemClipboard[], text: string): boolean {
+  const normalizedText = normalizeString(text);
+  return array.some(item => item.value === normalizedText && item.type === "text");
+}
+
+export function getIndexByValue(array: ItemClipboard[], text: string): number {
+  const normalizedText = normalizeString(text);
+  return array.findIndex(item => item.value === normalizedText && item.type === "text");
+}
+
+export function getOtherIndexEqual(array: ItemClipboard[],text:string, index: number): number {
+
+  const normalizedText = normalizeString(text);
+  return array.findIndex((item, idx)=> item.value === normalizedText &&  idx !== index) ;
+
+}
+
 export function addUnique(array: ItemClipboard[], text: string): ItemClipboard[] {
 
   const newItem: ItemClipboard = {
@@ -11,7 +28,7 @@ export function addUnique(array: ItemClipboard[], text: string): ItemClipboard[]
     fixed: false
   };
 
-  if (!array.some(item => item.value === newItem.value && item.type === newItem.type )) {
+  if (!alreadyExists(array, text)) {
     return [...array, newItem];
   }
 
