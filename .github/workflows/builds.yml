@@ -1,4 +1,4 @@
-name: Release Tuxclip
+name: Release Tau
 
 permissions:
   contents: write # Necesario para que el bot pueda crear Releases y subir archivos
@@ -58,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: ${{ github.ref_name }} # Usa el nombre del tag (ej: v0.1.0)
-          releaseName: 'Tuxclip App v__VERSION__' # Reemplaza __VERSION__ con la versión real
+          releaseName: 'Tau App v__VERSION__' # Reemplaza __VERSION__ con la versión real
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true # Lo crea como borrador para que revises antes de publicar (opcional)
           prerelease: false

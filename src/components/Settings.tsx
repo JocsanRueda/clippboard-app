@@ -12,7 +12,7 @@ export function Settings(){
   return(
     <div className="flex flex-col w-full h-full bg-gray-200 dark:bg-primary" >
 
-      <div className="flex-1 overflow-y-auto px-1">
+      <div className="flex-1 overflow-y-auto">
 
         <div className="w-full  flex flex-col justify-center items-center p-2 mb-5 overflow-x-scroll " >
 

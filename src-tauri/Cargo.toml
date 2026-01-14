@@ -1,8 +1,8 @@
 [package]
-name = "clippboard"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+name = "tau"
+version = "0.1.2"
+description = "clippboad manager"
+authors = ["Jocsan Rueda"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

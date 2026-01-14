@@ -16,7 +16,7 @@ export const CLIPBOARD_KEY={
   SETTINGS:"settings",
   THEME:"theme",
   THEMES:"themes",
-  FILE_PATH: "/home/ely/.local/share/com.Tuxclip.app"
+  FILE_PATH: "/home/ely/.local/share/com.tau.app"
 };
 
 export const CLIPBOARD_EVENT={

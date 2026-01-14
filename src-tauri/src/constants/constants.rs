@@ -5,7 +5,7 @@ pub mod clipboard_key {
     pub const SETTINGS: &str = "settings";
     pub const TEXT: &str = "text";
     pub const IMAGE: &str = "image";
-    pub const FILE_PATH: &str = "/home/ely/.local/share/com.Tuxclip.app";
+    pub const FILE_PATH: &str = "/home/ely/.local/share/com.tau.app";
 }
 
 pub mod clipboard_event {

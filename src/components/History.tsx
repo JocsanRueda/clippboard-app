@@ -230,7 +230,7 @@ export const History = () => {
           {t("history")}
         </h2>
 
-        <section className="flex flex-col gap-2 my-2 mx-1  ">
+        <section className="flex flex-col gap-2 my-2 mx-1 ">
           {finalData.length > 0 ?
             finalData.map((item, index) => {
 

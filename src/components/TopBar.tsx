@@ -74,7 +74,7 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
 
   return (
 
-    <div className="flex justify-end items-center px-2 py-2.5 dark:bg-primary mx-1 gap-2.5 over">
+    <div className="flex justify-end items-center px-2 py-2 dark:bg-primary mx-1 gap-2.5 overflow-visible">
 
       <div
         className={`flex items-center min-w-0 w-auto max-w-ws  ${

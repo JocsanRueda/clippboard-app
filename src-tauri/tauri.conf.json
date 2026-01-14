@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Tuxclip",
+  "productName": "Tau",
   "version": "0.1.2",
-  "identifier": "com.Tuxclip.app",
+  "identifier": "com.tau.app",
   "build": {
     "beforeDevCommand": "pnpm dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "Tuxclip",
+        "title": "Tau",
         "width": 380,
         "height": 440,
         "minWidth": 280,

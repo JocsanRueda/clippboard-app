@@ -36,5 +36,7 @@
   "delete_all_shortcut": "Delete All Shortcut",
   "sort_shortcut": "Sort Shortcut",
   "about": "About",
-  "system_settings": "System Settings"
+  "system_settings": "System Settings",
+  "no_history": "Waiting for data input..."
+
 }

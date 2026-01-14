@@ -20,7 +20,7 @@ export function GeneralSettings(){
         <h1 className="mx-auto font-bold text-black dark:text-white text-center">{t(currentPage??"")}</h1>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-1">
+      <div className="flex-1 overflow-y-auto ">
         {currentPage === PAGES.SYSTEM_SETTINGS && <SystemSettings  />}
         {currentPage === PAGES.THEME && <ThemeSettings  />}
         {currentPage ===PAGES.NEW_THEME && <NewTheme />}
