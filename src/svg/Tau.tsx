@@ -88,54 +88,46 @@ export const EmptyStateTesseractIsometric = () => {
 export const EmptyStateGhostTesseract = ({width, height,message}: {width: number, height: number,message:string}) => {
 
   return (
-    <div className="flex flex-col items-center justify-center h-full w-full text-gray-500 dark:text-gray-400 opacity-60 select-none pointer-events-none">
+    <div className="flex flex-col items-center justify-center  w-full text-gray-500 dark:text-gray-400 opacity-60 select-none pointer-events-none">
 
-      {/* SVG Tesseract - Ghost Mode */}
       <svg
         width={width}
         height={height}
         viewBox="0 0 100 100"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1" // Línea más fina aún
+        strokeWidth="1"
         strokeLinecap="round"
         strokeLinejoin="round"
-        // AQUÍ ESTÁ EL TRUCO: strokeDasharray crea el efecto de línea punteada
-        strokeDasharray="4 4"
-        className="mb-4 animate-[spin_90s_linear_infinite]" // Rotación ultra lenta
-      >
-        {/* --- ESTRUCTURA FANTASMA --- */}
 
-        {/* Cubo Exterior */}
+        strokeDasharray="4 4"
+        className="mb-1 animate-[spin_100s_linear_infinite]"
+      >
+
         <path d="M50 15 L85 35 L50 55 L15 35 Z" />
         <path d="M50 85 L85 65 L50 45 L15 65 Z" />
         <path d="M15 35 L15 65 M85 35 L85 65 M50 55 L50 85" />
-        {/* Parte trasera (oculta) con un punteado diferente para dar profundidad */}
+
         <path d="M50 15 L50 45" strokeOpacity="0.3" />
 
-        {/* Cubo Interior */}
         <path d="M50 35 L65 43.5 L50 52 L35 43.5 Z" />
         <path d="M50 65 L65 56.5 L50 48 L35 56.5 Z" />
         <path d="M35 43.5 L35 56.5 M65 43.5 L65 56.5 M50 52 L50 65"/>
         <path d="M50 35 L50 48" strokeOpacity="0.3"/>
 
-        {/* Conexiones (Lineas que unen ambos cubos) */}
         <g strokeOpacity="0.3">
           <path d="M15 35 L35 43.5 M85 35 L65 43.5 M50 15 L50 35 M50 55 L50 52" />
           <path d="M15 65 L35 56.5 M85 65 L65 56.5 M50 85 L50 65 M50 45 L50 48" />
         </g>
 
-        {/* --- EL NÚCLEO (Único elemento sólido) --- */}
-        {/* Quitamos el dasharray aquí para que el punto sea sólido */}
         <circle cx="50" cy="50" r="2" fill="currentColor" stroke="none" className="animate-pulse" />
 
       </svg>
 
-      {/* Texto explicativo */}
       <h3 className="text-sm font-mono font-semibold tracking-[0.2em] uppercase mb-2 text-gray-600 dark:text-gray-300">
         NO_DATA_FOUND
       </h3>
-      <p className="text-xs opacity-80 font-mono font-light">
+      <p className="text-xs opacity-80 font-mono font-light text-center">
         {message}
       </p>
     </div>

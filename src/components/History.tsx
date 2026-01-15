@@ -221,16 +221,16 @@ export const History = () => {
 
   return (
 
-    <div className="h-full flex flex-col bg-gray-200 dark:bg-primary">
+    <div className="flex flex-col h-full bg-gray-200 dark:bg-primary">
 
       <TopBar deleteFunction={deleteAllItem} setFilter={setFilter} filter={filter} />
 
-      <div className="flex-1 overflow-y-auto overflow-x-hidden">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col">
         <h2 className="text-gray-900 dark:text-quaternary font-light tracking-tight mx-3 select-none">
           {t("history")}
         </h2>
 
-        <section className="flex flex-col gap-2 my-2 mx-1 ">
+        <section className="flex flex-col gap-2 my-2 mx-1 flex-1">
           {finalData.length > 0 ?
             finalData.map((item, index) => {
 

@@ -23,7 +23,7 @@ export function NoResult(){
 
   return(
 
-    <div className="flex flex-col justify-center items-center gap-3 h-full ">
+    <div className="h-full w-full flex items-center justify-center" >
       <EmptyStateGhostTesseract width={proportion} height={proportion} message={t("no_history")} />
 
     </div>
