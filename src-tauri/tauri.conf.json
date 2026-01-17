@@ -23,7 +23,6 @@
         "transparent": true,
         "alwaysOnTop": true,
         "focus": true,
-        "visible": false,
         "center": true
       }
     ],
