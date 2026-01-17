@@ -11,6 +11,7 @@ pub fn setup_tray(app: &App<Wry>) -> tauri::Result<()> {
     let show_i = MenuItem::with_id(app, "show", "Show", true, None::<&str>)?;
     let hidden_i = MenuItem::with_id(app, "hidden", "Hidden", true, None::<&str>)?;
     let menu = Menu::with_items(app, &[&show_i, &hidden_i])?;
+    
 
     TrayIconBuilder::new()
         .menu(&menu)

@@ -31,22 +31,32 @@ pub struct AppStore(pub Arc<Mutex<Arc<Store<Wry>>>>);
 use crate::tray::setup_tray;
 use crate::utils::GLOBAL_DATA_PATH;
 use tauri_plugin_single_instance;
+use std::env;
 
-
+use tauri_plugin_autostart::MacosLauncher;
+use tauri_plugin_autostart::ManagerExt;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .plugin(tauri_plugin_autostart::Builder::new().build())
+        .plugin(tauri_plugin_autostart::init(
+            MacosLauncher::LaunchAgent,
+            Some(vec!["--silent"]) 
+        ))
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
-        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+        .plugin(tauri_plugin_single_instance::init(|app, args, _cwd| {
             print!("Comando externo recibido");
 
             if let Some(window) = app.get_webview_window("main") {
                 // Lógica robusta para mostrar la ventana
+                let is_silent_start = args.contains(&"--silent".to_string());
+
+                if is_silent_start {
+                    return;
+                }
 
                 let _ = window.show();
                 let _ = window.unminimize();
@@ -60,13 +70,8 @@ pub fn run() {
             //auto launch setup
 
             
-            use tauri_plugin_autostart::MacosLauncher;
-
-            let _ = app.handle().plugin(tauri_plugin_autostart::init(
-                MacosLauncher::LaunchAgent,
-                Some(vec!["--flag1", "--flag2"]),
-
-            ));
+            let autostart_manager = app.autolaunch();
+            let _ = autostart_manager.enable();
 
 
             // Initialize settings value
