@@ -8,6 +8,7 @@ version = "0.1.2"
 dependencies = [
  "dirs 6.0.0",
  "fs",
+ "gtk",
  "image",
  "notify",
  "serde",

@@ -4,3 +4,5 @@ pub use window::hide_window_command;
 pub use window::resize_window;
 pub use window::resize_window_command;
 pub use window::show_window_command;
+pub use window::get_mouse_position;
+pub use window::set_position_window;

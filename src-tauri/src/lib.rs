@@ -32,6 +32,8 @@ use crate::tray::setup_tray;
 use crate::utils::GLOBAL_DATA_PATH;
 use tauri_plugin_single_instance;
 
+
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -49,7 +51,8 @@ pub fn run() {
                 let _ = window.show();
                 let _ = window.unminimize();
                 let _ = window.set_focus();
-                println!("Ventana mostrada vía comando externo");
+
+           
             }
         }))
         .setup(|app| {
@@ -115,11 +118,15 @@ pub fn run() {
                 // Set initial window size
                 resize_window(&window, settings.horizontal_size, settings.vertical_size);
 
+
                 // Fix: Re-apply resize after a short delay to ensure Linux WM respects it
                 let win_clone = window.clone();
                 let (w, h) = (settings.horizontal_size, settings.vertical_size);
                 std::thread::spawn(move || {
                     std::thread::sleep(std::time::Duration::from_millis(150));
+
+                   
+
                     resize_window(&win_clone, w, h);
                 });
 
@@ -131,7 +138,11 @@ pub fn run() {
                             hide_window_command(window);
                         }
                     }
+
+                    
                 });
+
+                
             }
 
             watchers::start_clipboard_watcher(
