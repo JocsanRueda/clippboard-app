@@ -9,8 +9,8 @@ use tauri::{
 use crate::window::{hide_window_command, show_window_command};
 
 pub fn setup_tray(app: &App<Wry>) -> tauri::Result<()> {
-    let show_i = MenuItem::with_id(app, "show", "Show", true, None::<&str>)?;
-    let hidden_i = MenuItem::with_id(app, "hidden", "Hidden", true, None::<&str>)?;
+    let show_i = MenuItem::with_id(app, "open", "Open", true, None::<&str>)?;
+    let hidden_i = MenuItem::with_id(app, "close", "Close", true, None::<&str>)?;
     let menu = Menu::with_items(app, &[&show_i, &hidden_i])?;
     
     let icon_bytes = include_bytes!("../icons/Logo-tray-light.png");
@@ -24,12 +24,12 @@ pub fn setup_tray(app: &App<Wry>) -> tauri::Result<()> {
         .menu(&menu)
         .show_menu_on_left_click(true)
         .on_menu_event(|app, event| match event.id.as_ref() {
-            "Open" => {
+            "open" => {
                 if let Some(window) = app.get_webview_window("main") {
                     show_window_command(window);
                 }
             }
-            "Close" => {
+            "close" => {
                 if let Some(window) = app.get_webview_window("main") {
                     hide_window_command(window);
                 }
