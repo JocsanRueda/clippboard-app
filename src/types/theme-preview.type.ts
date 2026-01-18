@@ -6,6 +6,7 @@ export type ThemePreviewProps = {
   tertiaryColor: string;
   selected?: boolean;
   userTheme?: boolean;
+  fontColor?: string;
   onDelete?: () => void;
   onClick?: () => void;
   onMouseEnter?: () => void;

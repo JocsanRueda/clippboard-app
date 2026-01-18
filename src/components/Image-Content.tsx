@@ -20,7 +20,7 @@ function ImageContent({ text, url, handleCopy }: ImageContentProps) {
 
   return (
 
-    <img src={imageSrc} alt={text} className="max-w-full max-h-30 rounded-md shadow-md object-cover aspect-[16/9]" loading="lazy" onClick={handleCopy} />
+    <img src={imageSrc} alt={text} className="max-w-full max-h-30  min-h-5 rounded-md shadow-md object-cover aspect-[16/9] overflow-hidden" loading="lazy" onClick={handleCopy} />
 
   );
 }

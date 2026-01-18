@@ -51,7 +51,7 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
   };
 
   return (
-    <div className="flex flex-row justify-between items-stretch  ">
+    <div className="flex flex-row justify-between items-stretch  overflow-hidden">
       <div className="transition-[border] duration-100 w-full bg-gray-200 dark:bg-secondary py-2 px-2 mx-2 rounded-md hover:shadow-lg flex flex-row justify-between border-width-selected  border-gray-300 dark:border-tertiary-dark hover:border-gray-400 hover:dark:border-tertiary-light  transition-border  gap-2   "  onClick={handleCopyInternal} >
 
         {<ContentRenderer type={type} text={text} newText={newText} url={url} editText={toggleActions.activeEdit} setNewText={setNewText} />}
@@ -69,6 +69,7 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
 
       {showToast ?
         <CopyToast onComplete={() => setShowToast(false)} text={t("copied")} /> :
+
         <ActionMenu
           toggleMenu={toggleActions.showMenu}
           handleDelete={handleDelete}

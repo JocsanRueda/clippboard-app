@@ -225,7 +225,7 @@ export const History = () => {
 
       <TopBar deleteFunction={deleteAllItem} setFilter={setFilter} filter={filter} />
 
-      <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col">
+      <div className="flex-1 overflow-y-auto  flex flex-col">
         <h2 className="text-gray-900 dark:text-quaternary font-light tracking-tight mx-3 select-none">
           {t("history")}
         </h2>

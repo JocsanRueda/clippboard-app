@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { getVersion } from "@tauri-apps/api/app";
 import { getName } from "@tauri-apps/api/app";
 import { FaGithub, FaGlobe, FaReact, FaRust } from "react-icons/fa6";
+import { WEB_URLS } from "@/constants/constant";
 
 export function About() {
   const { t } = useTranslation();
@@ -26,15 +27,6 @@ export function About() {
 
     loadAppInfo();
   }, []);
-
-  const openExternalLink = async (url: string) => {
-    try {
-
-      window.open(url, "_blank", "noopener,noreferrer");
-    } catch (error) {
-      console.error("Error al abrir enlace:", error);
-    }
-  };
 
   return (
 
@@ -59,16 +51,20 @@ export function About() {
           </p>
 
           <div className="grid  grid-cols-1 xxs:grid-cols-2 gap-4  justify-center items-center">
-            <SocialButton
-              icon={<FaGithub className="w-5 h-5" />}
-              label="GitHub"
-              onClick={() => openExternalLink("https://github.com/tu-usuario/tu-repo")}
-            />
-            <SocialButton
-              icon={<FaGlobe className="w-5 h-5" />}
-              label="Website"
-              onClick={() => openExternalLink("https://tu-web.com")}
-            />
+            <a href={WEB_URLS.GITHUB} target="_blank" rel="noopener noreferrer">
+              <SocialButton
+                icon={<FaGithub className="w-5 h-5" />}
+                label="GitHub"
+
+              />
+            </a>
+            <a href={WEB_URLS.PERSONAL_WEBSITE} target="_blank" rel="noopener noreferrer">
+              <SocialButton
+                icon={<FaGlobe className="w-5 h-5" />}
+                label="Website"
+
+              />
+            </a>
           </div>
         </div>
 
@@ -93,13 +89,13 @@ export function About() {
 interface SocialButtonProps {
   icon: React.ReactNode;
   label: string;
-  onClick: () => void;
+
 }
 
-function SocialButton({ icon, label, onClick }: SocialButtonProps) {
+function SocialButton({ icon, label }: SocialButtonProps) {
   return (
     <button
-      onClick={onClick}
+
       className="flex items-center justify-center gap-2 px-3 py-2.5 bg-gray-100 dark:bg-tertiary dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-tertiary-light rounded-lg transition-all duration-200 font-medium border border-transparent hover:border-gray-300 dark:hover:border-tertiary-light active:scale-95 max-w-40  "
     >
       {icon}

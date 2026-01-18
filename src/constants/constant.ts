@@ -51,3 +51,8 @@ export const LANGUAGES={
   default: "en"
 };
 
+export const WEB_URLS={
+  GITHUB:"https://github.com/JocsanRueda/clippboard-app",
+  PERSONAL_WEBSITE:"https://jocsanrueda.github.io/"
+};
+

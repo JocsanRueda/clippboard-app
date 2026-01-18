@@ -10,12 +10,12 @@
   "font_size": "Tamaño de fuente",
   "apply": "Aplicar",
   "settings": "Ajustes",
-  "name": "nombre",
-  "primary_color": "color primario",
-  "secondary_color": "color secundario",
-  "border_color": "color del borde",
-  "font_color": "color de la fuente",
-  "border_width": "ancho del borde",
+  "name": "Nombre",
+  "primary_color": "Color primario",
+  "secondary_color": "Color secundario",
+  "border_color": "Color del borde",
+  "font_color": "Color de la fuente",
+  "border_width": "Ancho del borde",
   "save": "Guardar",
   "cancelar": "Cancelar",
   "new_theme": "Nuevo tema",
@@ -37,5 +37,7 @@
   "sort_shortcut": "Atajo de ordenación",
   "about": "Acerca de",
   "system_settings": "Ajustes del sistema",
-  "no_history": "No hay elementos para mostrar."
+  "no_history": "No hay elementos para mostrar.",
+  "name_your_theme": "Nombre del tema"
+
 }

@@ -37,8 +37,8 @@ function ActionMenu({
 
   return (
     <div
-      className={`flex flex-row gap-2 transition-all duration-300 ease-in-out  ${
-        toggleMenu ? "max-w-full opacity-100" : "max-w-0 opacity-0"
+      className={`flex flex-row gap-2 transition-all  duration-300 ease-in-out    ${
+        toggleMenu ? "max-w-full opacity-100" : "max-w-0 opacity-0 "
       }`}
     >
       {/* Edit/Save Button */}
