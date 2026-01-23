@@ -25,6 +25,7 @@ export function applyFontSize(fontSize: string) {
   const root = document.documentElement;
   root.style.fontSize = fontSize;
 }
+
 export function resetTheme() {
 
   const root = document.documentElement;

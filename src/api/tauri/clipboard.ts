@@ -1,3 +1,4 @@
+import { DEFAULT_SYSTEM_SETTINGS } from "@/constants/sytem-options";
 import { Font } from "@/types/fonts.type";
 import { invoke } from "@tauri-apps/api/core";
 
@@ -95,6 +96,18 @@ export const listFont = async () => {
   } catch (err) {
     console.error("Error listing fonts:", err);
     return [];
+  }
+};
+
+// get system font size
+
+export const getSystemFontSize= async (): Promise<string> => {
+  try {
+    const fontSize: string = await invoke("get_system_font_size");
+    return fontSize;
+  } catch (err) {
+    console.error("Error getting system font size:", err);
+    return DEFAULT_SYSTEM_SETTINGS.font_size;
   }
 };
 

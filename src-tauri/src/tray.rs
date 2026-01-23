@@ -18,9 +18,10 @@ pub fn setup_tray(app: &App<Wry>) -> tauri::Result<()> {
     let rgba = icon.to_rgba8();
     let (width, height) = rgba.dimensions();
     let rgba_bytes = rgba.into_raw();
+    let icon_image= Image::new_owned(rgba_bytes, width, height);
 
     TrayIconBuilder::new()
-        .icon(Image::new_owned(rgba_bytes, width, height))
+        .icon(icon_image)
         .menu(&menu)
         .show_menu_on_left_click(true)
         .on_menu_event(|app, event| match event.id.as_ref() {
