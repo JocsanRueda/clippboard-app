@@ -86,7 +86,7 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
         <FaMagnifyingGlass
           size={ICON_TOP_BAR_SIZE}
           className={`${
-            isSearchVisible ? "text-gray-400 mx-2" : "text-gray-900 dark:text-quaternary hover:text-tertiary hover:scale-110"
+            isSearchVisible ? "text-gray-400 mx-2" : "text-gray-900 dark:text-quaternary hover:dark:text-tertiary hover:scale-110"
           } cursor-pointer transition-[color,scale] duration-10 overflow-visible`}
           onClick={() => setIsSearchVisible(!isSearchVisible)}
         />
@@ -111,7 +111,7 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
         {/* Sort */}
         <RiSortDesc
           size={ICON_TOP_BAR_SIZE}
-          className={`transition-[color,scale,rotate] duration-100 text-gray-900 dark:text-quaternary hover:text-secondary-light hover:scale-120 ${settings.item_order === orderItemsOptions.items[1].value ? "" : "rotate-180"}`}
+          className={`transition-[color,scale,rotate] duration-100 text-gray-900 dark:text-quaternary hover:dark:text-secondary-light hover:scale-120 ${settings.item_order === orderItemsOptions.items[1].value ? "" : "rotate-180"}`}
           onClick={() => handleSort(settings.item_order === orderItemsOptions.items[1].value ? orderItemsOptions.items[0].value : orderItemsOptions.items[1].value)}
 
           style={{strokeWidth:0.5}}

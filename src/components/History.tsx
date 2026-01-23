@@ -188,7 +188,7 @@ export const History = () => {
 
   const handleCopyClick = (index: number) => async () => {
 
-    const item = finalData[index];
+    const item = dataList[index];
     const {type,value,path} = item;
 
     const key = `${type}-${value}`;

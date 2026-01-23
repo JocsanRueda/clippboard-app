@@ -126,6 +126,7 @@ pub async fn write_image_command(app: tauri::AppHandle, file_name: String) -> Re
             get_local_data_path().map_err(|e| format!("Error al obtener data path: {}", e))?;
 
         let full_path = format!("{}/images/{}.png", local_data_path, file_name);
+        
 
         let img =
             image::open(&full_path).map_err(|e| format!("Error al abrir la imagen: {}", e))?;

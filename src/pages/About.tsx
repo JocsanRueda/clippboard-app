@@ -37,7 +37,7 @@ export function About() {
         <div className="bg-white dark:bg-secondary p-8 rounded-2xl shadow-sm border border-gray-300 dark:border-tertiary-dark flex flex-col items-center text-center max-w-md w-full transition-colors duration-200">
 
           <div className="w-24 h-24 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-2xl mb-5 flex items-center justify-center shadow-lg">
-            <span className="text-4xl font-bold text-white">GS</span>
+            <span className="text-4xl font-bold text-white">T</span>
           </div>
 
           <h1 className="text-3xl font-bold mb-2 dark:text-white">{appName}</h1>
