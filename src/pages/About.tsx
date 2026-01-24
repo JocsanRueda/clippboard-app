@@ -5,6 +5,7 @@ import { getVersion } from "@tauri-apps/api/app";
 import { getName } from "@tauri-apps/api/app";
 import { FaGithub, FaGlobe, FaReact, FaRust } from "react-icons/fa6";
 import { WEB_URLS } from "@/constants/constant";
+import { Icon } from "@/svg/Icon";
 
 export function About() {
   const { t } = useTranslation();
@@ -36,9 +37,7 @@ export function About() {
 
         <div className="bg-white dark:bg-secondary p-8 rounded-2xl shadow-sm border border-gray-300 dark:border-tertiary-dark flex flex-col items-center text-center max-w-md w-full transition-colors duration-200">
 
-          <div className="w-24 h-24 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-2xl mb-5 flex items-center justify-center shadow-lg">
-            <span className="text-4xl font-bold text-white">T</span>
-          </div>
+          <Icon width={28} height={28}  />
 
           <h1 className="text-3xl font-bold mb-2 dark:text-white">{appName}</h1>
 
