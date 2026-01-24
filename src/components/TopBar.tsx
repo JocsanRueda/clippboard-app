@@ -15,6 +15,10 @@ import { RiSortDesc } from "react-icons/ri";
 import { useHotkeys } from "react-hotkeys-hook";
 
 function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
+
+  const ASCENDING= orderItemsOptions.items[0].value as string;
+  const DESCENDING= orderItemsOptions.items[1].value as string;
+
   const { handlePage } = usePageContext();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(getStorageIsDarkMode());
@@ -69,7 +73,7 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
   useHotkeys(settings.sort_shortcut,(event)=>{
     event.preventDefault();
 
-    handleSort(settings.item_order === orderItemsOptions.items[1].value ? orderItemsOptions.items[0].value : orderItemsOptions.items[1].value);
+    handleSort(settings.item_order === DESCENDING ? ASCENDING : DESCENDING);
   });
 
   return (
@@ -111,8 +115,8 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
         {/* Sort */}
         <RiSortDesc
           size={ICON_TOP_BAR_SIZE}
-          className={`transition-[color,scale,rotate] duration-100 text-gray-900 dark:text-quaternary hover:dark:text-secondary-light hover:scale-120 ${settings.item_order === orderItemsOptions.items[1].value ? "" : "rotate-180"}`}
-          onClick={() => handleSort(settings.item_order === orderItemsOptions.items[1].value ? orderItemsOptions.items[0].value : orderItemsOptions.items[1].value)}
+          className={`transition-[color,scale,rotate] duration-100 text-gray-900 dark:text-quaternary hover:dark:text-secondary-light hover:scale-120 ${settings.item_order === DESCENDING ? "" : "rotate-180"}`}
+          onClick={() => handleSort(settings.item_order === DESCENDING ? ASCENDING : DESCENDING)}
 
           style={{strokeWidth:0.5}}
         />

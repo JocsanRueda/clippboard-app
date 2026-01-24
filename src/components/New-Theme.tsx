@@ -10,6 +10,7 @@ import ContentSettings from "./Content-Settings";
 import ThemePreview from "./Theme-Preview";
 import Dropdown from "./UI-Components/Dropdown";
 import { useTranslation } from "react-i18next";
+import { Button } from "./UI-Components/Button";
 
 export function NewTheme() {
 
@@ -107,7 +108,7 @@ export function NewTheme() {
 
       </ContentSettings>
 
-      <input type="submit" value={t("save")} className="mt-2 mb-6 bg-gray-200 dark:bg-secondary border-width-selected border-gray-300 dark:border-tertiary-dark hover:dark:border-tertiary   text-dark dark:text-white font-light px-4 py-2 rounded-md cursor-pointer  transition-colors duration-100 disabled mr-auto "  />
+      <Button label={t("save")} type="submit" />
 
     </form>
   );

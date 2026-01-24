@@ -102,7 +102,7 @@ export const listFont = async () => {
 
 // get system font size
 
-export const getSystemFontSize= async (): Promise<string> => {
+export const getSystemFontSize= async (): Promise<string | number> => {
   try {
     const fontSize: string = await invoke("get_system_font_size");
     return fontSize;

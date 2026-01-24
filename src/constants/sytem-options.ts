@@ -1,4 +1,39 @@
-export const timeOptions = {
+
+export const TYPE_CONTROL_SETTINGS = {
+  DROPDOWN: "dropdown",
+  SHORTCUT_INPUT: "shortcut_input",
+  UNITY_INPUT: "unity_input",
+};
+
+export type DropdownSettings = {
+  label: string;
+  key: string;
+  items: Array<{ label: string; value: string | number | boolean }>;
+  defaultValue: number;
+  type: typeof TYPE_CONTROL_SETTINGS.DROPDOWN;
+};
+
+export type UnityInputSettings = {
+  label: string;
+  key: string;
+  defaultValue: string | number;
+  type: typeof TYPE_CONTROL_SETTINGS.UNITY_INPUT;
+  min: number;
+  max: number;
+  unity: string;
+  placeholder: string;
+  typeValue: "number" | "text";
+};
+
+export type ShortcutInputSettings = {
+  label: string;
+  key: string;
+  defaultValue: string;
+  type: typeof TYPE_CONTROL_SETTINGS.SHORTCUT_INPUT;
+  placeholder: string;
+};
+
+export const timeOptions : DropdownSettings = {
   label:"Expiration Time",
   key:"expiration_time",
   items:[
@@ -9,9 +44,10 @@ export const timeOptions = {
     { label: "48 hours", value: 60*60*48 },
   ],
   defaultValue: 3,
+  type: TYPE_CONTROL_SETTINGS.DROPDOWN,
 };
 
-export const limitItemsOptions = {
+export const limitItemsOptions : DropdownSettings = {
   label:"Limit of items",
   key:"item_limit",
   items: [
@@ -22,9 +58,10 @@ export const limitItemsOptions = {
     { label: "no_limit", value: -1 },
   ],
   defaultValue: 3,
+  type: TYPE_CONTROL_SETTINGS.DROPDOWN,
 };
 
-export const languagesOptions = {
+export const languagesOptions : DropdownSettings = {
   label:"Language",
   key:"language",
   items: [
@@ -32,57 +69,142 @@ export const languagesOptions = {
     { label: "spanish", value: "es" },
   ],
   defaultValue: 0,
+  type: TYPE_CONTROL_SETTINGS.DROPDOWN,
 };
 
-export const keyboardLaunchOptions = {
-  label:"Keyboard launch",
-  key:"keyboard_shortcut",
-  items: [
-    { label: "Ctrl+H", value: "Ctrl+H" },
-  ],
-  defaultValue: 0
-};
-
-export const orderItemsOptions = {
+export const orderItemsOptions : DropdownSettings = {
   label:"Order Items ",
   key:"item_order",
   items: [
     { label: "ascending", value: "ascending" },
     { label: "descending", value: "descending" },
   ],
-  defaultValue: 0
+  defaultValue: 0,
+  type: TYPE_CONTROL_SETTINGS.DROPDOWN,
 };
 
-export const roundedWindowOptions = {
+export const roundedWindowOptions : DropdownSettings = {
   label:"Rounded Window",
   key:"rounded_window_corners",
   items: [
     { label: "enabled", value: true },
     { label: "disabled", value: false },
   ],
-  defaultValue: 0
+  defaultValue: 0,
+  type: TYPE_CONTROL_SETTINGS.DROPDOWN,
 };
 
-export const fontSizeOptions = {
+export const fontSizeOptions : UnityInputSettings = {
   label:"Font Size",
   key:"font_size",
-  items: [
-    { label: "Small", value: "12" },
-  ],
-  defaultValue: 0
+  defaultValue: 13,
+  type: TYPE_CONTROL_SETTINGS.UNITY_INPUT,
+  min:6,
+  max:20,
+  unity:"px",
+  placeholder:"12",
+  typeValue:"number",
 };
 
+export const horizontalSizeOptions : UnityInputSettings = {
+  label:"Horizontal Size",
+  key:"horizontal_size",
+  defaultValue:380,
+  type: TYPE_CONTROL_SETTINGS.UNITY_INPUT,
+  min:100,
+  max:1000,
+  unity:"px",
+  placeholder:"380",
+  typeValue:"number",
+
+};
+
+export const verticalSizeOptions : UnityInputSettings = {
+  label:"Vertical Size",
+  key:"vertical_size",
+  defaultValue:440,
+  type: TYPE_CONTROL_SETTINGS.UNITY_INPUT,
+  min:100,
+  max:1000,
+  unity:"px",
+  placeholder:"440",
+  typeValue:"number",
+
+};
+
+export const searchShorcutOptions : ShortcutInputSettings = {
+  label:"Search Shortcut",
+  key:"search_shortcut",
+  defaultValue: "Ctrl+F",
+  type: TYPE_CONTROL_SETTINGS.SHORTCUT_INPUT,
+  placeholder:"press_key_combination",
+};
+
+export const deleteAllShortcutOptions : ShortcutInputSettings = {
+  label:"Delete All Shortcut",
+  key:"delete_all_shortcut",
+  defaultValue: "Ctrl+Backspace",
+  type: TYPE_CONTROL_SETTINGS.SHORTCUT_INPUT,
+  placeholder:"press_key_combination",
+};
+
+export const sortShortcutOptions : ShortcutInputSettings = {
+  label:"Sort Shortcut",
+  key:"sort_shortcut",
+  defaultValue: "Ctrl+S",
+  type: TYPE_CONTROL_SETTINGS.SHORTCUT_INPUT,
+  placeholder:"press_key_combination",
+};
+export const keyboardLaunchOptions : ShortcutInputSettings = {
+  label:"Keyboard launch",
+  key:"keyboard_shortcut",
+  defaultValue: "Super+V",
+  type: TYPE_CONTROL_SETTINGS.SHORTCUT_INPUT,
+  placeholder:"press_key_combination",
+
+};
 export const DEFAULT_SYSTEM_SETTINGS = {
   expiration_time: timeOptions.items[timeOptions.defaultValue].value,
   item_limit: limitItemsOptions.items[limitItemsOptions.defaultValue].value,
   language: languagesOptions.items[languagesOptions.defaultValue].value,
   item_order: orderItemsOptions.items[orderItemsOptions.defaultValue].value,
   rounded_window_corners: roundedWindowOptions.items[roundedWindowOptions.defaultValue].value,
-  font_size: fontSizeOptions.items[fontSizeOptions.defaultValue].value,
-  horizontal_size: 380,
-  vertical_size:440,
-  keyboard_shortcut: keyboardLaunchOptions.items[keyboardLaunchOptions.defaultValue].value,
-  search_shortcut: "Ctrl+F",
-  delete_all_shortcut: "Ctrl+Del",
-  sort_shortcut: "Ctrl+S",
+  font_size: fontSizeOptions.defaultValue,
+  horizontal_size: horizontalSizeOptions.defaultValue,
+  vertical_size: verticalSizeOptions.defaultValue,
+  keyboard_shortcut: keyboardLaunchOptions.defaultValue,
+  search_shortcut: searchShorcutOptions.defaultValue,
+  delete_all_shortcut: deleteAllShortcutOptions.defaultValue,
+  sort_shortcut: sortShortcutOptions.defaultValue,
 };
+
+export type CategoySettings={
+  GeneralSettings: Array< DropdownSettings>,
+  AppearanceSettings:Array< DropdownSettings | UnityInputSettings>,
+  KeyboardSettings:Array< ShortcutInputSettings>,
+}
+
+export const CATEGORY_SYSTEM_SETTINGS : CategoySettings  = {
+  GeneralSettings:[
+    languagesOptions,
+    limitItemsOptions,
+    timeOptions,
+    orderItemsOptions,
+  ],
+
+  AppearanceSettings:[
+    horizontalSizeOptions,
+    verticalSizeOptions,
+    fontSizeOptions,
+    roundedWindowOptions,
+  ],
+
+  KeyboardSettings:[
+    keyboardLaunchOptions,
+    searchShorcutOptions,
+    deleteAllShortcutOptions,
+    sortShortcutOptions,
+  ]
+
+};
+

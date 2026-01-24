@@ -2,9 +2,14 @@ import { offShortcuts, onShortcuts } from "@/api/tauri/clipboard";
 import { resizeWindow } from "@/api/tauri/windows";
 import { PAGES } from "@/constants/constant";
 import {
-  fontSizeOptions, keyboardLaunchOptions, languagesOptions,
-  limitItemsOptions, orderItemsOptions, roundedWindowOptions,
-  timeOptions
+  CATEGORY_SYSTEM_SETTINGS,
+  deleteAllShortcutOptions,
+  DropdownSettings,
+  fontSizeOptions,
+  searchShorcutOptions,
+  sortShortcutOptions,
+  TYPE_CONTROL_SETTINGS,
+  UnityInputSettings
 } from "@/constants/sytem-options";
 import { usePageContext } from "@/context/Page-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
@@ -12,6 +17,7 @@ import { SystemSettings as SystemSettingsProps } from "@/types/system-settings.t
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ContentSettings from "./Content-Settings";
+import { Button } from "./UI-Components/Button";
 import Dropdown from "./UI-Components/Dropdown";
 import ShortcutInput from "./UI-Components/Shorcut-input";
 import { UnityInput } from "./UI-Components/Unitiy-input";
@@ -19,7 +25,10 @@ export function SystemSettings(){
 
   const {handlePage}= usePageContext();
 
-  const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<{index: number, key: string}>({
+    index: -1,
+    key: "",
+  });
 
   const [isEditing, setIsEditing]= useState<boolean>(false);
 
@@ -57,8 +66,8 @@ export function SystemSettings(){
     handleEditing();
   },[isEditing]);
 
-  const handleDropdownToggle = (dropdownId: number) => {
-    setOpenDropdown((prev) => (prev === dropdownId ? null : dropdownId));
+  const handleDropdownToggle = (dropdownId: number  , key: string) => {
+    setOpenDropdown((prev) => (prev.index === dropdownId && prev.key === key ? {index: -1, key: ""} : {index: dropdownId, key}));
   };
 
   const handleSelect = async (key: keyof SystemSettingsProps, value: string | number | boolean) => {
@@ -72,24 +81,16 @@ export function SystemSettings(){
 
   const handleShorcutChange = async (combo: string, key: string) => {
     handleSelect(key as keyof SystemSettingsProps, combo);
-    if (key === "keyboard_shortcut") {
+    if (key ===  sortShortcutOptions.key) {
       shorcutsRef.current = combo;
-    } else if (key === "search_shortcut") {
+    } else if (key === searchShorcutOptions.key) {
       shorcutsSearchRef.current = combo;
-    } else if (key === "delete_all_shortcut") {
+    } else if (key === deleteAllShortcutOptions.key) {
       shorcutsDeleteRef.current = combo;
     } else{
       shortcutsSortRef.current = combo;
     }
   };
-
-  const settingsConfig = [
-    timeOptions,
-    limitItemsOptions,
-    languagesOptions,
-    orderItemsOptions,
-    roundedWindowOptions
-  ];
 
   const handleApplySettings = async (e: React.FormEvent) => {
 
@@ -111,100 +112,84 @@ export function SystemSettings(){
     <form onSubmit={handleApplySettings}>
       <div className="w-full  flex flex-col justify-center items-center p-2 mb-5 overflow-x-scroll " >
 
-        {settingsConfig.map((cfg, idx) => (
-          <ContentSettings label={t(cfg.key)} key={t(cfg.key)} className={idx==0?"rounded-t-md border-width-selected py-3":"border-x-width-selected border-b-width-selected width-selected"}>
+        {/* settings items */}
+
+        {CATEGORY_SYSTEM_SETTINGS.GeneralSettings.map((cfg, idx) => (
+          <ContentSettings label={t(cfg.key)} key={t(cfg.key)} firstItem={idx==0} lastItem={idx==CATEGORY_SYSTEM_SETTINGS.GeneralSettings.length-1}>
+
             <Dropdown
               options={cfg.items}
               onSelect={(value) => handleSelect(cfg.key as keyof SystemSettingsProps, value)}
               selectedValue={tempSettings[cfg.key as keyof SystemSettingsProps]}
-              isOpen={openDropdown === idx}
-              onToggle={() => handleDropdownToggle(idx)}
+              isOpen={openDropdown.index === idx && openDropdown.key === cfg.key}
+              onToggle={() => handleDropdownToggle(idx, cfg.key)}
             />
+
           </ContentSettings>
 
         ))}
 
-        <ContentSettings label={t("keyboard_shortcut")} className="border-x-width-selected border-b-width-selected ">
-          <ShortcutInput
-            value={settings.keyboard_shortcut}
-            onChange={(combo) => handleShorcutChange(combo ?? "", keyboardLaunchOptions.key)}
-            placeholder="Pulsa la combinación"
-            setEditing={setIsEditing}
-          />
-        </ContentSettings>
+        {/* aparent settings */}
 
-        <ContentSettings label={t("search_shortcut")} className="border-x-width-selected border-b-width-selected ">
-          <ShortcutInput
-            value={settings.search_shortcut}
-            onChange={(combo) => handleShorcutChange(combo ?? "", "search_shortcut")}
-            placeholder="Pulsa la combinación"
-            setEditing={setIsEditing}
-          />
-        </ContentSettings>
+        {CATEGORY_SYSTEM_SETTINGS.AppearanceSettings.map((cfg, idx) => {
 
-        <ContentSettings label={t("delete_all_shortcut")} className="border-x-width-selected border-b-width-selected ">
-          <ShortcutInput
-            value={settings.delete_all_shortcut}
-            onChange={(combo) => handleShorcutChange(combo ?? "", "delete_all_shortcut")}
-            placeholder="Pulsa la combinación"
-            setEditing={setIsEditing}
-          />
-        </ContentSettings>
+          const cfgUnity= cfg as UnityInputSettings;
 
-        <ContentSettings label={t("sort_shortcut")} className="border-x-width-selected border-b-width-selected ">
-          <ShortcutInput
-            value={settings.sort_shortcut}
-            onChange={(combo) => handleShorcutChange(combo ?? "", "sort_shortcut")}
-            placeholder="Pulsa la combinación"
-            setEditing={setIsEditing}
-          />
-        </ContentSettings>
+          const cfgDropdown= cfg as DropdownSettings;
 
-        <ContentSettings label={t("font_size")} className="border-x-width-selected border-b-width-selected ">
+          return(
 
-          <UnityInput
-            unity="px"
-            type="number"
-            placeholder="12"
-            value={parseInt(tempSettings.font_size,10)}
-            min={6}
-            max={20}
-            onSelect={(value) =>handleSelect(fontSizeOptions.key as keyof SystemSettingsProps, value+"px" )}
+            <ContentSettings label={t(cfg.key)} key={t(cfg.key)} firstItem={idx==0} lastItem={idx==CATEGORY_SYSTEM_SETTINGS.AppearanceSettings.length-1}>
+              {cfg.type === TYPE_CONTROL_SETTINGS.UNITY_INPUT && (
 
-          />
-        </ContentSettings>
+                <UnityInput
+                  unity={cfgUnity.unity}
+                  type={cfgUnity.typeValue}
+                  placeholder={cfgUnity.placeholder}
+                  value={parseInt(tempSettings.font_size,10)}
+                  min={cfgUnity.min}
+                  max={cfgUnity.max}
+                  onSelect={(value) =>handleSelect(fontSizeOptions.key as keyof SystemSettingsProps, value+cfgUnity.unity )}
 
-        <ContentSettings label={t("horizontal_size")} className="border-x-width-selected border-b-width-selected  ">
+                />
+              )}
 
-          <UnityInput
-            unity="px"
-            type="number"
-            placeholder="12"
-            value={tempSettings.horizontal_size}
-            min={100}
-            max={1000}
-            onSelect={(value) =>handleSelect("horizontal_size" as keyof SystemSettingsProps, parseInt(value as string,10) )}
+              {cfg.type === TYPE_CONTROL_SETTINGS.DROPDOWN && (
+                <Dropdown
+                  options={cfgDropdown.items}
+                  onSelect={(value) => handleSelect(cfgDropdown.key as keyof SystemSettingsProps, value)}
+                  selectedValue={tempSettings[cfgDropdown.key as keyof SystemSettingsProps]}
+                  isOpen={openDropdown.index === idx && openDropdown.key === cfgDropdown.key}
+                  onToggle={() => handleDropdownToggle(idx, cfgDropdown.key)}
+                />
 
-          />
-        </ContentSettings>
+              )}
 
-        <ContentSettings label={t("vertical_size")} className="border-x-width-selected border-b-width-selected  rounded-b-md py-3 ">
+            </ContentSettings>
+          );
+        })}
 
-          <UnityInput
-            unity="px"
-            type="number"
-            placeholder="12"
-            value={tempSettings.vertical_size}
-            min={100}
-            max={1000}
-            onSelect={(value) =>handleSelect("vertical_size" as keyof SystemSettingsProps, parseInt(value as string,10) )}
+        {/* size settings */}
 
-          />
-        </ContentSettings>
+        {CATEGORY_SYSTEM_SETTINGS.KeyboardSettings.map((cfg, idx) => {
 
-        <input type="submit" value={t("apply")} className="mt-2 mb-6 bg-gray-200 dark:bg-secondary border-width-selected border-gray-300 dark:border-tertiary-dark hover:dark:border-tertiary text-dark dark:text-white font-light px-4 py-2 rounded-md cursor-pointer  transition-colors duration-100 disabled mr-auto"   />
+          return(
+
+            <ContentSettings label={t(cfg.key)} key={t(cfg.key)} firstItem={idx==0} lastItem={idx==CATEGORY_SYSTEM_SETTINGS.KeyboardSettings.length-1}>
+              <ShortcutInput
+                value={settings.sort_shortcut}
+                onChange={(combo) => handleShorcutChange(combo ?? "", cfg.key)}
+                placeholder={t(cfg.placeholder)}
+                setEditing={setIsEditing}
+              />
+            </ContentSettings>
+          );
+        })}
+
+        <Button label={t("apply")} type="submit" />
 
       </div>
+
     </form>
   );
 }
