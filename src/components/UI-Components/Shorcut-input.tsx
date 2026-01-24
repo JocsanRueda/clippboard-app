@@ -56,7 +56,7 @@ const isModifierToken = (t: string) => MODIFIER_ALIASES.includes(t);
 // - Si >3 recorta a los primeros 3 (ordena modificadores primero).
 // - Si <2 rellena con valores por defecto (`keyboardLaunchOptions.items[0].value`).
 const normalizeCombo = (raw: string): string => {
-  const defaultParts = keyboardLaunchOptions.items[0].value.split("+");
+  const defaultParts = keyboardLaunchOptions.defaultValue.split("+");
   const defaultMod = defaultParts[0];
   const defaultKey = defaultParts[1] ?? "";
 

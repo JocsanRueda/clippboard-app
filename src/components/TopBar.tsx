@@ -115,8 +115,8 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
         {/* Sort */}
         <RiSortDesc
           size={ICON_TOP_BAR_SIZE}
-          className={`transition-[color,scale,rotate] duration-100 text-gray-900 dark:text-quaternary hover:dark:text-secondary-light hover:scale-120 ${settings.item_order === DESCENDING ? "" : "rotate-180"}`}
-          onClick={() => handleSort(settings.item_order === DESCENDING ? ASCENDING : DESCENDING)}
+          className={`transition-[color,scale,rotate] duration-100 text-gray-900 dark:text-quaternary hover:dark:text-secondary-light hover:scale-120 ${settings.item_order === ASCENDING ? "" : "rotate-180"}`}
+          onClick={() => handleSort(settings.item_order === ASCENDING ? DESCENDING : ASCENDING)}
 
           style={{strokeWidth:0.5}}
         />

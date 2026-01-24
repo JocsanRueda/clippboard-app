@@ -1,4 +1,5 @@
 
+import { ICON_WINDOW_CONTROL_SIZE } from "@/constants/constant";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { IoCloseSharp } from "react-icons/io5";
 import { VscChromeMaximize, VscChromeMinimize } from "react-icons/vsc";
@@ -30,24 +31,24 @@ export default function WindowControls({roundedWindow}: {roundedWindow: boolean}
     <div
       id="titlebar"
       data-tauri-drag-region
-      className={`fixed top-0 right-0 w-full flex justify-end items-center bg-gray-300 dark:bg-secondary gap-1.5 z-100 py-0.5 px-2  overflow-hidden border-t-2 border-x-2 border-gray-500 dark:border-gray-800 ${roundedWindow?" rounded-t-lg ":""}`}
+      className={`  w-full flex justify-end items-center bg-gray-300 dark:bg-secondary gap-1.5 z-100 py-0.5 px-2  overflow-hidden ${roundedWindow?" rounded-t-lg ":""}`}
     >
 
       <button
         onClick={handleMinimize}
       >
-        <VscChromeMinimize className="font-bold h-4 w-4 mr-0.5 transition-colors duration-100 text-gray-900 dark:text-quaternary hover:text-gray-500 hover:dark:text-quaternary-dark" style={{strokeWidth:0.5}}/>
+        <VscChromeMinimize size={ICON_WINDOW_CONTROL_SIZE} className="font-bold  mr-0.5 transition-colors duration-100 text-gray-900 dark:text-quaternary hover:text-gray-500 hover:dark:text-quaternary-dark" style={{strokeWidth:0.5}}/>
       </button>
 
       <button
         onClick={handleMaximize}
       >
-        <VscChromeMaximize className="font-bold h-4 w-4 transition-colors duration-100 text-gray-900 dark:text-quaternary hover:text-gray-500 hover:dark:text-quaternary-dark" style={{strokeWidth:0.6}}/>
+        <VscChromeMaximize  size={ICON_WINDOW_CONTROL_SIZE} className="font-bold  transition-colors duration-100 text-gray-900 dark:text-quaternary hover:text-gray-500 hover:dark:text-quaternary-dark" style={{strokeWidth:0.6}}/>
       </button>
       <button
         onClick={handleClose}
       >
-        <IoCloseSharp className="font-bold h-5 w-5 transition-colors duration-100 text-gray-900 dark:text-quaternary hover:text-gray-500 hover:dark:text-quaternary-dark" />
+        <IoCloseSharp size={ICON_WINDOW_CONTROL_SIZE} className="font-bold transition-colors duration-100 text-gray-900 dark:text-quaternary hover:text-gray-500 hover:dark:text-quaternary-dark" />
       </button>
     </div>
   );

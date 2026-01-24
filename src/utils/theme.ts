@@ -15,15 +15,15 @@ export async function applyTheme(theme: ThemeFile) {
   root.style.setProperty("--border-width", theme.borderWidth);
 
   if (systemSettings?.font_size) {
-    root.style.fontSize = systemSettings.font_size;
+    root.style.fontSize = systemSettings.font_size+"px";
   }
 
   saveLocalStorageTheme(theme);
 }
 
-export function applyFontSize(fontSize: string) {
+export function applyFontSize(fontSize: number) {
   const root = document.documentElement;
-  root.style.fontSize = fontSize;
+  root.style.fontSize = fontSize + "px";
 }
 
 export function resetTheme() {

@@ -39,6 +39,11 @@
   "system_settings": "System Settings",
   "no_history": "There are no items to display.",
   "name_your_theme": "Name your theme",
-  "press_key_combination": "Press the key combination"
+  "press_key_combination": "Press the key combination",
+  "behavior": "Behavior",
+  "appearance": "Appearance",
+  "keyboards_shortcut": "Keyboards Shortcut"
+
+
 
 }

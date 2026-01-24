@@ -1,4 +1,3 @@
-import { offShortcuts, onShortcuts } from "@/api/tauri/clipboard";
 import { resizeWindow } from "@/api/tauri/windows";
 import { PAGES } from "@/constants/constant";
 import {
@@ -14,7 +13,7 @@ import {
 import { usePageContext } from "@/context/Page-Contex";
 import { useSystemSettingsContext } from "@/context/System-Settings-Context";
 import { SystemSettings as SystemSettingsProps } from "@/types/system-settings.type";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ContentSettings from "./Content-Settings";
 import { Button } from "./UI-Components/Button";
@@ -30,7 +29,7 @@ export function SystemSettings(){
     key: "",
   });
 
-  const [isEditing, setIsEditing]= useState<boolean>(false);
+  // const [isEditing, setIsEditing]= useState<boolean>(false);
 
   const {settings, setSystemSettings} = useSystemSettingsContext();
 
@@ -43,28 +42,28 @@ export function SystemSettings(){
 
   const { t } = useTranslation();
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    const handleEditing = async ()=>{
+  //   const handleEditing = async ()=>{
 
-      try{
-        if(isEditing){
+  //     try{
+  //       if(isEditing){
 
-          await offShortcuts(shorcutsRef.current);
+  //         await offShortcuts(shorcutsRef.current);
 
-        }else{
+  //       }else{
 
-          await onShortcuts(shorcutsRef.current);
+  //         await onShortcuts(shorcutsRef.current);
 
-        }
-      }catch(error){
-        console.error("Failed to set editing state", error);
-      }
+  //       }
+  //     }catch(error){
+  //       console.error("Failed to set editing state", error);
+  //     }
 
-    };
+  //   };
 
-    handleEditing();
-  },[isEditing]);
+  //   handleEditing();
+  // },[isEditing]);
 
   const handleDropdownToggle = (dropdownId: number  , key: string) => {
     setOpenDropdown((prev) => (prev.index === dropdownId && prev.key === key ? {index: -1, key: ""} : {index: dropdownId, key}));
@@ -110,84 +109,103 @@ export function SystemSettings(){
 
   return(
     <form onSubmit={handleApplySettings}>
-      <div className="w-full  flex flex-col justify-center items-center p-2 mb-5 overflow-x-scroll " >
+      <div className="w-full  flex flex-col justify-center items-center py-2 px-2.5 mb-5 overflow-x-scroll " >
 
         {/* settings items */}
 
-        {CATEGORY_SYSTEM_SETTINGS.GeneralSettings.map((cfg, idx) => (
-          <ContentSettings label={t(cfg.key)} key={t(cfg.key)} firstItem={idx==0} lastItem={idx==CATEGORY_SYSTEM_SETTINGS.GeneralSettings.length-1}>
+        <div className="w-full">
 
-            <Dropdown
-              options={cfg.items}
-              onSelect={(value) => handleSelect(cfg.key as keyof SystemSettingsProps, value)}
-              selectedValue={tempSettings[cfg.key as keyof SystemSettingsProps]}
-              isOpen={openDropdown.index === idx && openDropdown.key === cfg.key}
-              onToggle={() => handleDropdownToggle(idx, cfg.key)}
-            />
+          <h1 className="mx-auto font-light text-black dark:text-white my-2 -ml-1">{t("behavior")}</h1>
 
-          </ContentSettings>
+          {CATEGORY_SYSTEM_SETTINGS.GeneralSettings.map((cfg, idx) => (
+            <ContentSettings label={t(cfg.key)} key={t(cfg.key)} firstItem={idx==0} lastItem={idx==CATEGORY_SYSTEM_SETTINGS.GeneralSettings.length-1}>
 
-        ))}
-
-        {/* aparent settings */}
-
-        {CATEGORY_SYSTEM_SETTINGS.AppearanceSettings.map((cfg, idx) => {
-
-          const cfgUnity= cfg as UnityInputSettings;
-
-          const cfgDropdown= cfg as DropdownSettings;
-
-          return(
-
-            <ContentSettings label={t(cfg.key)} key={t(cfg.key)} firstItem={idx==0} lastItem={idx==CATEGORY_SYSTEM_SETTINGS.AppearanceSettings.length-1}>
-              {cfg.type === TYPE_CONTROL_SETTINGS.UNITY_INPUT && (
-
-                <UnityInput
-                  unity={cfgUnity.unity}
-                  type={cfgUnity.typeValue}
-                  placeholder={cfgUnity.placeholder}
-                  value={parseInt(tempSettings.font_size,10)}
-                  min={cfgUnity.min}
-                  max={cfgUnity.max}
-                  onSelect={(value) =>handleSelect(fontSizeOptions.key as keyof SystemSettingsProps, value+cfgUnity.unity )}
-
-                />
-              )}
-
-              {cfg.type === TYPE_CONTROL_SETTINGS.DROPDOWN && (
-                <Dropdown
-                  options={cfgDropdown.items}
-                  onSelect={(value) => handleSelect(cfgDropdown.key as keyof SystemSettingsProps, value)}
-                  selectedValue={tempSettings[cfgDropdown.key as keyof SystemSettingsProps]}
-                  isOpen={openDropdown.index === idx && openDropdown.key === cfgDropdown.key}
-                  onToggle={() => handleDropdownToggle(idx, cfgDropdown.key)}
-                />
-
-              )}
+              <Dropdown
+                options={cfg.items}
+                onSelect={(value) => handleSelect(cfg.key as keyof SystemSettingsProps, value)}
+                selectedValue={tempSettings[cfg.key as keyof SystemSettingsProps]}
+                isOpen={openDropdown.index === idx && openDropdown.key === cfg.key}
+                onToggle={() => handleDropdownToggle(idx, cfg.key)}
+              />
 
             </ContentSettings>
-          );
-        })}
+
+          ))}
+
+        </div>
+
+        {/* aparent settings */}
+        <div className="w-full">
+
+          <h1 className="mx-auto font-light text-black dark:text-white my-2 -ml-1">{t("appearance")}</h1>
+
+          {CATEGORY_SYSTEM_SETTINGS.AppearanceSettings.map((cfg, idx) => {
+
+            const cfgUnity= cfg as UnityInputSettings;
+
+            const cfgDropdown= cfg as DropdownSettings;
+
+            const value= tempSettings[cfgDropdown.key as keyof SystemSettingsProps];
+
+            return(
+
+              <ContentSettings label={t(cfg.key)} key={t(cfg.key)} firstItem={idx==0} lastItem={idx==CATEGORY_SYSTEM_SETTINGS.AppearanceSettings.length-1}>
+                {cfg.type === TYPE_CONTROL_SETTINGS.UNITY_INPUT && (
+
+                  <UnityInput
+                    unity={cfgUnity.unity}
+                    type={cfgUnity.typeValue}
+                    placeholder={cfgUnity.placeholder}
+                    value={value as string}
+                    min={cfgUnity.min}
+                    max={cfgUnity.max}
+                    onSelect={(value) =>handleSelect(fontSizeOptions.key as keyof SystemSettingsProps, value)}
+
+                  />
+                )}
+
+                {cfg.type === TYPE_CONTROL_SETTINGS.DROPDOWN && (
+                  <Dropdown
+                    options={cfgDropdown.items}
+                    onSelect={(value) => handleSelect(cfgDropdown.key as keyof SystemSettingsProps, value)}
+                    selectedValue={tempSettings[cfgDropdown.key as keyof SystemSettingsProps]}
+                    isOpen={openDropdown.index === idx && openDropdown.key === cfgDropdown.key}
+                    onToggle={() => handleDropdownToggle(idx, cfgDropdown.key)}
+                  />
+
+                )}
+
+              </ContentSettings>
+            );
+          })}
+        </div>
 
         {/* size settings */}
 
-        {CATEGORY_SYSTEM_SETTINGS.KeyboardSettings.map((cfg, idx) => {
+        <div className="w-full">
 
-          return(
+          <h1 className="mx-auto font-light text-black dark:text-white  my-2 -ml-1">{t("keyboards_shortcut")}</h1>
 
-            <ContentSettings label={t(cfg.key)} key={t(cfg.key)} firstItem={idx==0} lastItem={idx==CATEGORY_SYSTEM_SETTINGS.KeyboardSettings.length-1}>
-              <ShortcutInput
-                value={settings.sort_shortcut}
-                onChange={(combo) => handleShorcutChange(combo ?? "", cfg.key)}
-                placeholder={t(cfg.placeholder)}
-                setEditing={setIsEditing}
-              />
-            </ContentSettings>
-          );
-        })}
+          {CATEGORY_SYSTEM_SETTINGS.KeyboardSettings.map((cfg, idx) => {
 
-        <Button label={t("apply")} type="submit" />
+            const value= tempSettings[cfg.key as keyof SystemSettingsProps];
 
+            return(
+
+              <ContentSettings label={t(cfg.key)} key={t(cfg.key)} firstItem={idx==0} lastItem={idx==CATEGORY_SYSTEM_SETTINGS.KeyboardSettings.length-1}>
+                <ShortcutInput
+                  value={value as string}
+                  onChange={(combo) => handleShorcutChange(combo ?? "", cfg.key)}
+                  placeholder={t(cfg.placeholder)}
+
+                />
+              </ContentSettings>
+            );
+          })}
+
+          <Button label={t("apply")} type="submit" />
+
+        </div>
       </div>
 
     </form>

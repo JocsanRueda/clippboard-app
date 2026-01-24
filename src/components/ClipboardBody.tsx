@@ -9,8 +9,7 @@ function ClipboardBody() {
   const {currentPage}= usePageContext();
 
   return (
-    <div className="flex-1 min-h-0 bg-gray-200 dark:bg-primary px-1 mt-6">
-
+    <div className="flex-1 min-h-0 bg-gray-200 dark:bg-primary px-1 ">
       {currentPage===PAGES.HOME && <History />}
       {currentPage!==PAGES.HOME && <GeneralSettings />}
 

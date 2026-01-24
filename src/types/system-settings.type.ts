@@ -8,7 +8,7 @@ export type SystemSettings={
   item_order:string;
   language:string;
   rounded_window_corners:boolean;
-  font_size:string;
+  font_size:number;
   vertical_size:number;
   horizontal_size:number;
 }

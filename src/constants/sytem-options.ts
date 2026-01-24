@@ -164,18 +164,18 @@ export const keyboardLaunchOptions : ShortcutInputSettings = {
 
 };
 export const DEFAULT_SYSTEM_SETTINGS = {
-  expiration_time: timeOptions.items[timeOptions.defaultValue].value,
-  item_limit: limitItemsOptions.items[limitItemsOptions.defaultValue].value,
-  language: languagesOptions.items[languagesOptions.defaultValue].value,
-  item_order: orderItemsOptions.items[orderItemsOptions.defaultValue].value,
-  rounded_window_corners: roundedWindowOptions.items[roundedWindowOptions.defaultValue].value,
-  font_size: fontSizeOptions.defaultValue,
-  horizontal_size: horizontalSizeOptions.defaultValue,
-  vertical_size: verticalSizeOptions.defaultValue,
-  keyboard_shortcut: keyboardLaunchOptions.defaultValue,
-  search_shortcut: searchShorcutOptions.defaultValue,
-  delete_all_shortcut: deleteAllShortcutOptions.defaultValue,
-  sort_shortcut: sortShortcutOptions.defaultValue,
+  expiration_time: timeOptions.items[timeOptions.defaultValue].value as number,
+  item_limit: limitItemsOptions.items[limitItemsOptions.defaultValue].value as number,
+  language: languagesOptions.items[languagesOptions.defaultValue].value as string,
+  item_order: orderItemsOptions.items[orderItemsOptions.defaultValue].value as string,
+  rounded_window_corners: roundedWindowOptions.items[roundedWindowOptions.defaultValue].value as boolean,
+  font_size: fontSizeOptions.defaultValue as number,
+  horizontal_size: horizontalSizeOptions.defaultValue as number,
+  vertical_size: verticalSizeOptions.defaultValue as number,
+  keyboard_shortcut: keyboardLaunchOptions.defaultValue as string,
+  search_shortcut: searchShorcutOptions.defaultValue as string,
+  delete_all_shortcut: deleteAllShortcutOptions.defaultValue as string,
+  sort_shortcut: sortShortcutOptions.defaultValue as string,
 };
 
 export type CategoySettings={

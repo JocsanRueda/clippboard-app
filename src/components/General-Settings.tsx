@@ -1,4 +1,4 @@
-import { PAGES } from "@/constants/constant";
+import { ICON_SETTINGS_SIZE, PAGES } from "@/constants/constant";
 import { usePageContext } from "@/context/Page-Contex";
 import About from "@/pages/About";
 import { useTranslation } from "react-i18next";
@@ -14,10 +14,10 @@ export function GeneralSettings(){
   const { t } = useTranslation();
 
   return(
-    <div className="flex flex-col w-full h-full bg-gray-200 dark:bg-primary" >
-      <div className="w-full grid grid-cols-3 gap-2 my-2">
-        <IoArrowBackOutline className="w-5.5 h-5.5 text-gray-600 dark:text-gray-200  cursor-pointer border-width-selected border-gray-200 dark:border-none hover:border-gray-400 rounded-md  ml-1.5" onClick={() => goBack()} />
-        <h1 className="mx-auto font-bold text-black dark:text-white text-center">{t(currentPage??"")}</h1>
+    <div className="flex flex-col w-full h-full  bg-gray-200 dark:bg-primary" >
+      <div className="w-full relative flex items-center justify-center my-2">
+        <IoArrowBackOutline size={ICON_SETTINGS_SIZE} className="absolute left-2 z-10  text-gray-600 dark:text-gray-200  cursor-pointer border-width-selected border-gray-200 dark:border-none hover:border-gray-400 rounded-md" onClick={() => goBack()} />
+        <h1 className="font-bold text-black dark:text-white">{t(currentPage??"")}</h1>
       </div>
 
       <div className="flex-1 overflow-y-auto ">
