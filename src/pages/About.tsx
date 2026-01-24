@@ -46,7 +46,7 @@ export function About() {
           </div>
 
           <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-            {t("app_description", "Tu gestor de portapapeles y atajos definitivo. Optimiza tu flujo de trabajo con velocidad y privacidad.")}
+            {t("app_description")}
           </p>
 
           <div className="grid  grid-cols-1 xxs:grid-cols-2 gap-4  justify-center items-center">
@@ -70,7 +70,7 @@ export function About() {
         <div className="text-center flex flex-col gap-3 text-sm text-gray-500 dark:text-gray-400">
           <div className="flex items-center justify-center gap-2 font-medium ml-auto">
             <span>Hecho con</span>
-            {/* Usando colores de marca de Rust y React */}
+
             <FaRust className="text-[#DEA584] w-5 h-5 inline" title="Rust" />
             <span>&</span>
             <FaReact className="text-[#61DAFB] w-5 h-5 inline animate-spin-slow" title="React" />
