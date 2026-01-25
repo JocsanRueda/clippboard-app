@@ -13,8 +13,11 @@ import { LuMoon, LuSun } from "react-icons/lu";
 import { RiSortDesc } from "react-icons/ri";
 
 import { useHotkeys } from "react-hotkeys-hook";
+import { useTranslation } from "react-i18next";
 
 function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
+
+  const { t } = useTranslation();
 
   const ASCENDING= orderItemsOptions.items[0].value as string;
   const DESCENDING= orderItemsOptions.items[1].value as string;
@@ -98,7 +101,7 @@ function TopBar({ deleteFunction, setFilter, filter }: TopBarProps) {
         <input
           ref={input}
           type="text"
-          placeholder="Search..."
+          placeholder={t("search")+"..."}
           className={`bg-transparent focus:outline-none text-black dark:text-quaternary transition-[width,opacity] duration-100 ${
 
             isSearchVisible ? "w-full opacity-100" : "w-0 opacity-0"
