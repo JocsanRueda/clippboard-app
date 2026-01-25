@@ -18,12 +18,30 @@
 
 ---
 
+---
+
 ## 📸 Demo & Screenshots
 
-| Clipboard History | Settings & Themes | Main Interface |
-|:---:|:---:|:---:|
-| <img src="./assets/screenshot-main.png" alt="Main Interface" width="600"> | <img src="./assets/screenshot-settings.png" alt="Main Interface" width="600"> | <img src="./assets/screenshot-main-clean.png" alt="Settings Interface" width="600"> |
-| *Clean history view with thumbnails* | *Fully customizable theming* | *Modern Design*|
+| 📋 Clipboard History |
+| :---: |
+| <img src="./assets/screenshot-main.png" alt="Main Interface" width="100%"> |
+| *Clean history view with thumbnails* |
+
+<br>
+
+| 🎨 Settings & Themes |
+| :---: |
+| <img src="./assets/screenshot-settings.png" alt="Settings Interface" width="100%"> |
+| *Fully customizable theming engine* |
+
+<br>
+
+| ✨ Minimal Interface |
+| :---: |
+| <img src="./assets/screenshot-main-clean.png" alt="Clean Interface" width="100%"> |
+| *Modern and unobtrusive design* |
+
+---
 
 <br>
 
