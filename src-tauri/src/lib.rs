@@ -48,7 +48,7 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_single_instance::init(|app, args, _cwd| {
-            print!("Comando externo recibido");
+            
 
             if let Some(window) = app.get_webview_window("main") {
                 // Lógica robusta para mostrar la ventana

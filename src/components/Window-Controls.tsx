@@ -3,8 +3,13 @@ import { ICON_WINDOW_CONTROL_SIZE } from "@/constants/constant";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { IoCloseSharp } from "react-icons/io5";
 import { VscChromeMaximize, VscChromeMinimize } from "react-icons/vsc";
-export default function WindowControls({roundedWindow}: {roundedWindow: boolean}) {
 
+type WindowControlsProps= {
+  roundedWindow: boolean;
+  // eslint-disable-next-line no-unused-vars
+  setIsMaximized: (value: boolean)=> void;
+};
+export default function WindowControls({roundedWindow,setIsMaximized}: WindowControlsProps) {
   const window = getCurrentWindow();
 
   const handleClose = async () => {
@@ -21,8 +26,10 @@ export default function WindowControls({roundedWindow}: {roundedWindow: boolean}
 
     if (isMaximized){
       await window.unmaximize();
+      setIsMaximized(false);
     }else{
       await window.maximize();
+      setIsMaximized(true);
     }
 
   };
@@ -31,7 +38,7 @@ export default function WindowControls({roundedWindow}: {roundedWindow: boolean}
     <div
       id="titlebar"
       data-tauri-drag-region
-      className={`w-full flex justify-end items-center bg-gray-300 dark:bg-secondary gap-1.5 z-100 py-0.5 px-2  overflow-hidden ${roundedWindow?" rounded-t-xl ":""}`}
+      className={`w-full flex justify-end items-center bg-gray-300 dark:bg-secondary gap-1.5 z-100  px-2  py-1.5  overflow-hidden ${roundedWindow?" rounded-t-xl ":""}`}
     >
 
       <button

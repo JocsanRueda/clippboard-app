@@ -51,13 +51,13 @@ export const limitItemsOptions : DropdownSettings = {
   label:"Limit of items",
   key:"item_limit",
   items: [
-    { label: "10 items", value: 10 },
-    { label: "30 items", value: 30 },
     { label: "50 items", value: 50 },
     { label: "100 items", value: 100 },
+    { label: "200 items", value: 200 },
+    { label: "500 items", value: 500 },
     { label: "no_limit", value: -1 },
   ],
-  defaultValue: 3,
+  defaultValue: 2,
   type: TYPE_CONTROL_SETTINGS.DROPDOWN,
 };
 
