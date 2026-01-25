@@ -200,7 +200,6 @@ export const CATEGORY_SYSTEM_SETTINGS : CategoySettings  = {
   ],
 
   KeyboardSettings:[
-    keyboardLaunchOptions,
     searchShorcutOptions,
     deleteAllShortcutOptions,
     sortShortcutOptions,
