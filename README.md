@@ -22,7 +22,7 @@
 
 | Clipboard History | Settings & Themes | Main Interface |
 |:---:|:---:|:---:|
-| <img src="./assets/screenshot-main.png" alt="Main Interface" width="400"> | <img src="./assets/screenshot-settings.png" alt="Main Interface" width="400"> | <img src="./assets/screenshot-main-clean.png" alt="Settings Interface" width="400"> |
+| <img src="./assets/screenshot-main.png" alt="Main Interface" width="600"> | <img src="./assets/screenshot-settings.png" alt="Main Interface" width="600"> | <img src="./assets/screenshot-main-clean.png" alt="Settings Interface" width="600"> |
 | *Clean history view with thumbnails* | *Fully customizable theming* | *Modern Design*|
 
 <br>
