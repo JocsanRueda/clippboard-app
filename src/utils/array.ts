@@ -22,6 +22,7 @@ export function getOtherIndexEqual(array: ItemClipboard[],text:string, index: nu
 export function addUnique(array: ItemClipboard[], text: string): ItemClipboard[] {
 
   const newItem: ItemClipboard = {
+    id: window.crypto.randomUUID(),
     value: normalizeString(text),
     type: "text",
     path: "",
@@ -38,6 +39,7 @@ export function addUnique(array: ItemClipboard[], text: string): ItemClipboard[]
 export function add(array: ItemClipboard[], item: newItemPayload): ItemClipboard[] {
 
   const newItemClipboard: ItemClipboard = {
+    id:  item.id,
     value: normalizeString(item.value),
     type: item.type,
     path: item.path,

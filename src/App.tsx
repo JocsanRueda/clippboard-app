@@ -20,8 +20,6 @@ function App() {
 
   }, [settings.language]);
 
-  console.log("Rounded corners:", isMaximized);
-
   return (
     <div className={`font-sans
         flex flex-col h-screen overflow-hidden

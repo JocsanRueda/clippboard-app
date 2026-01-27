@@ -1,5 +1,5 @@
 import { ContentCardProps } from "@/types/content-card.type";
-import React, { useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
 import { TiPin, TiPinOutline } from "react-icons/ti";
@@ -9,14 +9,19 @@ import CopyToast from "./UI-Components/CopyToast";
 
 function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete ,handleEdit, handleSave, handleFixed, handleCopy}: ContentCardProps) {
 
-  const [newText, setNewText] = useState(text);
+  const [newText, setNewText] = useState<string>("");
   const [showToast, setShowToast] = useState(false);
   const { t } = useTranslation();
 
+  // Save new text after edit
   const handleSaveText = () => {
+
+    if (newText === "") return;
+
     handleSave(newText);
   };
 
+  // Handle option click
   const handledOption = (e: React.MouseEvent) => {
     e.stopPropagation();
     handleMenu();
@@ -25,7 +30,7 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
       setShowToast(false);
     }
   };
-
+  // Handle copy action
   const handleCopyInternal = () => {
 
     if (toggleActions.activeEdit) return;
@@ -39,6 +44,16 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
 
     setShowToast(true);
   };
+
+  // Sync newText with text prop when edit mode changes
+  useEffect(()=>{
+
+    if (toggleActions.activeEdit){
+      setNewText(text);
+    }else{
+      setNewText("");
+    }
+  },[toggleActions.activeEdit, text]);
 
   const getPinIcon = () => {
     return toggleActions.fixed ? (<TiPin
@@ -84,4 +99,4 @@ function ContentCard({ text, type,url, toggleActions, handleMenu , handleDelete 
   );
 }
 
-export default ContentCard;
+export default memo(ContentCard);

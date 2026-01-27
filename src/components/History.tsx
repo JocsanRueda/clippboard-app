@@ -23,6 +23,8 @@ export const History = () => {
 
   const {dataList,setDataList,toggleActions,setToggleActions} = useClipboardContext();
 
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+
   const {settings} = useSystemSettingsContext();
 
   const [filter, setFilter] = useState<string>("");
@@ -113,6 +115,10 @@ export const History = () => {
     // Remove the item from the store
     await removeClipboardItem(index);
 
+    if (index===currentIndex) {
+      setCurrentIndex(null);
+    }
+
     return newDataList;
 
   };
@@ -188,6 +194,10 @@ export const History = () => {
 
   const handleCopyClick = (index: number) => async () => {
 
+    if (currentIndex === index) return;
+
+    setCurrentIndex(index);
+
     const item = dataList[index];
     const {type,value,path} = item;
 
@@ -238,7 +248,7 @@ export const History = () => {
 
               return (
                 <ContentCard
-                  key={newIndex + item.value}
+                  key={item.id}
                   text={item.value}
                   type={item.type}
                   url={item.path}

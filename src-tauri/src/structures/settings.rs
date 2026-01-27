@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Settings {
     pub expiration_time: u64,
-    pub item_limit: usize,
+    pub item_limit: i16,
     pub keyboard_shortcut: String,
     pub search_shortcut: String,
     pub delete_all_shortcut: String,

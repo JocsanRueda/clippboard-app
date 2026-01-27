@@ -2,6 +2,8 @@ pub fn normalize_string(input: &str) -> String {
     input.trim().to_string()
 }
 
+
+
 #[cfg(test)]
 mod tests {
     use super::*;

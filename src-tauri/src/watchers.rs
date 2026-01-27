@@ -19,13 +19,14 @@ use tauri::Wry;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 use tauri_plugin_store::Store;
 use thread_priority::{set_current_thread_priority, ThreadPriority};
+use uuid::Uuid;
 
 /// Starts a clipboard watcher that monitors the clipboard for changes
 pub fn start_clipboard_watcher(
     app_handle: AppHandle,
     store_global: Arc<Mutex<Arc<Store<Wry>>>>,
     global_history: Arc<Mutex<Vec<serde_json::Value>>>,
-    max_history: usize,
+    max_history: i16,
 ) {
     let (tx_fast, rx_fast) = channel::<PathBuf>();
     let worker_app_handle = app_handle.clone();
@@ -36,6 +37,8 @@ pub fn start_clipboard_watcher(
         let _ = set_current_thread_priority(ThreadPriority::Min);
 
         for path in rx_fast {
+            thread::sleep(Duration::from_millis(150));
+
             let metadata = match metadata(&path) {
                 Ok(meta) => meta,
                 Err(e) => {
@@ -57,20 +60,23 @@ pub fn start_clipboard_watcher(
                 }
             };
 
-            let mut history = worker_history.lock().unwrap();
+            let (last_item, file_name) = {
+                let mut history = worker_history.lock().unwrap();
+                add_image(&mut *history);
+                let last = history.last().unwrap().clone();
+                let name = last["path"].as_str().unwrap().to_string();
+                (last, name)
+            };
 
-            add_image(&mut *history);
+            save_thumbnail(&new_image, &file_name);
 
-            let last = history.last().unwrap();
+            copy_image(&path, &file_name);
 
-            let file_name = last["path"].as_str().unwrap();
-
-            save_thumbnail(&new_image, file_name);
-
-            copy_image(&path, file_name);
-
-            let _ = worker_app_handle.emit(NEW_ITEM, last.clone());
+            let _ = worker_app_handle.emit(NEW_ITEM, last_item);
+            
+            // Re-adquirir bloqueos para guardar el store
             let store = worker_store_global.lock().unwrap();
+            let history = worker_history.lock().unwrap();
             save_store(&store, &*history);
         }
     });
@@ -101,8 +107,6 @@ pub fn start_clipboard_watcher(
             match res {
                 Ok(event) => {
                     if let EventKind::Create(_) = event.kind {
-                        thread::sleep(Duration::from_millis(150));
-
                         if let Some(new_file_path) = event.paths.get(0) {
                             if let Err(e) = tx_fast.send(new_file_path.clone()) {
                                 eprintln!("Error: thread are dead {}", e);
@@ -122,30 +126,35 @@ pub fn start_clipboard_watcher(
 
         loop {
             if let Ok(current) = app_handle.clipboard().read_text() {
-                let mut history = global_history.lock().unwrap();
+                if current != last_value && !current.is_empty() {
+                    let mut history = global_history.lock().unwrap();
 
-                if current != last_value && history.len() < max_history && !current.is_empty() {
-                    last_value = current.clone();
+                    if max_history == -1 || history.len() < max_history as usize {
+                        last_value = current;
 
-                    let last_length = history.len();
+                        let last_length = history.len();
 
-                    add_unique(&mut *history, &last_value);
+                        let id= Uuid::new_v4().to_string();
 
-                    if last_length < history.len() {
-                        // Emit the clipboard change event
+                        add_unique(&mut *history, &last_value, &id);
 
-                        let payload = json!({
-                            "value": last_value.clone(),
-                            "path": EMPTY,
-                            "type": TEXT
-                        });
+                        if last_length < history.len() {
+                            // Emit the clipboard change event
 
-                        app_handle.emit(NEW_ITEM, payload).unwrap();
+                            let payload = json!({
+                                "value": last_value,
+                                "path": EMPTY,
+                                "type": TEXT,
+                                "id": id,
+                            });
 
-                        // Save the updated history to the store
-                        let store = store_global.lock().unwrap();
+                            app_handle.emit(NEW_ITEM, payload).unwrap();
 
-                        save_store(&store, &*history);
+                            // Save the updated history to the store
+                            let store = store_global.lock().unwrap();
+
+                            save_store(&store, &*history);
+                        }
                     }
                 }
             }

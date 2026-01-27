@@ -2,7 +2,7 @@ use crate::constants::clipboard_key::{IMAGE, TEXT};
 use crate::utils::data::get_data_now;
 use crate::utils::string::normalize_string;
 use serde_json::json;
-pub fn add_unique(array: &mut Vec<serde_json::Value>, value: &str) {
+pub fn add_unique(array: &mut Vec<serde_json::Value>, value: &str,id:&str) {
     let last_value = normalize_string(value);
 
     let timestamp = get_data_now();
@@ -12,7 +12,8 @@ pub fn add_unique(array: &mut Vec<serde_json::Value>, value: &str) {
         "type": TEXT,
         "fixed": false,
         "path": null,
-        "timestamp": timestamp
+        "timestamp": timestamp,
+        "id": id
     });
 
     if !array
