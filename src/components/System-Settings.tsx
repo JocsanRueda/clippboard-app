@@ -4,7 +4,6 @@ import {
   CATEGORY_SYSTEM_SETTINGS,
   deleteAllShortcutOptions,
   DropdownSettings,
-  fontSizeOptions,
   searchShorcutOptions,
   sortShortcutOptions,
   TYPE_CONTROL_SETTINGS,
@@ -145,7 +144,7 @@ export function SystemSettings(){
 
             const cfgDropdown= cfg as DropdownSettings;
 
-            const value= tempSettings[cfgDropdown.key as keyof SystemSettingsProps];
+            const value= tempSettings[cfg.key as keyof SystemSettingsProps];
 
             return(
 
@@ -159,7 +158,7 @@ export function SystemSettings(){
                     value={value as string}
                     min={cfgUnity.min}
                     max={cfgUnity.max}
-                    onSelect={(value) =>handleSelect(fontSizeOptions.key as keyof SystemSettingsProps, value)}
+                    onSelect={(value) =>handleSelect(cfgUnity.key as keyof SystemSettingsProps, value)}
 
                   />
                 )}
